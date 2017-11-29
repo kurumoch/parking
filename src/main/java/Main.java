@@ -1,4 +1,5 @@
 import forms.MainForm;
+import forms.ParamsForm;
 import forms.ParkingCreationForm;
 
 /**
@@ -7,6 +8,6 @@ import forms.ParkingCreationForm;
 public class Main {
 
     public static void main(String...args){
-        new MainForm();
+        new ParamsForm();
     }
 }
