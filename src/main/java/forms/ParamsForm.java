@@ -1,12 +1,11 @@
 package forms;
 
 import javax.swing.*;
-import java.awt.*;
 
 /**
  * Created by denis on 22.11.2017.
  */
-public class ParamsForm extends JFrame{
+public class ParamsForm extends JFrame {
     private JSpinner xSpinner;
     private JSpinner ySpinner;
     private JLabel label;
@@ -77,7 +76,7 @@ public class ParamsForm extends JFrame{
     private GroupLayout exponentialLayoutFlow;
 
 
-    public ParamsForm(){
+    public ParamsForm() {
         super("Изменение параметров");
         JPanel panel = new JPanel();
         label = new JLabel("Введите размер парковки");
@@ -139,14 +138,14 @@ public class ParamsForm extends JFrame{
         exponentialLayoutTime.setAutoCreateGaps(true);
         exponentialLayoutTime.setAutoCreateContainerGaps(true);
         exponentialPanelTime.setLayout(exponentialLayoutTime);
-        exponentialLayoutTime.setHorizontalGroup(exponentialLayoutTime.createSequentialGroup().addComponent(intervalLabelTime).addComponent(intervalFieldTime));
-        exponentialLayoutTime.setVerticalGroup(exponentialLayoutTime.createParallelGroup().addComponent(intervalLabelTime).addComponent(intervalFieldTime));
+        exponentialLayoutTime.setHorizontalGroup(exponentialLayoutTime.createSequentialGroup().addComponent(lambdaLabelTime).addComponent(lambdaFieldTime));
+        exponentialLayoutTime.setVerticalGroup(exponentialLayoutTime.createParallelGroup().addComponent(lambdaLabelTime).addComponent(lambdaFieldTime));
         stochasticLayoutTime = new GroupLayout(stochasticPanelTime);
         stochasticLayoutTime.setAutoCreateGaps(true);
         stochasticLayoutTime.setAutoCreateContainerGaps(true);
         stochasticPanelTime.setLayout(stochasticLayoutTime);
-        stochasticLayoutTime.setVerticalGroup(stochasticLayoutTime.createSequentialGroup().addComponent(normalPanelTime).addComponent(uniformPanelTime).addComponent(exponentialPanelTime));
-        stochasticLayoutTime.setHorizontalGroup(stochasticLayoutTime.createParallelGroup().addComponent(normalPanelTime).addComponent(uniformPanelTime).addComponent(exponentialPanelTime));
+        stochasticLayoutTime.setVerticalGroup(stochasticLayoutTime.createSequentialGroup().addComponent(stochasticComboBoxTime).addComponent(normalPanelTime).addComponent(uniformPanelTime).addComponent(exponentialPanelTime));
+        stochasticLayoutTime.setHorizontalGroup(stochasticLayoutTime.createParallelGroup().addComponent(stochasticComboBoxTime).addComponent(normalPanelTime).addComponent(uniformPanelTime).addComponent(exponentialPanelTime));
         flowDistribLabel = new JLabel("Поток автомобилей");
         flowDistribComboBox = new JComboBox<String>(new String[]{"Детерминированный", "Стохастический"});
         determinePanelFlow = new JPanel();
@@ -189,14 +188,14 @@ public class ParamsForm extends JFrame{
         exponentialLayoutFlow.setAutoCreateGaps(true);
         exponentialLayoutFlow.setAutoCreateContainerGaps(true);
         exponentialPanelFlow.setLayout(exponentialLayoutFlow);
-        exponentialLayoutFlow.setHorizontalGroup(exponentialLayoutFlow.createSequentialGroup().addComponent(intervalLabelFlow).addComponent(intervalFieldFlow));
-        exponentialLayoutFlow.setVerticalGroup(exponentialLayoutFlow.createParallelGroup().addComponent(intervalLabelFlow).addComponent(intervalFieldFlow));
+        exponentialLayoutFlow.setHorizontalGroup(exponentialLayoutFlow.createSequentialGroup().addComponent(lambdaLabelTime).addComponent(lambdaFieldTime));
+        exponentialLayoutFlow.setVerticalGroup(exponentialLayoutFlow.createParallelGroup().addComponent(lambdaLabelTime).addComponent(lambdaFieldTime));
         stochasticLayoutFlow = new GroupLayout(stochasticPanelFlow);
         stochasticLayoutFlow.setAutoCreateGaps(true);
         stochasticLayoutFlow.setAutoCreateContainerGaps(true);
         stochasticPanelFlow.setLayout(stochasticLayoutFlow);
-        stochasticLayoutFlow.setVerticalGroup(stochasticLayoutFlow.createSequentialGroup().addComponent(normalPanelFlow).addComponent(uniformPanelFlow).addComponent(exponentialPanelFlow));
-        stochasticLayoutFlow.setHorizontalGroup(stochasticLayoutFlow.createParallelGroup().addComponent(normalPanelFlow).addComponent(uniformPanelFlow).addComponent(exponentialPanelFlow));
+        stochasticLayoutFlow.setVerticalGroup(stochasticLayoutFlow.createSequentialGroup().addComponent(stochasticComboBoxFlow).addComponent(normalPanelFlow).addComponent(uniformPanelFlow).addComponent(exponentialPanelFlow));
+        stochasticLayoutFlow.setHorizontalGroup(stochasticLayoutFlow.createParallelGroup().addComponent(stochasticComboBoxFlow).addComponent(normalPanelFlow).addComponent(uniformPanelFlow).addComponent(exponentialPanelFlow));
         truckPartLabel = new JLabel("Доля грузового транспорта");
         truckPartSpinner = new JSpinner();
         truckPartSpinner.setValue(0.3);
@@ -220,7 +219,7 @@ public class ParamsForm extends JFrame{
                 .addComponent(flowDistribLabel)
                 .addComponent(flowDistribComboBox)
                 .addComponent(determinePanelFlow)
-                .addComponent(stochasticComboBoxFlow)
+                .addComponent(stochasticPanelFlow)
                 .addComponent(truckPartLabel)
                 .addComponent(truckPartSpinner)
                 .addComponent(probLabel)
@@ -239,7 +238,7 @@ public class ParamsForm extends JFrame{
                 .addComponent(flowDistribLabel)
                 .addComponent(flowDistribComboBox)
                 .addComponent(determinePanelFlow)
-                .addComponent(stochasticComboBoxFlow)
+                .addComponent(stochasticPanelFlow)
                 .addComponent(truckPartLabel)
                 .addComponent(truckPartSpinner)
                 .addComponent(probLabel)
