@@ -1,6 +1,8 @@
 package forms;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Created by denis on 22.11.2017.
@@ -108,7 +110,7 @@ public class ParamsForm extends JFrame {
         determineLayoutTime.setHorizontalGroup(determineLayoutTime.createSequentialGroup().addComponent(intervalLabelTime).addComponent(intervalFieldTime));
         determineLayoutTime.setVerticalGroup(determineLayoutTime.createParallelGroup().addComponent(intervalLabelTime).addComponent(intervalFieldTime));
         stochasticPanelTime = new JPanel();
-        stochasticComboBoxTime = new JComboBox<String>(new String[]{"Нормальный", "Показательный", "Экспоненциальный"});
+        stochasticComboBoxTime = new JComboBox<String>(new String[]{"Нормальный", "Показательный", "Равномерный"});
         normalPanelTime = new JPanel();
         mxFieldTime = new JTextField();
         mxLabelTime = new JLabel("MX");
@@ -158,7 +160,7 @@ public class ParamsForm extends JFrame {
         determineLayoutFlow.setHorizontalGroup(determineLayoutFlow.createSequentialGroup().addComponent(intervalLabelFlow).addComponent(intervalFieldFlow));
         determineLayoutFlow.setVerticalGroup(determineLayoutFlow.createParallelGroup().addComponent(intervalLabelFlow).addComponent(intervalFieldFlow));
         stochasticPanelFlow = new JPanel();
-        stochasticComboBoxFlow = new JComboBox<String>(new String[]{"Нормальный", "Показательный", "Экспоненциальный"});
+        stochasticComboBoxFlow = new JComboBox<String>(new String[]{"Нормальный", "Показательный", "Равномерный"});
         normalPanelFlow = new JPanel();
         mxFieldFlow = new JTextField();
         mxLabelFlow = new JLabel("MX");
@@ -250,5 +252,77 @@ public class ParamsForm extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         pack();
         setVisible(true);
+
+        stochasticPanelTime.setVisible(false);
+        stochasticPanelFlow.setVisible(false);
+
+        timeDistribComboBox.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (timeDistribComboBox.getSelectedItem() == "Стохастический") {
+                    stochasticPanelTime.setVisible(true);
+                    determinePanelTime.setVisible(false);
+                } else {
+                    stochasticPanelTime.setVisible(false);
+                    determinePanelTime.setVisible(true);
+                }
+            }
+        });
+
+        flowDistribComboBox.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (flowDistribComboBox.getSelectedItem() == "Стохастический") {
+                    stochasticPanelFlow.setVisible(true);
+                    determinePanelFlow.setVisible(false);
+                } else {
+                    stochasticPanelFlow.setVisible(false);
+                    determinePanelFlow.setVisible(true);
+                }
+            }
+        });
+
+        exponentialPanelTime.setVisible(false);
+        uniformPanelTime.setVisible(false);
+        exponentialPanelFlow.setVisible(false);
+        uniformPanelFlow.setVisible(false);
+
+        stochasticComboBoxTime.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (stochasticComboBoxTime.getSelectedItem() == "Нормальный") { // свитч мозг ебет, в пизду
+                    normalPanelTime.setVisible(true);
+                    exponentialPanelTime.setVisible(false);
+                    uniformPanelTime.setVisible(false);
+                } else {
+                    if (stochasticComboBoxTime.getSelectedItem() == "Равномерный") { //привет из индии
+                        normalPanelTime.setVisible(false);
+                        exponentialPanelTime.setVisible(false);
+                        uniformPanelTime.setVisible(true);
+                    } else {
+                        normalPanelTime.setVisible(false);
+                        exponentialPanelTime.setVisible(true);
+                        uniformPanelTime.setVisible(false);
+                    }
+                }
+            }
+        });
+
+        stochasticComboBoxFlow.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (stochasticComboBoxFlow.getSelectedItem() == "Нормальный") { // свитч мозг ебет, в пизду
+                    normalPanelFlow.setVisible(true);
+                    exponentialPanelFlow.setVisible(false);
+                    uniformPanelFlow.setVisible(false);
+                } else {
+                    if (stochasticComboBoxFlow.getSelectedItem() == "Равномерный") { //привет из индии
+                        normalPanelFlow.setVisible(false);
+                        exponentialPanelFlow.setVisible(false);
+                        uniformPanelFlow.setVisible(true);
+                    } else {
+                        normalPanelFlow.setVisible(false);
+                        exponentialPanelFlow.setVisible(true);
+                        uniformPanelFlow.setVisible(false);
+                    }
+                }
+            }
+        });
     }
 }
