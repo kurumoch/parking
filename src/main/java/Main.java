@@ -10,7 +10,7 @@ import models.TileType;
 public class Main {
 
     public static void main(String...args){
-        Controller c = new Controller(3, 3);
+        Controller c = new Controller(10, 10);
         System.out.print(c.toString());
     }
 
