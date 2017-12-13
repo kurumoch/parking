@@ -190,8 +190,8 @@ public class ParamsForm extends JFrame {
         exponentialLayoutFlow.setAutoCreateGaps(true);
         exponentialLayoutFlow.setAutoCreateContainerGaps(true);
         exponentialPanelFlow.setLayout(exponentialLayoutFlow);
-        exponentialLayoutFlow.setHorizontalGroup(exponentialLayoutFlow.createSequentialGroup().addComponent(lambdaLabelTime).addComponent(lambdaFieldTime));
-        exponentialLayoutFlow.setVerticalGroup(exponentialLayoutFlow.createParallelGroup().addComponent(lambdaLabelTime).addComponent(lambdaFieldTime));
+        exponentialLayoutFlow.setHorizontalGroup(exponentialLayoutFlow.createSequentialGroup().addComponent(lambdaLabelFlow).addComponent(lambdaFieldFlow));
+        exponentialLayoutFlow.setVerticalGroup(exponentialLayoutFlow.createParallelGroup().addComponent(lambdaLabelFlow).addComponent(lambdaFieldFlow));
         stochasticLayoutFlow = new GroupLayout(stochasticPanelFlow);
         stochasticLayoutFlow.setAutoCreateGaps(true);
         stochasticLayoutFlow.setAutoCreateContainerGaps(true);
@@ -298,7 +298,7 @@ public class ParamsForm extends JFrame {
                         uniformPanelTime.setVisible(true);
                     } else {
                         normalPanelTime.setVisible(false);
-                        exponentialPanelTime.setVisible(true);
+                        exponentialPanelTime.setVisible(true); // почему-то в этом лейауте нет дочерних контейнеров
                         uniformPanelTime.setVisible(false);
                     }
                 }
