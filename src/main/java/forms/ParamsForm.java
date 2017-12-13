@@ -247,7 +247,6 @@ public class ParamsForm extends JFrame {
                 .addComponent(probSpinner)
                 .addComponent(submitButton));
         panel.setLayout(layout);
-//        panel.setPreferredSize(new Dimension(300,100));
         setContentPane(panel);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         pack();
