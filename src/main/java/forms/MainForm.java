@@ -1,31 +1,43 @@
 package forms;
 
+import JPanels.Surface;
+import controllers.Controller;
+import drawing.DrawLines;
+import models.TileType;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /**
  * Created by denis on 22.11.2017.
  */
-public class MainForm extends JFrame{
-   private JPanel panel;
-   private JMenuBar menuBar;
-   private JMenu fileMenu;
-   private JMenu modelMenu;
-   private JMenu aboutMenu;
-   private JLabel timeLabel;
-   private JButton lawnButton;
-   private JButton roadButton;
-   private JButton parkingButton;
-   private JButton doubleParkingButton;
-   private JButton startButton;
-   private JButton pauseButton;
-   private JButton stopButton;
-   private JButton rewindButton;
-   private JButton slowerButton;
-   private JPanel graphicsPanel;
+public class MainForm extends JFrame {
+    private JPanel panel;
+    private JMenuBar menuBar;
+    private JMenu fileMenu;
+    private JMenu modelMenu;
+    private JMenu aboutMenu;
+    private JLabel timeLabel;
+    private JButton lawnButton;
+    private JButton roadButton;
+    private JButton parkingButton;
+    private JButton doubleParkingButton;
+    private JButton startButton;
+    private JButton pauseButton;
+    private JButton stopButton;
+    private JButton rewindButton;
+    private JButton slowerButton;
+    private JPanel graphicsPanel;
+    private Controller controller;
+    private TileType currentTileType;
 
-    public MainForm(){
+    public MainForm(Controller controller) {
         super("Моделирование работы платной парковки");
+        this.controller = controller;
         panel = new JPanel();
         menuBar = new JMenuBar();
         fileMenu = new JMenu("Файл");
@@ -54,7 +66,13 @@ public class MainForm extends JFrame{
         JMenuItem aboutProgramm = new JMenuItem("О Программе..");
         aboutMenu.add(aboutAuthorsItem);
         aboutMenu.add(aboutProgramm);
-        graphicsPanel = new JPanel();
+
+
+        //   graphicsPanel = new JPanel();
+        Surface graphicsPanel = new Surface();
+        Graphics g = graphicsPanel.getGraphics();
+
+
         timeLabel = new JLabel("Время 00:00");
         lawnButton = new JButton("Газон");
         roadButton = new JButton("Дорога");
@@ -72,13 +90,13 @@ public class MainForm extends JFrame{
         panel.setLayout(layout);
         layout.setAutoCreateGaps(true);
         layout.setAutoCreateContainerGaps(true);
-        graphicsPanel.setPreferredSize(new Dimension(1000,1000));
+        graphicsPanel.setPreferredSize(new Dimension(1000, 1000));
         layout.setHorizontalGroup(layout.createParallelGroup()
                 .addGroup(layout.createSequentialGroup().addComponent(menuBar).addComponent(timeLabel))
                 .addComponent(graphicsPanel).addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup()
                                 .addComponent(lawnButton).addComponent(roadButton).addComponent(parkingButton).addComponent(doubleParkingButton))
-                .addComponent(startButton).addComponent(pauseButton).addComponent(stopButton).addComponent(rewindButton).addComponent(slowerButton)));
+                        .addComponent(startButton).addComponent(pauseButton).addComponent(stopButton).addComponent(rewindButton).addComponent(slowerButton)));
         setContentPane(panel);
 
         layout.setVerticalGroup(layout.createSequentialGroup()
@@ -90,6 +108,27 @@ public class MainForm extends JFrame{
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         pack();
+        setResizable(false);
         setVisible(true);
+        controller.setSurface(graphicsPanel);
+
+        paramsItem.addActionListener(e -> new ParamsForm(controller));
+        startButton.addActionListener(e -> {
+            DrawLines dr = new DrawLines(graphicsPanel, controller);
+            dr.draw();
+            controller.setDefaultTiles();
+        });
+        graphicsPanel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                controller.setTile(e.getX(),e.getY(),currentTileType);
+            }
+        });
+        lawnButton.addActionListener(e -> currentTileType = TileType.LAWN);
+        roadButton.addActionListener(e -> currentTileType = TileType.PARK_ROAD);
+        parkingButton.addActionListener(e -> currentTileType = TileType.PARKING);
+        doubleParkingButton.addActionListener(e -> currentTileType = TileType.DOUBLE_PARKING);
+        stopButton.addActionListener(e -> System.out.println(controller.toString()));
     }
 }

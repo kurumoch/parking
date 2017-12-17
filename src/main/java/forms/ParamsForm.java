@@ -1,5 +1,7 @@
 package forms;
 
+import controllers.Controller;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -76,10 +78,11 @@ public class ParamsForm extends JFrame {
     private GroupLayout uniformLayoutFlow;
     private GroupLayout exponentialLayoutTime;
     private GroupLayout exponentialLayoutFlow;
+    private Controller controller;
 
-
-    public ParamsForm() {
+    public ParamsForm(Controller controller) {
         super("Изменение параметров");
+        this.controller = controller;
         JPanel panel = new JPanel();
         label = new JLabel("Введите размер парковки");
         xLabel = new JLabel("x: ");
