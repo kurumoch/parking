@@ -1,9 +1,7 @@
 package controllers;
 
-import drawing.DrawDefaultTiles;
-import drawing.DrawLines;
+import drawing.DrawTiles;
 import drawing.DrawRect;
-import models.Tile;
 import models.TileType;
 import org.apache.commons.math3.distribution.RealDistribution;
 
@@ -14,20 +12,20 @@ import static models.TileType.*;
 
 public class Controller {
 
-    public TileType[][] tiles;
+    private TileType[][] tiles;
     private Rectangle[][] rectangles;
     private final int TILES_X = 13;
     private final int TILES_Y = 14;
-    private int xSize = 7;
-    private int ySize = 5;
+    private int xSize;
+    private int ySize;
     private JPanel surface;
 
     public int getxSize() {
-        return xSize;
+        return TILES_X;
     }
 
     public int getySize() {
-        return ySize;
+        return TILES_Y;
     }
 
     private int costOfOneHour;
@@ -61,36 +59,36 @@ public class Controller {
     }
 
     public Controller(int x, int y) {
-//        x += 1; //не баг, а фича
-//        y += 1;
-//        float mid_x = ((float) TILES_X) / 2;
-//        int a = Math.round(mid_x - ((float) x) / 2) - 1;
-//        int b = Math.round(mid_x + ((float) x) / 2) - 1;
-//        tiles = new TileType[TILES_X][TILES_Y];
-//        for (int i = 0; i < TILES_X; i++) {
-//            for (int j = 0; j < TILES_Y; j++) {
-//                tiles[i][j] = LAWN;
-//                if (i > TILES_X - y - 1 && i < TILES_X - 1) {
-//                    if (j < b + 1 && j > a + 1)
-//                        tiles[i][j] = PARKING;
-//                    if (j == b + 1 || j == a + 1)
-//                        tiles[i][j] = PARK_ROAD;
-//                }
-//                if (i == TILES_X - y - 1 && j <= b + 1 && j >= a + 1) {
-//                    tiles[i][j] = PARK_ROAD;
-//                }
-//                if (i == TILES_X - 1)
-//                    tiles[i][j] = ROAD;
-//            }
-//        }
-        tiles = new TileType[xSize + 2][ySize + 2];
+        xSize = ++x;
+        ySize = ++y;
+        float mid_x = ((float) TILES_X) / 2;
+        int a = Math.round(mid_x - ((float) xSize) / 2) - 1;
+        int b = Math.round(mid_x + ((float) xSize) / 2) - 1;
+        tiles = new TileType[TILES_X][TILES_Y];
+
+        for (int j = 0; j < TILES_Y; j++) {
+            for (int i = 0; i < TILES_X; i++) {
+                tiles[i][j] = LAWN;
+                if (i > TILES_X - ySize - 1 && i < TILES_X - 1) {
+                    if (j < b + 1 && j > a + 1)
+                        tiles[i][j] = PARKING;
+                    if (j == b + 1 || j == a + 1)
+                        tiles[i][j] = PARK_ROAD;
+                }
+                if (i == TILES_X - ySize - 1 && j <= b + 1 && j >= a + 1) {
+                    tiles[i][j] = PARK_ROAD;
+                }
+                if (i == TILES_X - 1)
+                    tiles[i][j] = ROAD;
+            }
+        }
     }
 
     @Override
     public String toString() {
         StringBuilder out = new StringBuilder();
-        for (int i = 0; i < ySize + 2; i++) {
-            for (int j = 0; j < xSize + 2; j++) {
+        for (int i = 0; i < TILES_X; i++) {
+            for (int j = 0; j < TILES_Y; j++) {
                 switch (tiles[i][j]) {
                     case LAWN:
                         out.append("L ");
@@ -112,32 +110,24 @@ public class Controller {
     }
 
     public void setTile(int x, int y, TileType tileType) {
-        DrawRect drawRect = new DrawRect(surface.getGraphics());
-        for (int i = 0; i < xSize+1; i++) {
-            for (int j = 0; j < ySize+1; j++) {
-                if (x > rectangles[i][j].x && x < rectangles[i + 1][j].x && y > rectangles[i][j].y && y < rectangles[i][j+1].y) {
-                    tiles[i][j] = tileType;
-                    drawRect.drawRect(rectangles[i][j]);
-                    return;
-                }
-
-
-            }
-        }
+//        DrawRect drawRect = new DrawRect(surface.getGraphics());
+//        for (int i = 0; i < TILES_X-1; i++) {
+//            for (int j = 0; j < TILES_Y-1; j++) {
+//                if (x > rectangles[i][j].x && x < rectangles[i + 1][j].x && y > rectangles[i][j].y && y < rectangles[i][j+1].y) {
+//                    tiles[i][j] = tileType;
+//                    drawRect.drawRect(rectangles[i][j]);
+//                    return;
+//                }
+//
+//
+//            }
+//        }
     }
 
     public void setDefaultTiles() {
-        DrawDefaultTiles drawDefaultTiles = new DrawDefaultTiles(surface.getGraphics(), this);
-        drawDefaultTiles.drawDefaultRoad();
-        drawDefaultTiles.drawDefaultLawn();
-        for (int i = 0; i < xSize + 2; i++) {
-            tiles[i][0] = TileType.LAWN;
-            tiles[i][ySize + 1] = TileType.ROAD;
-        }
-        for(int i =0;i<ySize+1;i++) {
-            tiles[xSize+1][i] = LAWN;
-            tiles[0][i] = TileType.LAWN;
-        }
+        DrawTiles drawTiles = new DrawTiles(surface.getGraphics(), this);
+        drawTiles.draw(tiles);
+
     }
 
     public void setSurface(JPanel surface) {

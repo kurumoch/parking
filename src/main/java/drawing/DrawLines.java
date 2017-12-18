@@ -22,15 +22,15 @@ public class DrawLines extends JComponent {
         this.controller = controller;
         this.width = surface.getWidth() - 60;
         this.height = surface.getHeight() - 50;
-        this.xSize = controller.getxSize() + 2;
-        this.ySize = controller.getySize() + 2;
+        this.xSize = controller.getxSize();
+        this.ySize = controller.getySize();
         this.rectangles = new Rectangle[xSize][ySize];
     }
 
     public void draw() {
         int x = 30;
         int y = 30;
-        graphics.setColor(Color.RED);
+        graphics.setColor(Color.BLACK);
         int dx = width / xSize;
         int dy = height / ySize;
         for (int i = 0; i < ySize; i++) {
