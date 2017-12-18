@@ -30,6 +30,9 @@ public class DrawTiles {
                     case ROAD:
                         graphics2D.setColor(Color.darkGray);
                         break;
+                    case DOUBLE_PARKING:
+                        graphics2D.setColor(Color.RED);
+                        break;
                 }
                 Rectangle r = controller.getRectangles()[i][j];
                 graphics2D.fillRect(r.x+1,r.y+1,r.width-1,r.height-1);

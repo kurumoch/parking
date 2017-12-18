@@ -122,13 +122,15 @@ public class MainForm extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                controller.setTile(e.getX(),e.getY(),currentTileType);
+                if(currentTileType != TileType.DOUBLE_PARKING)
+                    controller.setTile(e.getX(),e.getY(),currentTileType);
+                else controller.setDoubleTile(e.getX(), e.getY(), /* is hotkey pressed*/);
             }
         });
         lawnButton.addActionListener(e -> currentTileType = TileType.LAWN);
         roadButton.addActionListener(e -> currentTileType = TileType.PARK_ROAD);
         parkingButton.addActionListener(e -> currentTileType = TileType.PARKING);
         doubleParkingButton.addActionListener(e -> currentTileType = TileType.DOUBLE_PARKING);
-        stopButton.addActionListener(e -> System.out.println(controller.toString()));
+//        stopButton.addActionListener(e -> System.out.println(controller.toString()));
     }
 }

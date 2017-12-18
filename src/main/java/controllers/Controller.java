@@ -49,6 +49,8 @@ public class Controller {
     private int lambdaCars;
     private int t1Cars;
     private int t2Cars;
+    int a;
+    int b;
 
     public Rectangle[][] getRectangles() {
         return rectangles;
@@ -62,8 +64,8 @@ public class Controller {
         xSize = ++x;
         ySize = ++y;
         float mid_x = ((float) TILES_X) / 2;
-        int a = Math.round(mid_x - ((float) xSize) / 2) - 1;
-        int b = Math.round(mid_x + ((float) xSize) / 2) - 1;
+        a = Math.round(mid_x - ((float) xSize) / 2) - 1;
+        b = Math.round(mid_x + ((float) xSize) / 2) - 1;
         tiles = new TileType[TILES_X][TILES_Y];
 
         for (int j = 0; j < TILES_Y; j++) {
@@ -111,8 +113,8 @@ public class Controller {
 
     public void setTile(int x, int y, TileType tileType) {
         DrawRect drawRect = new DrawRect(surface.getGraphics());
-        for (int i = 0; i < TILES_X-1; i++) {
-            for (int j = 0; j < TILES_Y-1; j++) {
+        for (int i = 2; i < TILES_X-1; i++) {
+            for (int j = 2; j < TILES_Y-1; j++) {
                 if (x > rectangles[i][j].y && x < rectangles[i + 1][j].y && y > rectangles[i][j].x && y < rectangles[i][j+1].x) {
                     tiles[j][i] = tileType;
                     DrawTiles drawTiles = new DrawTiles(surface.getGraphics(), this);
@@ -121,6 +123,23 @@ public class Controller {
                 }
 
 
+            }
+        }
+    }
+
+    public void setDoubleTile(int x, int y, boolean vert) {
+        DrawRect drawRect = new DrawRect(surface.getGraphics());
+        for (int i = 2; i < TILES_X-1; i++) {
+            for (int j = 2; j < TILES_Y-1; j++) {
+                if (x > rectangles[i][j].y && x < rectangles[i + 1][j].y && y > rectangles[i][j].x && y < rectangles[i][j+1].x) {
+                    tiles[j][i] = TileType.DOUBLE_PARKING;
+                    if(vert)
+                    tiles[--j][i] = TileType.DOUBLE_PARKING;
+                    else tiles[j][--i] = TileType.DOUBLE_PARKING;
+                    DrawTiles drawTiles = new DrawTiles(surface.getGraphics(), this);
+                    drawTiles.draw(tiles);
+                    return;
+                }
             }
         }
     }
