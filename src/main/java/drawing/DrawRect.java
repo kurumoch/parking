@@ -11,7 +11,7 @@ public class DrawRect {
 
     public void drawRect(Rectangle rectangle) {
         Graphics2D graphics2D = (Graphics2D) graphics;
-        graphics2D.setColor(Color.GRAY);
+        graphics2D.setColor(Color.RED);
         graphics2D.fillRect(rectangle.x + 1, rectangle.y + 1, rectangle.width-1, rectangle.height-1);
     }
 }
