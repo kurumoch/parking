@@ -90,7 +90,7 @@ public class MainForm extends JFrame {
         panel.setLayout(layout);
         layout.setAutoCreateGaps(true);
         layout.setAutoCreateContainerGaps(true);
-        graphicsPanel.setPreferredSize(new Dimension(1000, 1000));
+        graphicsPanel.setPreferredSize(new Dimension(800, 800));
         layout.setHorizontalGroup(layout.createParallelGroup()
                 .addGroup(layout.createSequentialGroup().addComponent(menuBar).addComponent(timeLabel))
                 .addComponent(graphicsPanel).addGroup(layout.createSequentialGroup()
