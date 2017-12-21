@@ -90,7 +90,7 @@ public class MainForm extends JFrame {
         panel.setLayout(layout);
         layout.setAutoCreateGaps(true);
         layout.setAutoCreateContainerGaps(true);
-        graphicsPanel.setPreferredSize(new Dimension(800, 800));
+        graphicsPanel.setPreferredSize(new Dimension(400, 400));
         layout.setHorizontalGroup(layout.createParallelGroup()
                 .addGroup(layout.createSequentialGroup().addComponent(menuBar).addComponent(timeLabel))
                 .addComponent(graphicsPanel).addGroup(layout.createSequentialGroup()
@@ -124,7 +124,7 @@ public class MainForm extends JFrame {
                 super.mouseClicked(e);
                 if(currentTileType != TileType.DOUBLE_PARKING)
                     controller.setTile(e.getX(),e.getY(),currentTileType);
-                else controller.setDoubleTile(e.getX(), e.getY(), /* is hotkey pressed*/);
+//                else controller.setDoubleTile(e.getX(), e.getY(), /* is hotkey pressed*/);
             }
         });
         lawnButton.addActionListener(e -> currentTileType = TileType.LAWN);
