@@ -2,13 +2,14 @@ package drawing;
 
 import JPanels.Surface;
 import controllers.Controller;
+import models.Car2D;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class DrawLines extends JComponent {
     private Graphics graphics;
-    private Surface surface;
+    private JPanel surface;
     private Controller controller;
     private Rectangle[][] rectangles;
     private int width;
@@ -16,7 +17,7 @@ public class DrawLines extends JComponent {
     private int xSize;
     private int ySize;
 
-    public DrawLines(Surface surface, Controller controller) {
+    public DrawLines(JPanel surface, Controller controller) {
         this.surface = surface;
         this.graphics = surface.getGraphics();
         this.controller = controller;

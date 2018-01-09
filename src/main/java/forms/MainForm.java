@@ -68,13 +68,8 @@ public class MainForm extends JFrame {
         JMenuItem aboutProgramm = new JMenuItem("О Программе..");
         aboutMenu.add(aboutAuthorsItem);
         aboutMenu.add(aboutProgramm);
-
-
-        //   graphicsPanel = new JPanel();
-        Surface graphicsPanel = new Surface();
-        Graphics g = graphicsPanel.getGraphics();
-
-
+        graphicsPanel = new Surface();
+        graphicsPanel.add(new Car2D());
         timeLabel = new JLabel("Время 00:00");
         lawnButton = new JButton("Газон");
         roadButton = new JButton("Дорога");
@@ -92,6 +87,7 @@ public class MainForm extends JFrame {
         panel.setLayout(layout);
         layout.setAutoCreateGaps(true);
         layout.setAutoCreateContainerGaps(true);
+
         graphicsPanel.setPreferredSize(new Dimension(400, 400));
         layout.setHorizontalGroup(layout.createParallelGroup()
                 .addGroup(layout.createSequentialGroup().addComponent(menuBar).addComponent(timeLabel))
@@ -121,8 +117,6 @@ public class MainForm extends JFrame {
             controller.setDefaultTiles();
         });
 
-        Car2D car2D = new Car2D();
-        graphicsPanel.add(car2D);
 
         graphicsPanel.addMouseListener(new MouseAdapter() {
             @Override
