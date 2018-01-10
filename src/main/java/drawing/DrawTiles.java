@@ -3,13 +3,14 @@ package drawing;
 import controllers.Controller;
 import models.TileType;
 
+import javax.swing.*;
 import java.awt.*;
 
 public class DrawTiles {
     Graphics graphics;
     Controller controller;
-    public DrawTiles(Graphics graphics, Controller controller) {
-        this.graphics = graphics;
+    public DrawTiles(JPanel surface, Controller controller) {
+        this.graphics = surface.getGraphics();
         this.controller = controller;
     }
 

@@ -69,7 +69,6 @@ public class MainForm extends JFrame {
         aboutMenu.add(aboutAuthorsItem);
         aboutMenu.add(aboutProgramm);
         graphicsPanel = new Surface();
-        graphicsPanel.add(new Car2D());
         timeLabel = new JLabel("Время 00:00");
         lawnButton = new JButton("Газон");
         roadButton = new JButton("Дорога");
@@ -112,12 +111,10 @@ public class MainForm extends JFrame {
 
         paramsItem.addActionListener(e -> new ParamsForm(controller));
         startButton.addActionListener(e -> {
-            DrawLines dr = new DrawLines(graphicsPanel, controller);
-            dr.draw();
             controller.setDefaultTiles();
         });
 
-
+        graphicsPanel.add(new Car2D());
         graphicsPanel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {

@@ -1,5 +1,6 @@
 package controllers;
 
+import drawing.DrawLines;
 import drawing.DrawTiles;
 import drawing.DrawRect;
 import models.TileType;
@@ -117,7 +118,7 @@ public class Controller {
             for (int j = 2; j < TILES_Y-1; j++) {
                 if (y > rectangles[i][j].y && y < rectangles[i + 1][j].y && x > rectangles[i][j].x && x < rectangles[i][j+1].x) {
                     tiles[i][j] = tileType;
-                    DrawTiles drawTiles = new DrawTiles(surface.getGraphics(), this);
+                    DrawTiles drawTiles = new DrawTiles(surface, this);
                     drawTiles.draw(tiles);
                     return;
                 }
@@ -136,7 +137,7 @@ public class Controller {
                     if(vert)
                     tiles[--j][i] = TileType.DOUBLE_PARKING;
                     else tiles[j][--i] = TileType.DOUBLE_PARKING;
-                    DrawTiles drawTiles = new DrawTiles(surface.getGraphics(), this);
+                    DrawTiles drawTiles = new DrawTiles(surface, this);
                     drawTiles.draw(tiles);
                     return;
                 }
@@ -145,7 +146,9 @@ public class Controller {
     }
 
     public void setDefaultTiles() {
-        DrawTiles drawTiles = new DrawTiles(surface.getGraphics(), this);
+        DrawLines dr = new DrawLines(surface, this);
+        dr.draw();
+        DrawTiles drawTiles = new DrawTiles(surface, this);
         drawTiles.draw(tiles);
 
     }

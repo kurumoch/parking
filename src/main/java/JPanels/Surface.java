@@ -9,6 +9,7 @@ public class Surface extends JPanel {
 
 
     public Surface() {
+        super();
     }
 
     @Override
