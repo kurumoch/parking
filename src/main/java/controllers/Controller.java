@@ -1,13 +1,16 @@
 package controllers;
 
+import JPanels.Surface;
 import drawing.DrawLines;
 import drawing.DrawTiles;
 import drawing.DrawRect;
 import models.TileType;
+import models.Vehicle;
 import org.apache.commons.math3.distribution.RealDistribution;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 import static models.TileType.*;
 
@@ -19,8 +22,8 @@ public class Controller {
     private final int TILES_Y = 14;
     private int xSize;
     private int ySize;
-    private JPanel surface;
-
+    private Surface surface;
+    public ArrayList<Vehicle> vehicles;
     public int getxSize() {
         return TILES_X;
     }
@@ -85,6 +88,8 @@ public class Controller {
                     tiles[i][j] = ROAD;
             }
         }
+        vehicles = new ArrayList<>();
+
     }
 
     @Override
@@ -146,14 +151,15 @@ public class Controller {
     }
 
     public void setDefaultTiles() {
-        DrawLines dr = new DrawLines(surface, this);
-        dr.draw();
-        DrawTiles drawTiles = new DrawTiles(surface, this);
-        drawTiles.draw(tiles);
-
+       // DrawLines dr = new DrawLines(surface, this);
+    //    dr.draw();
+     //   DrawTiles drawTiles = new DrawTiles(surface, this);
+     //   drawTiles.draw(tiles);
+        Timer t = new Timer(40, surface);
+        t.start();
     }
 
-    public void setSurface(JPanel surface) {
+    public void setSurface(Surface surface) {
         this.surface = surface;
     }
 }

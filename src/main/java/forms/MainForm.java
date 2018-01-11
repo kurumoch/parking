@@ -33,7 +33,7 @@ public class MainForm extends JFrame {
     private JButton stopButton;
     private JButton rewindButton;
     private JButton slowerButton;
-    private JPanel graphicsPanel;
+    private Surface graphicsPanel;
     private Controller controller;
     private TileType currentTileType;
 
@@ -68,7 +68,7 @@ public class MainForm extends JFrame {
         JMenuItem aboutProgramm = new JMenuItem("О Программе..");
         aboutMenu.add(aboutAuthorsItem);
         aboutMenu.add(aboutProgramm);
-        graphicsPanel = new Surface();
+        graphicsPanel = new Surface(controller);
         timeLabel = new JLabel("Время 00:00");
         lawnButton = new JButton("Газон");
         roadButton = new JButton("Дорога");
@@ -108,19 +108,19 @@ public class MainForm extends JFrame {
         setResizable(false);
         setVisible(true);
         controller.setSurface(graphicsPanel);
-
         paramsItem.addActionListener(e -> new ParamsForm(controller));
         startButton.addActionListener(e -> {
             controller.setDefaultTiles();
+
         });
 
-        graphicsPanel.add(new Car2D());
+
         graphicsPanel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                if(currentTileType != TileType.DOUBLE_PARKING)
-                    controller.setTile(e.getX(),e.getY(),currentTileType);
+               // if(currentTileType != TileType.DOUBLE_PARKING)
+                 //   controller.setTile(e.getX(),e.getY(),currentTileType);
 //                else controller.setDoubleTile(e.getX(), e.getY(), /* is hotkey pressed*/);
             }
         });

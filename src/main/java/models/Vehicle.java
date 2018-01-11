@@ -1,5 +1,7 @@
 package models;
 
+import JPanels.Surface;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -101,8 +103,8 @@ public class Vehicle {
         //image.paintIcon(panel, g, x, y); - commented out because I don't have an ImageIcon
         g.drawImage(car, x, y, panel);
 
-//        g.drawOval(x, y, SIZE, SIZE);
-//        g.drawRect(x+5,y+5,SIZE,SIZE);
+        g.drawOval(x, y, SIZE, SIZE);
+        g.drawRect(x+5,y+5,SIZE,SIZE);
 //        g.fillRect(x+5,y+5,SIZE,SIZE);
     }
 
