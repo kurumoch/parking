@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Surface extends JPanel implements ActionListener {
     private Controller controller;
@@ -31,9 +32,14 @@ public class Surface extends JPanel implements ActionListener {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawRect(50, 50, 50, 50);
-        for (Vehicle vehicle : vehicles) {
-            vehicle.draw(g);
+        Iterator<Vehicle> iterator = vehicles.iterator();
+        while(iterator.hasNext()) {
+            Vehicle v = iterator.next();
+            v.draw(g);
         }
+//        for (Vehicle vehicle : vehicles) {
+//            vehicle.draw(g);
+//        }
     }
 
     @Override

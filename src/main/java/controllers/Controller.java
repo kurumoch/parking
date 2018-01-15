@@ -7,6 +7,7 @@ import drawing.DrawRect;
 import models.TileType;
 import models.Vehicle;
 import org.apache.commons.math3.distribution.RealDistribution;
+import threads.CarsCreator;
 
 import javax.swing.*;
 import java.awt.*;
@@ -155,10 +156,14 @@ public class Controller {
     //    dr.draw();
      //   DrawTiles drawTiles = new DrawTiles(surface, this);
      //   drawTiles.draw(tiles);
+        CarsCreator carsCreator = new CarsCreator(this);
+        carsCreator.start();
         Timer t = new Timer(40, surface);
         t.start();
     }
-
+    public Surface getSurface(){
+        return surface;
+    }
     public void setSurface(Surface surface) {
         this.surface = surface;
     }
