@@ -135,8 +135,6 @@ public class Controller {
                     drawTiles.draw(tiles);
                     return;
                 }
-
-
             }
         }
     }
@@ -157,7 +155,21 @@ public class Controller {
             }
         }
     }
-
+    public int[] getTilesNumber(int x, int y){
+        int xx = x - 20;
+        int yy = y - 20;
+        int[] arr = new int[2];
+        for (int i = 2; i < TILES_X - 1; i++) {
+            for (int j = 2; j < TILES_Y - 1; j++) {
+                if (yy >= rectangles[i][j].y && yy < rectangles[i + 1][j].y && xx >= rectangles[i][j].x && xx < rectangles[i][j + 1].x) {
+                    arr[0] = i;
+                    arr[1] = j;
+                    return arr;
+                }
+            }
+        }
+        return null;
+    }
     public void setDefaultTiles() {
         DrawLines dr = new DrawLines(surface, this);
         dr.draw();

@@ -12,7 +12,9 @@ public class CarsCreator extends Thread {
     @Override
     public void run() {
         while (true) {
-            controller.vehicles.add(new Vehicle(controller.getSurface(),30,30,400,400));
+            int x = controller.getxSize()-1;
+            int y = controller.getySize()-1;
+            controller.vehicles.add(new Vehicle(controller.getSurface(),controller.getRectangles()[x][y].x,controller.getRectangles()[x][y].y,controller.getSurface().getWidth(),controller.getSurface().getHeight(), controller));
             try {
                 //wait(10000);
                 Thread.sleep(5000);
