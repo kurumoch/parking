@@ -28,6 +28,24 @@ public class DrawLines extends JComponent {
         this.rectangles = new Rectangle[xSize][ySize];
     }
 
+    @Override
+    public int getWidth() {
+        return width;
+    }
+
+    @Override
+    public int getHeight() {
+        return height;
+    }
+
+    public int getxSize() {
+        return xSize;
+    }
+
+    public int getySize() {
+        return ySize;
+    }
+
     public void draw() {
         int x = 30;
         int y = 30;
@@ -36,7 +54,7 @@ public class DrawLines extends JComponent {
         int dx = height / ySize;
         for (int i = 0; i < ySize; i++) {
             for (int j = 0; j < xSize; j++) {
-                graphics.drawRect(y, x, dy, dx);
+             //   graphics.drawRect(y, x, dy, dx);
                 rectangles[j][i] = new Rectangle(y, x, dy, dx);
                 x += dx;
             }

@@ -14,7 +14,8 @@ public class CarsCreator extends Thread {
         while (true) {
             controller.vehicles.add(new Vehicle(controller.getSurface(),30,30,400,400));
             try {
-                wait(500);
+                //wait(10000);
+                Thread.sleep(5000);
             }
             catch (Exception e) {
                 e.getStackTrace();

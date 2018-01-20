@@ -2,27 +2,27 @@ package JPanels;
 
 
 import controllers.Controller;
+import models.TileType;
 import models.Vehicle;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Surface extends JPanel implements ActionListener {
     private Controller controller;
-    private ArrayList<Vehicle> vehicles;
-
+    private CopyOnWriteArrayList<Vehicle> vehicles;
+    private TileType[][] tiles;
+    private Graphics2D graphics2D;
     public Surface(Controller controller) {
         super();
         this.controller = controller;
         this.vehicles = controller.vehicles;
+        tiles = controller.getTiles();
         this.setDoubleBuffered(true);
         setPreferredSize(new Dimension(400, 300));
-        vehicles.add(new Vehicle(this,10,10,500,500));
-        vehicles.add(new Vehicle(this,30,30,500,500));
         for (Vehicle vehicle : vehicles) {
             vehicle.setBounds(500, 500);
         }
@@ -31,20 +31,55 @@ public class Surface extends JPanel implements ActionListener {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawRect(50, 50, 50, 50);
-        Iterator<Vehicle> iterator = vehicles.iterator();
-        while(iterator.hasNext()) {
-            Vehicle v = iterator.next();
-            v.draw(g);
+        graphics2D = (Graphics2D)g;
+        int x = 30;
+        int y = 30;
+        g.setColor(Color.BLACK);
+        int dy = (getWidth() - 110) / controller.getxSize();
+        int dx = (getHeight() - 50) / controller.getySize();
+        for (int i = 0; i < controller.getySize(); i++) {
+            for (int j = 0; j < controller.getxSize(); j++) {
+                g.drawRect(y, x, dy, dx);
+                x += dx;
+            }
+            x = 30;
+            y += dy;
         }
-//        for (Vehicle vehicle : vehicles) {
-//            vehicle.draw(g);
-//        }
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        for (int i = 0; i < controller.getxSize(); i++) {
+            for (int j = 0; j < controller.getySize(); j++) {
+                switch (tiles[i][j]) {
+                    case LAWN:
+                        graphics2D.setColor(Color.LIGHT_GRAY);
+                        break;
+                    case PARKING:
+                        graphics2D.setColor(Color.ORANGE);
+                        break;
+                    case PARK_ROAD:
+                        graphics2D.setColor(Color.gray);
+                        break;
+                    case ROAD:
+                        graphics2D.setColor(Color.darkGray);
+                        break;
+                    case DOUBLE_PARKING:
+                        graphics2D.setColor(Color.RED);
+                        break;
+                }
+                Rectangle r = controller.getRectangles()[i][j];
+                graphics2D.fillRect(r.x+1,r.y+1,r.width-1,r.height-1);
+            }
+        }
+        for (Vehicle vehicle : vehicles) {
+            vehicle.draw(g);
+        }
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
         for (Vehicle vehicle : vehicles) {
             vehicle.move();
         }

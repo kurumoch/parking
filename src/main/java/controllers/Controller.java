@@ -11,7 +11,7 @@ import threads.CarsCreator;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import static models.TileType.*;
 
@@ -24,7 +24,8 @@ public class Controller {
     private int xSize;
     private int ySize;
     private Surface surface;
-    public ArrayList<Vehicle> vehicles;
+    public CopyOnWriteArrayList<Vehicle> vehicles;
+
     public int getxSize() {
         return TILES_X;
     }
@@ -89,8 +90,14 @@ public class Controller {
                     tiles[i][j] = ROAD;
             }
         }
-        vehicles = new ArrayList<>();
+//        vehicles = new ArrayList<>();
+        //   vehicles = new Vector<>();
+        vehicles = new CopyOnWriteArrayList<>();
+    }
 
+
+    public TileType[][] getTiles() {
+        return tiles;
     }
 
     @Override
@@ -120,9 +127,9 @@ public class Controller {
 
     public void setTile(int x, int y, TileType tileType) {
         DrawRect drawRect = new DrawRect(surface.getGraphics());
-        for (int i = 2; i < TILES_X-1; i++) {
-            for (int j = 2; j < TILES_Y-1; j++) {
-                if (y > rectangles[i][j].y && y < rectangles[i + 1][j].y && x > rectangles[i][j].x && x < rectangles[i][j+1].x) {
+        for (int i = 2; i < TILES_X - 1; i++) {
+            for (int j = 2; j < TILES_Y - 1; j++) {
+                if (y > rectangles[i][j].y && y < rectangles[i + 1][j].y && x > rectangles[i][j].x && x < rectangles[i][j + 1].x) {
                     tiles[i][j] = tileType;
                     DrawTiles drawTiles = new DrawTiles(surface, this);
                     drawTiles.draw(tiles);
@@ -136,12 +143,12 @@ public class Controller {
 
     public void setDoubleTile(int x, int y, boolean vert) {
         DrawRect drawRect = new DrawRect(surface.getGraphics());
-        for (int i = 2; i < TILES_X-1; i++) {
-            for (int j = 2; j < TILES_Y-1; j++) {
-                if (x > rectangles[i][j].y && x < rectangles[i + 1][j].y && y > rectangles[i][j].x && y < rectangles[i][j+1].x) {
+        for (int i = 2; i < TILES_X - 1; i++) {
+            for (int j = 2; j < TILES_Y - 1; j++) {
+                if (x > rectangles[i][j].y && x < rectangles[i + 1][j].y && y > rectangles[i][j].x && y < rectangles[i][j + 1].x) {
                     tiles[j][i] = TileType.DOUBLE_PARKING;
-                    if(vert)
-                    tiles[--j][i] = TileType.DOUBLE_PARKING;
+                    if (vert)
+                        tiles[--j][i] = TileType.DOUBLE_PARKING;
                     else tiles[j][--i] = TileType.DOUBLE_PARKING;
                     DrawTiles drawTiles = new DrawTiles(surface, this);
                     drawTiles.draw(tiles);
@@ -152,18 +159,22 @@ public class Controller {
     }
 
     public void setDefaultTiles() {
-       // DrawLines dr = new DrawLines(surface, this);
-    //    dr.draw();
-     //   DrawTiles drawTiles = new DrawTiles(surface, this);
-     //   drawTiles.draw(tiles);
+        DrawLines dr = new DrawLines(surface, this);
+        dr.draw();
+        DrawTiles drawTiles = new DrawTiles(surface, this);
+        drawTiles.draw(tiles);
+    }
+    public void startModelling() {
         CarsCreator carsCreator = new CarsCreator(this);
         carsCreator.start();
         Timer t = new Timer(40, surface);
         t.start();
     }
-    public Surface getSurface(){
+
+    public Surface getSurface() {
         return surface;
     }
+
     public void setSurface(Surface surface) {
         this.surface = surface;
     }

@@ -3,6 +3,7 @@ package forms;
 import JPanels.Surface;
 import controllers.Controller;
 import drawing.DrawLines;
+import drawing.DrawTiles;
 import models.Car2D;
 import models.TileType;
 
@@ -109,9 +110,9 @@ public class MainForm extends JFrame {
         setVisible(true);
         controller.setSurface(graphicsPanel);
         paramsItem.addActionListener(e -> new ParamsForm(controller));
+        controller.setDefaultTiles();
         startButton.addActionListener(e -> {
-            controller.setDefaultTiles();
-
+            controller.startModelling();
         });
 
 

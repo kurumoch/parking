@@ -17,7 +17,6 @@ public class Vehicle {
     private int x, y;
     private BufferedImage car;
     static final int SIZE = 35;
-
     static final int SPEED = 3;
 
     int maxX, maxY;
@@ -102,10 +101,6 @@ public class Vehicle {
     public void draw(Graphics g) {
         //image.paintIcon(panel, g, x, y); - commented out because I don't have an ImageIcon
         g.drawImage(car, x, y, panel);
-
-        g.drawOval(x, y, SIZE, SIZE);
-        g.drawRect(x+5,y+5,SIZE,SIZE);
-//        g.fillRect(x+5,y+5,SIZE,SIZE);
     }
 
 }
