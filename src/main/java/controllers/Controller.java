@@ -44,11 +44,9 @@ public class Controller implements Serializable{
     private int costToThreeHours;
     private int costMoreThreeHours;
     private String typeOfThreadTimeOnParking;
-    private RealDistribution distributionTimeOnParking;
     private int leftDetermInterval;
     private int rightDetermInterval;
     private String typeOfThreadOfCars;
-    private RealDistribution distributionThreadOfCars;
     private double partOfTrucks;
     private double probOfArrivalToParking;
     private int mxTime;
@@ -61,8 +59,27 @@ public class Controller implements Serializable{
     private int lambdaCars;
     private int t1Cars;
     private int t2Cars;
+    private int intervalCars;
+    private int intervalTime;
     int a;
     int b;
+
+    public int getIntervalCars() {
+        return intervalCars;
+    }
+
+    public int getIntervalTime() {
+        return intervalTime;
+
+    }
+
+    public void setIntervalCars(int intervalCars) {
+        this.intervalCars = intervalCars;
+    }
+
+    public void setIntervalTime(int intervalTime) {
+        this.intervalTime = intervalTime;
+    }
 
     public Rectangle[][] getRectangles() {
         return rectangles;
@@ -320,13 +337,6 @@ public class Controller implements Serializable{
         this.typeOfThreadTimeOnParking = typeOfThreadTimeOnParking;
     }
 
-    public RealDistribution getDistributionTimeOnParking() {
-        return distributionTimeOnParking;
-    }
-
-    public void setDistributionTimeOnParking(RealDistribution distributionTimeOnParking) {
-        this.distributionTimeOnParking = distributionTimeOnParking;
-    }
 
     public int getLeftDetermInterval() {
         return leftDetermInterval;
@@ -350,14 +360,6 @@ public class Controller implements Serializable{
 
     public void setTypeOfThreadOfCars(String typeOfThreadOfCars) {
         this.typeOfThreadOfCars = typeOfThreadOfCars;
-    }
-
-    public RealDistribution getDistributionThreadOfCars() {
-        return distributionThreadOfCars;
-    }
-
-    public void setDistributionThreadOfCars(RealDistribution distributionThreadOfCars) {
-        this.distributionThreadOfCars = distributionThreadOfCars;
     }
 
     public double getPartOfTrucks() {
