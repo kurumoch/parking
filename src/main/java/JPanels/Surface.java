@@ -81,8 +81,7 @@ public class Surface extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         for (Vehicle vehicle : controller.vehicles) {
             if(!vehicle.isParking)
-            new Thread(()->
-            vehicle.move()).start();
+            new Thread(vehicle::move).start();
         }
         repaint();
     }
