@@ -49,9 +49,10 @@ public class CarsCreator extends Thread {
     @Override
     public void run() {
         while (true) {
+            System.out.println( Math.toIntExact(Math.round(distributionTime.cumulativeProbability(Math.random()))));
             controller.vehicles.add(new Vehicle(controller, Math.toIntExact(Math.round(distributionTime.cumulativeProbability(Math.random()))), PathGenerator.generate()));
             try {
-                //wait(10000);
+                Math.toIntExact(Math.round(distributionCars.cumulativeProbability(Math.random())));
                 Thread.sleep(Math.toIntExact(Math.round(distributionCars.cumulativeProbability(Math.random()))));
             }
             catch (Exception e) {

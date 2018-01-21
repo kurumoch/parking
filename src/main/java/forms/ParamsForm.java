@@ -335,10 +335,10 @@ public class ParamsForm extends JFrame {
                 controller.setCostToThreeHours((int)oneToThreeHourSpinner.getValue());
                 controller.setCostMoreThreeHours((int)moreThreeHoursSpinner.getValue());
                 String type;
-                if(flowDistribComboBox.getSelectedItem() == "Стохастический"){
-                    type = (String) stochasticComboBoxFlow.getSelectedItem();
+                if(timeDistribComboBox.getSelectedItem() == "Стохастический"){
+                    type = (String) stochasticComboBoxTime.getSelectedItem();
                 }
-                else type = (String) flowDistribComboBox.getSelectedItem();
+                else type = (String) timeDistribComboBox.getSelectedItem();
                 controller.setTypeOfThreadTimeOnParking(type);
                 if(!Objects.equals(t1FieldFlow.getText(), "") && !Objects.equals(t2FieldFlow.getText(), "")) {
                     controller.setLeftDetermInterval(Integer.valueOf(t1FieldFlow.getText()));
