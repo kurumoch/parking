@@ -26,9 +26,10 @@ public class Vehicle {
     private TileType[][] tiles;
     private Rectangle[][] rectangles;
     JPanel panel;
+    Path path;
 
 
-    public Vehicle(Controller controller) {
+    public Vehicle(Controller controller, int parkingTime, Path path) {
         JPanel panel = controller.getSurface();
         Rectangle borderRect = controller.getRectangles()[controller.getxSize()-1][controller.getySize()-1];
         x=borderRect.x;
@@ -43,46 +44,6 @@ public class Vehicle {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private int getX() {
-        return x;
-    }
-
-    private int getY() {
-        return y;
-    }
-
-    private void setX(int x) {
-        this.x = x;
-    }
-
-    private void setY(int y) {
-        this.y = y;
-    }
-
-    private void setParkingTime(int secs) {
-        this.parkingTime = secs;
-    }
-
-    private void setType(VehicleType type) {
-        this.type = type;
-    }
-
-    private void setIsParking(boolean isParking) {
-        this.isParking = isParking;
-    }
-
-    private int getParkingTime() {
-        return parkingTime;
-    }
-
-    private VehicleType getType() {
-        return type;
-    }
-
-    private boolean isParking() {
-        return isParking;
     }
 
     public void setBounds(int maxX, int maxY) {
@@ -120,7 +81,6 @@ public class Vehicle {
     }
 
     public void draw(Graphics g) {
-        //image.paintIcon(panel, g, x, y); - commented out because I don't have an ImageIcon
         g.drawImage(car, x, y, panel);
 
     }
