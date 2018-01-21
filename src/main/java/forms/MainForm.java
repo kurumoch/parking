@@ -2,18 +2,12 @@ package forms;
 
 import JPanels.Surface;
 import controllers.Controller;
-import drawing.DrawLines;
-import drawing.DrawTiles;
-import models.Car2D;
 import models.TileType;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Rectangle2D;
 
 /**
  * Created by denis on 22.11.2017.

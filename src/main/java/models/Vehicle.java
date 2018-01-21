@@ -27,12 +27,14 @@ public class Vehicle {
     private Rectangle[][] rectangles;
     JPanel panel;
 
-    public Vehicle(JPanel panel, int x, int y, int maxX, int maxY, Controller controller) {
-        this.x = x;
-        this.y = y;
-        this.maxX = maxX;
-        this.maxY = maxY;
-        this.panel = panel;
+
+    public Vehicle(Controller controller) {
+        JPanel panel = controller.getSurface();
+        Rectangle borderRect = controller.getRectangles()[controller.getxSize()-1][controller.getySize()-1];
+        x=borderRect.x;
+        y=borderRect.y;
+        maxX=panel.getWidth();
+        maxY=panel.getHeight();
         this.controller = controller;
         tiles = controller.getTiles();
         this.rectangles = controller.getRectangles();

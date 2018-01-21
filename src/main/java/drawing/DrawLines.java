@@ -1,8 +1,6 @@
 package drawing;
 
-import JPanels.Surface;
 import controllers.Controller;
-import models.Car2D;
 
 import javax.swing.*;
 import java.awt.*;
