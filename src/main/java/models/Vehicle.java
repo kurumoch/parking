@@ -2,6 +2,7 @@ package models;
 
 import JPanels.Surface;
 import controllers.Controller;
+import org.apache.commons.math3.util.Pair;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -27,6 +28,7 @@ public class Vehicle {
     private Rectangle[][] rectangles;
     JPanel panel;
     Path path;
+    Pair<Pair<Integer, Integer>, Direction> point;
 
 
     public Vehicle(Controller controller, int parkingTime, Path path) {
@@ -38,6 +40,8 @@ public class Vehicle {
         maxY=panel.getHeight();
         this.controller = controller;
         tiles = controller.getTiles();
+        this.path = path;
+        point = path.next();
         this.rectangles = controller.getRectangles();
         try {
             car = ImageIO.read(new File("car.png"));
@@ -52,30 +56,40 @@ public class Vehicle {
     }
 
     public void move() {
-
         int[] arr = controller.getTilesNumber(x, y);
-        if ((arr != null) && (tiles[arr[0]][arr[1]].equals(TileType.PARK_ROAD)) && (x == rectangles[arr[0]][arr[1]+1].x)) {
-            y -= 10;
-            x-=20;
+        if(arr[0] == point.getFirst().getFirst() && arr[1] == point.getFirst().getSecond()) {
+            point = path.next();
         }
-        x += speedX;
-        //  y += speedY;
-        if (x < 0) {
-            speedX = -speedX;
-            x = 0;
+        switch (point.getSecond()){
+            case DOWN: y-=speedY; break;
+            case LEFT: x+=speedX; break;
+            case RIGHT: x-=speedX; break;
+            case UP:y+=speedY; break;
         }
-//        if (y < 0) {
-//            speedY = -speedY;
-//            y = 0;
+
+//
+//        if ((arr != null) && (tiles[arr[0]][arr[1]].equals(TileType.PARK_ROAD)) && (x == rectangles[arr[0]][arr[1]+1].x)) {
+//            y -= 10;
+//            x-=20;
 //        }
-        if (x + SIZE > maxX) {
-            speedX = -speedX;
-            x = maxX - SIZE;
-        }
-//        if (y + SIZE > maxY) {
-//            speedY = -speedY;
-//            y = maxY - SIZE;
+//        x += speedX;
+//        //  y += speedY;
+//        if (x < 0) {
+//            speedX = -speedX;
+//            x = 0;
 //        }
+////        if (y < 0) {
+////            speedY = -speedY;
+////            y = 0;
+////        }
+//        if (x + SIZE > maxX) {
+//            speedX = -speedX;
+//            x = maxX - SIZE;
+//        }
+////        if (y + SIZE > maxY) {
+////            speedY = -speedY;
+////            y = maxY - SIZE;
+////        }
 
 
     }
