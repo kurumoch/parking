@@ -26,7 +26,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import static models.TileType.*;
 
-public class Controller implements Serializable{
+public class Controller implements Serializable {
 
     private TileType[][] tiles;
     private Rectangle[][] rectangles;
@@ -36,9 +36,9 @@ public class Controller implements Serializable{
     private int ySize;
     private Surface surface;
     private State state;
-    public  CopyOnWriteArrayList<Vehicle> vehicles;
+    public CopyOnWriteArrayList<Vehicle> vehicles;
     // private int[][] graph;
-
+    private boolean[][] isEmpty;
 
     private int costOfOneHour;
     private int costToThreeHours;
@@ -83,7 +83,7 @@ public class Controller implements Serializable{
     }
 
 
-    public void initParking(int x, int y){
+    public void initParking(int x, int y) {
         state = State.CONSTRUCT;
         xSize = ++x;
         ySize = ++y;
@@ -91,7 +91,12 @@ public class Controller implements Serializable{
         a = Math.round(mid_x - ((float) xSize) / 2) - 1;
         b = Math.round(mid_x + ((float) xSize) / 2) - 1;
         tiles = new TileType[TILES_X][TILES_Y];
-
+        isEmpty = new boolean[TILES_X][TILES_Y];
+        for(int i = 0; i < TILES_X; i++){
+            for(int j = 0; j < TILES_X; j++){
+                isEmpty[i][j] = true;
+            }
+        }
         for (int j = 0; j < TILES_Y; j++) {
             for (int i = 0; i < TILES_X; i++) {
                 tiles[i][j] = LAWN;
@@ -171,7 +176,8 @@ public class Controller implements Serializable{
             }
         }
     }
-    public int[] getTilesNumber(int x, int y){
+
+    public int[] getTilesNumber(int x, int y) {
         int xx = x - 20;
         int yy = y - 20;
         int[] arr = new int[2];
@@ -186,6 +192,7 @@ public class Controller implements Serializable{
         }
         return null;
     }
+
     public void setDefaultTiles() {
         DrawLines dr = new DrawLines(surface, this);
         dr.draw();
@@ -202,20 +209,20 @@ public class Controller implements Serializable{
         t.start();
     }
 
-    public void stopModelling(){
+    public void stopModelling() {
 
     }
 
-    public void pauseModelling(){
+    public void pauseModelling() {
 
     }
 
-    public State getState(){
+    public State getState() {
         return state;
     }
 
-    public void setState(State state){
-        this.state=state;
+    public void setState(State state) {
+        this.state = state;
     }
 
     public Surface getSurface() {
@@ -236,18 +243,29 @@ public class Controller implements Serializable{
                 list.add(pair);
             }
         }
-        for (int i = 0; i < TILES_X - 1; i++) {
-            for (int j = 0; j < TILES_Y - 1; j++) {
-              //  if (tiles[i][j].equals(TileType.PARK_ROAD) || tiles[i][j].equals(TileType.PARKING)) {
-                    graph.addEdge(list.get(i * TILES_X + j), list.get(i * TILES_X + j + 1));
-                    graph.addEdge(list.get(i * TILES_X + j), list.get((i + 1) * TILES_X + j));
-              //  }
+        int res[] = new int[2];
+        for (int i = 0; i < TILES_X; i++) {
+            for (int j = 0; j < TILES_Y; j++) {
+                if(tiles[i][j].equals(TileType.PARKING) && isEmpty[i][j]) {
+                    res[0] = i;
+                    res[1] = j;
+                    isEmpty[i][j] = false;
+                    break;
+                }
+            }
+        }
+        for (int i = 0; i < TILES_X-1; i++) {
+            for (int j = 0; j < TILES_Y-1; j++) {
+                //  if (tiles[i][j].equals(TileType.PARK_ROAD) || tiles[i][j].equals(TileType.PARKING)) {
+                graph.addEdge(list.get(i * TILES_Y + j), list.get(i * TILES_Y + j + 1));
+                graph.addEdge(list.get(i * TILES_Y + j), list.get((i + 1) * TILES_Y + j));
+                //  }
             }
         }
 
-         DijkstraShortestPath dijkstraShortestPath = new DijkstraShortestPath(graph);
-         java.util.List<Pair<TileType, Pair<Integer, Integer>>> shortestPath = dijkstraShortestPath.getPath(list.get(0),list.get(42)).getVertexList();
-         return shortestPath;
+        DijkstraShortestPath dijkstraShortestPath = new DijkstraShortestPath(graph);
+        java.util.List<Pair<TileType, Pair<Integer, Integer>>> shortestPath = dijkstraShortestPath.getPath(list.get(58), list.get(179)).getVertexList();
+        return shortestPath;
     }
 
     public int getxSize() {
