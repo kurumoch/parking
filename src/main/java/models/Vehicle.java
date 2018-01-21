@@ -22,7 +22,7 @@ public class Vehicle implements Serializable{
     private float x, y;
     private BufferedImage car;
     static final int SIZE = 35;
-    static final float SPEED = -10f;
+    static final float SPEED = -20f;
     int maxX, maxY;
     private Controller controller;
     float speedX = SPEED, speedY = SPEED;
@@ -61,9 +61,9 @@ public class Vehicle implements Serializable{
 
     public void move() {
         int[] arr = controller.getTilesNumber(Math.round(x), Math.round(y));
-        if(arr[0] == point.getFirst().getFirst() && arr[1] == point.getFirst().getSecond()) {
+       // if(arr[0] == point.getFirst().getFirst() && arr[1] == point.getFirst().getSecond()) {
             point = path.next();
-        }
+      //  }
         switch (point.getSecond()){
             case DOWN: y-=speedY; break;
             case LEFT: x+=speedX; break;

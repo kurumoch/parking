@@ -24,29 +24,56 @@ public class PathGenerator {
         LinkedList<Pair<Pair<Integer, Integer>, Direction>> list = new LinkedList<>();
 
 
-        for(int i = 0; i < list1.size();i++) {
+        for (int i = 0; i < list1.size() - 1; i++) {
             int x1, x2 = 0;
             int y1, y2 = 0;
             x1 = list1.get(i).getSecond().getFirst();
             y1 = list1.get(i).getSecond().getSecond();
-            x2 = list1.get(i+1).getSecond().getFirst();
-            y2 = list1.get(i+1).getSecond().getSecond();
-            if(x1 > x2) {
+            x2 = list1.get(i + 1).getSecond().getFirst();
+            y2 = list1.get(i + 1).getSecond().getSecond();
+            if (x1 > x2) {
                 list.add(new Pair<>(iterator.next().getSecond(), Direction.RIGHT));
-            }
-            else if(x1 < x2) {
+            } else if (x1 < x2) {
                 list.add(new Pair<>(iterator.next().getSecond(), Direction.LEFT));
             }
             if (y1 > y2) {
                 list.add(new Pair<>(iterator.next().getSecond(), Direction.DOWN));
-            }
-            else if (y1 < y2) {
+            } else if (y1 < y2) {
                 list.add(new Pair<>(iterator.next().getSecond(), Direction.UP));
             }
-            list.add(new Pair<>((list1.get(list1.size()-1).getSecond()), Direction.PARK));
+
         }
-//
-//        LinkedList<Pair<Integer, Integer>> temp = new LinkedList<>();
+        //  list.add(new Pair<>((list1.get(list1.size()-1).getSecond()), Direction.PARK));
+
+
+        LinkedList<Pair<Pair<Integer, Integer>, Direction>> govno = new LinkedList<>();
+
+        for (int i = list.size() - 1; i > 0; i--) {
+            govno.add(list.get(i));
+        }
+        //  list.add(new Pair<>((list1.get(list1.size()-1).getSecond()), Direction.PARK));
+
+//        for (int i = list1.size()-1; i > 0; i--) {
+//            int x1, x2 = 0;
+//            int y1, y2 = 0;
+//            x1 = list1.get(i).getSecond().getFirst();
+//            y1 = list1.get(i).getSecond().getSecond();
+//            x2 = list1.get(i - 1).getSecond().getFirst();
+//            y2 = list1.get(i - 1).getSecond().getSecond();
+//            if (x1 > x2) {
+//                list.add(new Pair<>(iterator.next().getSecond(), Direction.LEFT));
+//            } else if (x1 < x2) {
+//                list.add(new Pair<>(iterator.next().getSecond(), Direction.RIGHT));
+//            }
+//            if (y1 > y2) {
+//                list.add(new Pair<>(iterator.next().getSecond(), Direction.UP));
+//            } else if (y1 < y2) {
+//                list.add(new Pair<>(iterator.next().getSecond(), Direction.DOWN));
+//            }
+//        }
+
+
+        //       LinkedList<Pair<Integer, Integer>> temp = new LinkedList<>();
 //        while (iterator.hasNext()) {
 //            int x1,x2 = 0;
 //            int y1,y2 = 0;
@@ -58,12 +85,15 @@ public class PathGenerator {
 //            list.add(new Pair<>(iterator.next().getSecond(), Direction.RIGHT));
 //        }
 
-     //   list.add(new Pair<>(new Pair<>(11, 7), Direction.LEFT));
-     //   list.add(new Pair<>(new Pair<>(5, 7), Direction.UP));
-     //   list.add(new Pair<>(new Pair<>(5, 4), Direction.LEFT));
-     //   list.add(new Pair<>(new Pair<>(5, 4), Direction.PARK));
-      //  list.add(new Pair<>(new Pair<>(5, 2), Direction.LEFT));
-     //   list.add(new Pair<>(new Pair<>(2, 2), Direction.DOWN));
-        return new Path(list);
+
+//        LinkedList<Pair<Pair<Integer, Integer>, Direction>> list2 = new LinkedList<>();
+//        list2.add(new Pair<>(new Pair<>(11, 7), Direction.LEFT));
+//        list2.add(new Pair<>(new Pair<>(5, 7), Direction.UP));
+//        list2.add(new Pair<>(new Pair<>(5, 4), Direction.LEFT));
+//        list2.add(new Pair<>(new Pair<>(5, 4), Direction.PARK));
+//        list2.add(new Pair<>(new Pair<>(5, 2), Direction.LEFT));
+//        list2.add(new Pair<>(new Pair<>(2, 2), Direction.DOWN));
+        // return new Path(list);
+        return new Path(govno);
     }
 }

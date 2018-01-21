@@ -51,7 +51,7 @@ public class CarsCreator extends Thread {
         while (true) {
             int parkTime =  Math.toIntExact(Math.round(distributionTime.sample()));
             System.out.println(Math.abs(parkTime));
-            controller.vehicles.add(new Vehicle(controller,parkTime, PathGenerator.generate()));
+            controller.vehicles.add(new Vehicle(controller,parkTime, new PathGenerator(controller).generate()));
             try {
               int carTime =  Math.toIntExact(Math.round(distributionCars.sample()));
                 System.out.println(Math.abs(carTime));
