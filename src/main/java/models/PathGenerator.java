@@ -12,6 +12,7 @@ public class PathGenerator {
         LinkedList<Pair<Pair<Integer, Integer>, Direction>> list = new LinkedList<>();
         list.add(new Pair<>(new Pair<>(11, 7), Direction.LEFT));
         list.add(new Pair<>(new Pair<>(5, 7), Direction.UP));
+        list.add(new Pair<>(new Pair<>(5, 4), Direction.LEFT));
         return new Path(list);
     }
 }

@@ -2,6 +2,7 @@ package forms;
 
 import JPanels.Surface;
 import controllers.Controller;
+import models.State;
 import models.TileType;
 
 import javax.swing.*;
@@ -106,7 +107,15 @@ public class MainForm extends JFrame {
         paramsItem.addActionListener(e -> new ParamsForm(controller));
         controller.setDefaultTiles();
         startButton.addActionListener(e -> {
-            controller.startModelling();
+            if(controller.getState() == State.CONSTRUCT) {
+                lawnButton.setEnabled(false);
+                roadButton.setEnabled(false);
+                doubleParkingButton.setEnabled(false);
+                parkingButton.setEnabled(false);
+                startButton.setEnabled(false);
+                controller.startModelling();
+
+            }
         });
 
 

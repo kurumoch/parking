@@ -7,6 +7,7 @@ import org.apache.commons.math3.util.Pair;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -16,14 +17,13 @@ public class Vehicle {
     private VehicleType type;
     private int parkingTime;
     private boolean isParking;
-    private int x, y;
+    private float x, y;
     private BufferedImage car;
     static final int SIZE = 35;
-    static final int SPEED = -3;
-    private String direction = "right";
+    static final float SPEED = -10f;
     int maxX, maxY;
     private Controller controller;
-    int speedX = SPEED, speedY = SPEED;
+    float speedX = SPEED, speedY = SPEED;
     private TileType[][] tiles;
     private Rectangle[][] rectangles;
     JPanel panel;
@@ -35,7 +35,7 @@ public class Vehicle {
         JPanel panel = controller.getSurface();
         Rectangle borderRect = controller.getRectangles()[controller.getxSize()-1][controller.getySize()-1];
         x=borderRect.x;
-        y=borderRect.y;
+        y=borderRect.y+9;
         maxX=panel.getWidth();
         maxY=panel.getHeight();
         this.controller = controller;
@@ -44,7 +44,7 @@ public class Vehicle {
         point = path.next();
         this.rectangles = controller.getRectangles();
         try {
-            car = ImageIO.read(new File("car.png"));
+            car = ImageIO.read(new File("red-dot-md.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -56,7 +56,7 @@ public class Vehicle {
     }
 
     public void move() {
-        int[] arr = controller.getTilesNumber(x, y);
+        int[] arr = controller.getTilesNumber(Math.round(x), Math.round(y+9));
         if(arr[0] == point.getFirst().getFirst() && arr[1] == point.getFirst().getSecond()) {
             point = path.next();
         }
@@ -95,7 +95,10 @@ public class Vehicle {
     }
 
     public void draw(Graphics g) {
-        g.drawImage(car, x, y, panel);
+        AffineTransform t = new AffineTransform();
+        t.translate(x, y);
+        t.scale(1, 1);
+        ((Graphics2D) g).drawImage(car, t, panel);
 
     }
 
