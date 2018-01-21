@@ -14,7 +14,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class Surface extends JPanel implements ActionListener {
     private Controller controller;
     private CopyOnWriteArrayList<Vehicle> vehicles;
-    private transient Graphics2D graphics2D;
     public Surface(Controller controller) {
         super();
         this.controller = controller;
@@ -28,7 +27,7 @@ public class Surface extends JPanel implements ActionListener {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        graphics2D = (Graphics2D)g;
+        Graphics2D graphics2D = (Graphics2D)g;
         int x = 30;
         int y = 30;
         g.setColor(Color.BLACK);
@@ -80,9 +79,15 @@ public class Surface extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         for (Vehicle vehicle : controller.vehicles) {
+            repaint();
             if(!vehicle.isParking)
             new Thread(vehicle::move).start();
+            repaint();
         }
         repaint();
+    }
+
+    public void setController(Controller controller) {
+        this.controller = controller;
     }
 }

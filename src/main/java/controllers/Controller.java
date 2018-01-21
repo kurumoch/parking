@@ -44,11 +44,9 @@ public class Controller implements Serializable {
     private int costToThreeHours;
     private int costMoreThreeHours;
     private String typeOfThreadTimeOnParking;
-    private RealDistribution distributionTimeOnParking;
     private int leftDetermInterval;
     private int rightDetermInterval;
     private String typeOfThreadOfCars;
-    private RealDistribution distributionThreadOfCars;
     private double partOfTrucks;
     private double probOfArrivalToParking;
     private int mxTime;
@@ -61,8 +59,27 @@ public class Controller implements Serializable {
     private int lambdaCars;
     private int t1Cars;
     private int t2Cars;
+    private int intervalCars;
+    private int intervalTime;
     int a;
     int b;
+
+    public int getIntervalCars() {
+        return intervalCars;
+    }
+
+    public int getIntervalTime() {
+        return intervalTime;
+
+    }
+
+    public void setIntervalCars(int intervalCars) {
+        this.intervalCars = intervalCars;
+    }
+
+    public void setIntervalTime(int intervalTime) {
+        this.intervalTime = intervalTime;
+    }
 
     public Rectangle[][] getRectangles() {
         return rectangles;
@@ -149,7 +166,7 @@ public class Controller implements Serializable {
     public void setTile(int x, int y, TileType tileType) {
         DrawRect drawRect = new DrawRect(surface.getGraphics());
         for (int i = 2; i < TILES_X - 1; i++) {
-            for (int j = 2; j < TILES_Y - 1; j++) {
+            for (int j = 2; j < TILES_Y - 2; j++) {
                 if (y > rectangles[i][j].y && y < rectangles[i + 1][j].y && x > rectangles[i][j].x && x < rectangles[i][j + 1].x) {
                     tiles[i][j] = tileType;
                     DrawTiles drawTiles = new DrawTiles(surface, this);
@@ -163,12 +180,14 @@ public class Controller implements Serializable {
     public void setDoubleTile(int x, int y, boolean vert) {
         DrawRect drawRect = new DrawRect(surface.getGraphics());
         for (int i = 2; i < TILES_X - 1; i++) {
-            for (int j = 2; j < TILES_Y - 1; j++) {
-                if (x > rectangles[i][j].y && x < rectangles[i + 1][j].y && y > rectangles[i][j].x && y < rectangles[i][j + 1].x) {
-                    tiles[j][i] = TileType.DOUBLE_PARKING;
-                    if (vert)
-                        tiles[--j][i] = TileType.DOUBLE_PARKING;
-                    else tiles[j][--i] = TileType.DOUBLE_PARKING;
+            for (int j = 2; j < TILES_Y - 2; j++) {
+                if (y > rectangles[i][j].y && y < rectangles[i + 1][j].y && x > rectangles[i][j].x && x < rectangles[i][j + 1].x) {
+                    if((j-1 > 1 && !vert)|| (i-1>1 &&vert)) {
+                    tiles[i][j] = TileType.DOUBLE_PARKING;
+                        if (vert)
+                            tiles[--i][j] = TileType.DOUBLE_PARKING;
+                        else tiles[i][--j] = TileType.DOUBLE_PARKING;
+                    }
                     DrawTiles drawTiles = new DrawTiles(surface, this);
                     drawTiles.draw(tiles);
                     return;
@@ -336,13 +355,6 @@ public class Controller implements Serializable {
         this.typeOfThreadTimeOnParking = typeOfThreadTimeOnParking;
     }
 
-    public RealDistribution getDistributionTimeOnParking() {
-        return distributionTimeOnParking;
-    }
-
-    public void setDistributionTimeOnParking(RealDistribution distributionTimeOnParking) {
-        this.distributionTimeOnParking = distributionTimeOnParking;
-    }
 
     public int getLeftDetermInterval() {
         return leftDetermInterval;
@@ -366,14 +378,6 @@ public class Controller implements Serializable {
 
     public void setTypeOfThreadOfCars(String typeOfThreadOfCars) {
         this.typeOfThreadOfCars = typeOfThreadOfCars;
-    }
-
-    public RealDistribution getDistributionThreadOfCars() {
-        return distributionThreadOfCars;
-    }
-
-    public void setDistributionThreadOfCars(RealDistribution distributionThreadOfCars) {
-        this.distributionThreadOfCars = distributionThreadOfCars;
     }
 
     public double getPartOfTrucks() {

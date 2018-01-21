@@ -159,11 +159,11 @@ public class MainForm extends JFrame {
                     controller.setCostToThreeHours(controller1.getCostToThreeHours());
                     controller.setCostMoreThreeHours(controller1.getCostMoreThreeHours());
                     controller.setTypeOfThreadTimeOnParking(controller1.getTypeOfThreadTimeOnParking());
-                    controller.setDistributionTimeOnParking(controller1.getDistributionTimeOnParking());
+//                    controller.setDistributionTimeOnParking(controller1.getDistributionTimeOnParking());
                     controller.setLeftDetermInterval(controller1.getLeftDetermInterval());
                     controller.setRightDetermInterval(controller1.getRightDetermInterval());
                     controller.setTypeOfThreadOfCars(controller1.getTypeOfThreadOfCars());
-                    controller.setDistributionThreadOfCars(controller1.getDistributionThreadOfCars());
+//                    controller.setDistributionThreadOfCars(controller1.getDistributionThreadOfCars());
                     controller.setPartOfTrucks(controller1.getPartOfTrucks());
                     controller.setProbOfArrivalToParking(controller1.getProbOfArrivalToParking());
                     controller.setMxTime(controller1.getMxTime());
@@ -179,6 +179,7 @@ public class MainForm extends JFrame {
                     controller.setDefaultTiles();
                     graphicsPanel = controller1.getSurface();
                     controller.setSurface(controller1.getSurface());
+                    graphicsPanel.setController(controller);
                     setEnabledConstructButtons(true);
                 } catch (IOException e1) {
                     e1.printStackTrace();
@@ -216,9 +217,9 @@ public class MainForm extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-               // if(currentTileType != TileType.DOUBLE_PARKING)
-                 //   controller.setTile(e.getX(),e.getY(),currentTileType);
-//                else controller.setDoubleTile(e.getX(), e.getY(), /* is hotkey pressed*/);
+                if(currentTileType != TileType.DOUBLE_PARKING)
+                    controller.setTile(e.getX(),e.getY(),currentTileType);
+                else controller.setDoubleTile(e.getX(), e.getY(), false);
             }
         });
         lawnButton.addActionListener(e -> currentTileType = TileType.LAWN);

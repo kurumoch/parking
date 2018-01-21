@@ -18,6 +18,7 @@ public class Vehicle implements Serializable{
     private VehicleType type;
     private int parkingTime;
     public boolean isParking;
+    public boolean isCreated;
     private float x, y;
     private BufferedImage car;
     static final int SIZE = 35;
@@ -50,6 +51,7 @@ public class Vehicle implements Serializable{
         } catch (IOException e) {
             e.printStackTrace();
         }
+        isCreated = true;
     }
 
     public void setBounds(int maxX, int maxY) {

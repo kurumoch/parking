@@ -6,6 +6,7 @@ import org.apache.commons.math3.distribution.RealDistribution;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Objects;
 
 /**
  * Created by denis on 22.11.2017.
@@ -333,24 +334,47 @@ public class ParamsForm extends JFrame {
                  controller.setCostOfOneHour((int)oneHourSpinner.getValue());
                 controller.setCostToThreeHours((int)oneToThreeHourSpinner.getValue());
                 controller.setCostMoreThreeHours((int)moreThreeHoursSpinner.getValue());
-//                controller.setTypeOfThreadTimeOnParking();
-//                controller.setDistributionTimeOnParking();
-                controller.setLeftDetermInterval(Integer.valueOf(t1FieldFlow.getText()));
-                controller.setRightDetermInterval(Integer.valueOf(t2FieldFlow.getText()));
-//                controller.setTypeOfThreadOfCars();
-//                controller.setDistributionThreadOfCars();
-                controller.setPartOfTrucks((int)truckPartSpinner.getValue());
-                controller.setProbOfArrivalToParking((int)probSpinner.getValue());
+                String type;
+                if(timeDistribComboBox.getSelectedItem() == "Стохастический"){
+                    type = (String) stochasticComboBoxTime.getSelectedItem();
+                }
+                else type = (String) timeDistribComboBox.getSelectedItem();
+                controller.setTypeOfThreadTimeOnParking(type);
+                if(!Objects.equals(t1FieldFlow.getText(), "") && !Objects.equals(t2FieldFlow.getText(), "")) {
+                    controller.setLeftDetermInterval(Integer.valueOf(t1FieldFlow.getText()));
+                    controller.setRightDetermInterval(Integer.valueOf(t2FieldFlow.getText()));
+                }
+                if(flowDistribComboBox.getSelectedItem() == "Стохастический"){
+                    type = (String) stochasticComboBoxFlow.getSelectedItem();
+                }
+                else type = (String) flowDistribComboBox.getSelectedItem();
+                controller.setTypeOfThreadOfCars(type);
+                controller.setPartOfTrucks((double)truckPartSpinner.getValue());
+                controller.setProbOfArrivalToParking((double)probSpinner.getValue());
+                if(!Objects.equals(mxFieldTime.getText(), "") && !Objects.equals(dxFieldTime.getText(), "")){
                 controller.setMxTime(Integer.valueOf(mxFieldTime.getText()));
                 controller.setDxTime(Integer.valueOf(dxFieldTime.getText()));
+                }
+                if(!Objects.equals(lambdaFieldTime.getText(), ""))
                 controller.setLambdaTime(Integer.valueOf(lambdaFieldTime.getText()));
-                controller.setT1Time(Integer.valueOf(t1FieldTime.getText()));
-                controller.setT2Time(Integer.valueOf(t2FieldTime.getText()));
-                controller.setMxCars(Integer.valueOf(mxFieldFlow.getText()));
-                controller.setDxCars(Integer.valueOf(dxFieldFlow.getText()));
+                if(!Objects.equals(t1FieldTime.getText(), "") && !Objects.equals(t2FieldTime.getText(), "")) {
+                    controller.setT1Time(Integer.valueOf(t1FieldTime.getText()));
+                    controller.setT2Time(Integer.valueOf(t2FieldTime.getText()));
+                }
+                if(!Objects.equals(mxFieldFlow.getText(), "") && !Objects.equals(dxFieldFlow.getText(), "")) {
+                    controller.setMxCars(Integer.valueOf(mxFieldFlow.getText()));
+                    controller.setDxCars(Integer.valueOf(dxFieldFlow.getText()));
+                }
+                if(!Objects.equals(lambdaFieldFlow.getText(), ""))
                 controller.setLambdaCars(Integer.valueOf(lambdaFieldFlow.getText()));
-                controller.setT1Cars(Integer.valueOf(t1FieldFlow.getText()));
-                controller.setT2Cars(Integer.valueOf(t2FieldFlow.getText()));
+                if(!Objects.equals(t1FieldFlow.getText(), "") && !Objects.equals(t2FieldFlow.getText(), "")) {
+                    controller.setT1Cars(Integer.valueOf(t1FieldFlow.getText()));
+                    controller.setT2Cars(Integer.valueOf(t2FieldFlow.getText()));
+                }
+                if(!Objects.equals(intervalFieldFlow.getText(), ""))
+                controller.setIntervalCars(Integer.valueOf(intervalFieldFlow.getText()));
+                if(!Objects.equals(intervalFieldTime.getText(), ""))
+                controller.setIntervalTime(Integer.valueOf(intervalFieldTime.getText()));
                 dispose();
             }
         });
