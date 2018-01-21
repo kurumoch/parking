@@ -2,6 +2,7 @@ package forms;
 
 import JPanels.Surface;
 import controllers.Controller;
+import javafx.stage.FileChooser;
 import models.State;
 import models.TileType;
 
@@ -11,6 +12,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.*;
+import java.util.ArrayList;
 
 /**
  * Created by denis on 22.11.2017.
@@ -142,6 +145,41 @@ public class MainForm extends JFrame {
         openFileItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.showOpenDialog(null);
+                try {
+
+                    ObjectInputStream inputStream = new ObjectInputStream((new FileInputStream(fileChooser.getSelectedFile())));
+                   Controller controller1 =  (Controller) inputStream.readObject();
+                    inputStream.close();
+                    controller.initParking(controller1.getxSize(), controller1.getySize());
+                    controller.setTiles(controller1.getTiles());
+                    controller.setCostOfOneHour(controller1.getCostOfOneHour());
+                    controller.setCostToThreeHours(controller1.getCostToThreeHours());
+                    controller.setCostMoreThreeHours(controller1.getCostMoreThreeHours());
+                controller.setTypeOfThreadTimeOnParking(controller1.getTypeOfThreadTimeOnParking());
+                controller.setDistributionTimeOnParking(controller1.getDistributionTimeOnParking());
+                    controller.setLeftDetermInterval(controller1.getLeftDetermInterval());
+                    controller.setRightDetermInterval(controller1.getRightDetermInterval());
+                controller.setTypeOfThreadOfCars(controller1.getTypeOfThreadOfCars());
+                controller.setDistributionThreadOfCars(controller1.getDistributionThreadOfCars());
+                    controller.setPartOfTrucks(controller1.getPartOfTrucks());
+                    controller.setProbOfArrivalToParking(controller1.getProbOfArrivalToParking());
+                    controller.setMxTime(controller1.getMxTime());
+                    controller.setDxTime(controller1.getDxTime());
+                    controller.setLambdaTime(controller1.getLambdaTime());
+                    controller.setT1Time(controller1.getT1Time());
+                    controller.setT2Time(controller1.getT2Time());
+                    controller.setMxCars(controller1.getMxCars());
+                    controller.setDxCars(controller1.getDxCars());
+                    controller.setLambdaCars(controller1.getLambdaCars());
+                    controller.setT1Cars(controller1.getT1Cars());
+                    controller.setT2Cars(controller1.getT2Cars());
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                } catch (ClassNotFoundException e1) {
+                    e1.printStackTrace();
+                }
 
             }
         });
@@ -149,7 +187,15 @@ public class MainForm extends JFrame {
         saveFileItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.showSaveDialog(null);
+                try {
+                    ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(fileChooser.getSelectedFile()));
+                    outputStream.writeObject(controller);
+                    outputStream.close();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
             }
         });
 
