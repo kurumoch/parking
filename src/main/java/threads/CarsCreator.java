@@ -13,7 +13,7 @@ public class CarsCreator extends Thread {
     @Override
     public void run() {
         while (true) {
-            controller.vehicles.add(new Vehicle(controller, 4200,    PathGenerator.generate()));
+            controller.vehicles.add(new Vehicle(controller, 10000,    PathGenerator.generate()));
             try {
                 //wait(10000);
                 Thread.sleep(5000);

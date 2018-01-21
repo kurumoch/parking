@@ -77,11 +77,12 @@ public class Surface extends JPanel implements ActionListener {
         }
     }
 
-
     @Override
     public void actionPerformed(ActionEvent e) {
         for (Vehicle vehicle : controller.vehicles) {
-            vehicle.move();
+            if(!vehicle.isParking)
+            new Thread(()->
+            vehicle.move()).start();
         }
         repaint();
     }

@@ -17,7 +17,7 @@ public class Vehicle implements Serializable{
 
     private VehicleType type;
     private int parkingTime;
-    private boolean isParking;
+    public boolean isParking;
     private float x, y;
     private BufferedImage car;
     static final int SIZE = 35;
@@ -70,7 +70,7 @@ public class Vehicle implements Serializable{
             case PARK:
                 try {
                     isParking = true;
-                    Thread.sleep(parkingTime);
+                    Thread.currentThread().sleep(parkingTime);
                     isParking = false;
                 } catch (InterruptedException e) {
                     e.printStackTrace();
