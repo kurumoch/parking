@@ -391,12 +391,16 @@ public class ParamsForm extends JFrame {
             public void stateChanged(ChangeEvent e) {
                 ImageIcon icon = new ImageIcon("error.png");
                 if ((int)xSpinner.getValue()>10){
+                    xLabel.setForeground(Color.red);
                     JOptionPane.showMessageDialog(new JApplet(),"Максимальное значение - '10'!","Перебор",0,icon);
                     xSpinner.setValue(10);
+                    xLabel.setForeground(Color.black);
                 }
                 if ((int)xSpinner.getValue()<1){
+                    xLabel.setForeground(Color.red);
                     JOptionPane.showMessageDialog(new JApplet(),"Минимальное значение - '1'!","Недобор",0,icon);
                     xSpinner.setValue(1);
+                    xLabel.setForeground(Color.black);
                 }
             }
         });
@@ -405,12 +409,16 @@ public class ParamsForm extends JFrame {
             public void stateChanged(ChangeEvent e) {
                 ImageIcon icon = new ImageIcon("error.png");
                 if ((int)ySpinner.getValue()>10){
+                    yLabel.setForeground(Color.red);
                     JOptionPane.showMessageDialog(new JApplet(),"Максимальное значение - '10'!","Перебор",0,icon);
                     ySpinner.setValue(10);
+                    yLabel.setForeground(Color.black);
                 }
                 if ((int)ySpinner.getValue()<1){
+                    yLabel.setForeground(Color.red);
                     JOptionPane.showMessageDialog(new JApplet(),"Минимальное значение - '1'!","Недобор",0,icon);
                     ySpinner.setValue(1);
+                    yLabel.setForeground(Color.black);
                 }
             }
         });
@@ -419,12 +427,16 @@ public class ParamsForm extends JFrame {
             public void stateChanged(ChangeEvent e) {
                 ImageIcon icon = new ImageIcon("error.png");
                 if ((int)oneHourSpinner.getValue()>400){
+                    oneHourLabel.setForeground(Color.red);
                     JOptionPane.showMessageDialog(new JApplet(),"Максимальное значение - '400'!","Перебор",0,icon);
                     oneHourSpinner.setValue(400);
+                    oneHourLabel.setForeground(Color.black);
                 }
                 if ((int)oneHourSpinner.getValue()<0){
+                    oneHourLabel.setForeground(Color.red);
                     JOptionPane.showMessageDialog(new JApplet(),"Минимальное значение - '0'!","Недобор",0,icon);
                     oneHourSpinner.setValue(0);
+                    oneHourLabel.setForeground(Color.black);
                 }
             }
         });
@@ -433,12 +445,16 @@ public class ParamsForm extends JFrame {
             public void stateChanged(ChangeEvent e) {
                 ImageIcon icon = new ImageIcon("error.png");
                 if ((int)oneToThreeHourSpinner.getValue()>350){
+                    oneToThreeHourLabel.setForeground(Color.red);
                     JOptionPane.showMessageDialog(new JApplet(),"Максимальное значение - '350'!","Перебор",0,icon);
                     oneToThreeHourSpinner.setValue(350);
+                    oneToThreeHourLabel.setForeground(Color.black);
                 }
                 if ((int)oneToThreeHourSpinner.getValue()<50){
+                    oneToThreeHourLabel.setForeground(Color.red);
                     JOptionPane.showMessageDialog(new JApplet(),"Минимальное значение - '50'!","Недобор",0,icon);
                     oneToThreeHourSpinner.setValue(50);
+                    oneToThreeHourLabel.setForeground(Color.black);
                 }
             }
         });
@@ -447,12 +463,16 @@ public class ParamsForm extends JFrame {
             public void stateChanged(ChangeEvent e) {
                 ImageIcon icon = new ImageIcon("error.png");
                 if ((int)moreThreeHoursSpinner.getValue()>300){
+                    moreThreeHoursLabel.setForeground(Color.red);
                     JOptionPane.showMessageDialog(new JApplet(),"Максимальное значение - '300'!","Перебор",0,icon);
                     moreThreeHoursSpinner.setValue(300);
+                    moreThreeHoursLabel.setForeground(Color.black);
                 }
                 if ((int)moreThreeHoursSpinner.getValue()<70){
+                    moreThreeHoursLabel.setForeground(Color.red);
                     JOptionPane.showMessageDialog(new JApplet(),"Минимальное значение - '70'!","Недобор",0,icon);
                     moreThreeHoursSpinner.setValue(70);
+                    moreThreeHoursLabel.setForeground(Color.black);
                 }
             }
         });
@@ -461,12 +481,16 @@ public class ParamsForm extends JFrame {
             public void stateChanged(ChangeEvent e) {
                 ImageIcon icon = new ImageIcon("error.png");
                 if ((double)truckPartSpinner.getValue()>1.0){
+                    truckPartLabel.setForeground(Color.red);
                     JOptionPane.showMessageDialog(new JApplet(),"Максимальное значение - '1'!","Перебор",0,icon);
                     truckPartSpinner.setValue(1.0);
+                    truckPartLabel.setForeground(Color.black);
                 }
                 if ((double)truckPartSpinner.getValue()<0.0){
+                    truckPartLabel.setForeground(Color.red);
                     JOptionPane.showMessageDialog(new JApplet(),"Минимальное значение - '0'!","Недобор",0,icon);
                     truckPartSpinner.setValue(0.0);
+                    truckPartLabel.setForeground(Color.black);
                 }
             }
         });
@@ -475,12 +499,16 @@ public class ParamsForm extends JFrame {
             public void stateChanged(ChangeEvent e) {
                 ImageIcon icon = new ImageIcon("error.png");
                 if ((double)probSpinner.getValue()>1.0){
+                    probLabel.setForeground(Color.red);
                     JOptionPane.showMessageDialog(new JApplet(),"Максимальное значение - '1'!","Перебор",0,icon);
                     probSpinner.setValue(1.0);
+                    probLabel.setForeground(Color.black);
                 }
                 if ((double)probSpinner.getValue()<0.0){
+                    probLabel.setForeground(Color.red);
                     JOptionPane.showMessageDialog(new JApplet(),"Минимальное значение - '0'!","Недобор",0,icon);
                     probSpinner.setValue(0.0);
+                    probLabel.setForeground(Color.black);
                 }
             }
         });

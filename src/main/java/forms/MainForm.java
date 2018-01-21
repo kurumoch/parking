@@ -22,6 +22,9 @@ public class MainForm extends JFrame {
     private JPanel panel;
     private JMenuBar menuBar;
     private JMenu fileMenu;
+    JMenuItem createFileItem;
+    JMenuItem openFileItem;
+    JMenuItem saveFileItem;
     private JMenu modelMenu;
     private JMenu aboutMenu;
     private JLabel timeLabel;
@@ -54,9 +57,9 @@ public class MainForm extends JFrame {
         panel = new JPanel();
         menuBar = new JMenuBar();
         fileMenu = new JMenu("Файл");
-        JMenuItem createFileItem = new JMenuItem("Создать..");
-        JMenuItem openFileItem = new JMenuItem("Открыть..");
-        JMenuItem saveFileItem = new JMenuItem("Сохранить..");
+        createFileItem = new JMenuItem("Создать..");
+        openFileItem = new JMenuItem("Открыть..");
+        saveFileItem = new JMenuItem("Сохранить..");
         fileMenu.add(createFileItem);
         fileMenu.add(openFileItem);
         fileMenu.add(saveFileItem);
@@ -239,10 +242,13 @@ public class MainForm extends JFrame {
         parkingButton.addActionListener(e -> currentTileType = TileType.PARKING);
         doubleParkingButton.addActionListener(e -> currentTileType = TileType.DOUBLE_PARKING);
 //        stopButton.addActionListener(e -> System.out.println(controller.toString()));
+
+        aboutAuthorsItem.addActionListener(e -> new AboutAuthorsForm());
     }
 
     public void setEnabledConstructButtons(boolean var){
         lawnButton.setEnabled(var);
+        saveFileItem.setEnabled(var);
         roadButton.setEnabled(var);
         doubleParkingButton.setEnabled(var);
         parkingButton.setEnabled(var);
