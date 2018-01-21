@@ -49,11 +49,13 @@ public class CarsCreator extends Thread {
     @Override
     public void run() {
         while (true) {
-            System.out.println( Math.toIntExact(Math.round(distributionTime.cumulativeProbability(Math.random()))));
-            controller.vehicles.add(new Vehicle(controller, Math.toIntExact(Math.round(distributionTime.cumulativeProbability(Math.random()))), new PathGenerator(controller).generate()));
+            int parkTime =  Math.toIntExact(Math.round(distributionTime.sample()));
+            System.out.println(Math.abs(parkTime));
+            controller.vehicles.add(new Vehicle(controller,parkTime, PathGenerator.generate()));
             try {
-                Math.toIntExact(Math.round(distributionCars.cumulativeProbability(Math.random())));
-                Thread.sleep(Math.toIntExact(Math.round(distributionCars.cumulativeProbability(Math.random()))));
+              int carTime =  Math.toIntExact(Math.round(distributionCars.sample()));
+                System.out.println(Math.abs(carTime));
+                Thread.sleep(carTime);
             }
             catch (Exception e) {
                 e.getStackTrace();

@@ -63,4 +63,9 @@ public class DetermineDistribution extends AbstractRealDistribution {
     public boolean isSupportConnected() {
         return false;
     }
+
+    @Override
+    public double sample() {
+        return a;
+    }
 }
