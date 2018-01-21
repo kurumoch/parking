@@ -5,7 +5,6 @@ import drawing.DrawLines;
 import drawing.DrawTiles;
 import drawing.DrawRect;
 import models.State;
-import models.Tile;
 import models.TileType;
 import models.Vehicle;
 import org.apache.commons.math3.distribution.RealDistribution;
@@ -35,225 +34,6 @@ public class Controller {
     public CopyOnWriteArrayList<Vehicle> vehicles;
     private int[][] graph;
 
-    public int getxSize() {
-        return TILES_X;
-    }
-
-    public int getySize() {
-        return TILES_Y;
-    }
-
-    public void setTiles(TileType[][] tiles) {
-        this.tiles = tiles;
-    }
-
-    public int getTILES_X() {
-        return TILES_X;
-    }
-
-    public int getTILES_Y() {
-        return TILES_Y;
-    }
-
-    public void setxSize(int xSize) {
-        this.xSize = xSize;
-    }
-
-    public void setySize(int ySize) {
-        this.ySize = ySize;
-    }
-
-    public CopyOnWriteArrayList<Vehicle> getVehicles() {
-        return vehicles;
-    }
-
-    public void setVehicles(CopyOnWriteArrayList<Vehicle> vehicles) {
-        this.vehicles = vehicles;
-    }
-
-    public int getCostOfOneHour() {
-        return costOfOneHour;
-    }
-
-    public void setCostOfOneHour(int costOfOneHour) {
-        this.costOfOneHour = costOfOneHour;
-    }
-
-    public int getCostToThreeHours() {
-        return costToThreeHours;
-    }
-
-    public void setCostToThreeHours(int costToThreeHours) {
-        this.costToThreeHours = costToThreeHours;
-    }
-
-    public int getCostMoreThreeHours() {
-        return costMoreThreeHours;
-    }
-
-    public void setCostMoreThreeHours(int costMoreThreeHours) {
-        this.costMoreThreeHours = costMoreThreeHours;
-    }
-
-    public String getTypeOfThreadTimeOnParking() {
-        return typeOfThreadTimeOnParking;
-    }
-
-    public void setTypeOfThreadTimeOnParking(String typeOfThreadTimeOnParking) {
-        this.typeOfThreadTimeOnParking = typeOfThreadTimeOnParking;
-    }
-
-    public RealDistribution getDistributionTimeOnParking() {
-        return distributionTimeOnParking;
-    }
-
-    public void setDistributionTimeOnParking(RealDistribution distributionTimeOnParking) {
-        this.distributionTimeOnParking = distributionTimeOnParking;
-    }
-
-    public int getLeftDetermInterval() {
-        return leftDetermInterval;
-    }
-
-    public void setLeftDetermInterval(int leftDetermInterval) {
-        this.leftDetermInterval = leftDetermInterval;
-    }
-
-    public int getRightDetermInterval() {
-        return rightDetermInterval;
-    }
-
-    public void setRightDetermInterval(int rightDetermInterval) {
-        this.rightDetermInterval = rightDetermInterval;
-    }
-
-    public String getTypeOfThreadOfCars() {
-        return typeOfThreadOfCars;
-    }
-
-    public void setTypeOfThreadOfCars(String typeOfThreadOfCars) {
-        this.typeOfThreadOfCars = typeOfThreadOfCars;
-    }
-
-    public RealDistribution getDistributionThreadOfCars() {
-        return distributionThreadOfCars;
-    }
-
-    public void setDistributionThreadOfCars(RealDistribution distributionThreadOfCars) {
-        this.distributionThreadOfCars = distributionThreadOfCars;
-    }
-
-    public double getPartOfTrucks() {
-        return partOfTrucks;
-    }
-
-    public void setPartOfTrucks(double partOfTrucks) {
-        this.partOfTrucks = partOfTrucks;
-    }
-
-    public double getProbOfArrivalToParking() {
-        return probOfArrivalToParking;
-    }
-
-    public void setProbOfArrivalToParking(double probOfArrivalToParking) {
-        this.probOfArrivalToParking = probOfArrivalToParking;
-    }
-
-    public int getMxTime() {
-        return mxTime;
-    }
-
-    public void setMxTime(int mxTime) {
-        this.mxTime = mxTime;
-    }
-
-    public int getDxTime() {
-        return dxTime;
-    }
-
-    public void setDxTime(int dxTime) {
-        this.dxTime = dxTime;
-    }
-
-    public int getLambdaTime() {
-        return lambdaTime;
-    }
-
-    public void setLambdaTime(int lambdaTime) {
-        this.lambdaTime = lambdaTime;
-    }
-
-    public int getT1Time() {
-        return t1Time;
-    }
-
-    public void setT1Time(int t1Time) {
-        this.t1Time = t1Time;
-    }
-
-    public int getT2Time() {
-        return t2Time;
-    }
-
-    public void setT2Time(int t2Time) {
-        this.t2Time = t2Time;
-    }
-
-    public int getMxCars() {
-        return mxCars;
-    }
-
-    public void setMxCars(int mxCars) {
-        this.mxCars = mxCars;
-    }
-
-    public int getDxCars() {
-        return dxCars;
-    }
-
-    public void setDxCars(int dxCars) {
-        this.dxCars = dxCars;
-    }
-
-    public int getLambdaCars() {
-        return lambdaCars;
-    }
-
-    public void setLambdaCars(int lambdaCars) {
-        this.lambdaCars = lambdaCars;
-    }
-
-    public int getT1Cars() {
-        return t1Cars;
-    }
-
-    public void setT1Cars(int t1Cars) {
-        this.t1Cars = t1Cars;
-    }
-
-    public int getT2Cars() {
-        return t2Cars;
-    }
-
-    public void setT2Cars(int t2Cars) {
-        this.t2Cars = t2Cars;
-    }
-
-    public int getA() {
-        return a;
-    }
-
-    public void setA(int a) {
-        this.a = a;
-    }
-
-    public int getB() {
-        return b;
-    }
-
-    public void setB(int b) {
-        this.b = b;
-    }
 
     private int costOfOneHour;
     private int costToThreeHours;
@@ -473,5 +253,226 @@ public class Controller {
 //                }
 //            }
 //        }
+
+    }
+
+    public int getxSize() {
+        return TILES_X;
+    }
+
+    public int getySize() {
+        return TILES_Y;
+    }
+
+    public void setTiles(TileType[][] tiles) {
+        this.tiles = tiles;
+    }
+
+    public int getTILES_X() {
+        return TILES_X;
+    }
+
+    public int getTILES_Y() {
+        return TILES_Y;
+    }
+
+    public void setxSize(int xSize) {
+        this.xSize = xSize;
+    }
+
+    public void setySize(int ySize) {
+        this.ySize = ySize;
+    }
+
+    public CopyOnWriteArrayList<Vehicle> getVehicles() {
+        return vehicles;
+    }
+
+    public void setVehicles(CopyOnWriteArrayList<Vehicle> vehicles) {
+        this.vehicles = vehicles;
+    }
+
+    public int getCostOfOneHour() {
+        return costOfOneHour;
+    }
+
+    public void setCostOfOneHour(int costOfOneHour) {
+        this.costOfOneHour = costOfOneHour;
+    }
+
+    public int getCostToThreeHours() {
+        return costToThreeHours;
+    }
+
+    public void setCostToThreeHours(int costToThreeHours) {
+        this.costToThreeHours = costToThreeHours;
+    }
+
+    public int getCostMoreThreeHours() {
+        return costMoreThreeHours;
+    }
+
+    public void setCostMoreThreeHours(int costMoreThreeHours) {
+        this.costMoreThreeHours = costMoreThreeHours;
+    }
+
+    public String getTypeOfThreadTimeOnParking() {
+        return typeOfThreadTimeOnParking;
+    }
+
+    public void setTypeOfThreadTimeOnParking(String typeOfThreadTimeOnParking) {
+        this.typeOfThreadTimeOnParking = typeOfThreadTimeOnParking;
+    }
+
+    public RealDistribution getDistributionTimeOnParking() {
+        return distributionTimeOnParking;
+    }
+
+    public void setDistributionTimeOnParking(RealDistribution distributionTimeOnParking) {
+        this.distributionTimeOnParking = distributionTimeOnParking;
+    }
+
+    public int getLeftDetermInterval() {
+        return leftDetermInterval;
+    }
+
+    public void setLeftDetermInterval(int leftDetermInterval) {
+        this.leftDetermInterval = leftDetermInterval;
+    }
+
+    public int getRightDetermInterval() {
+        return rightDetermInterval;
+    }
+
+    public void setRightDetermInterval(int rightDetermInterval) {
+        this.rightDetermInterval = rightDetermInterval;
+    }
+
+    public String getTypeOfThreadOfCars() {
+        return typeOfThreadOfCars;
+    }
+
+    public void setTypeOfThreadOfCars(String typeOfThreadOfCars) {
+        this.typeOfThreadOfCars = typeOfThreadOfCars;
+    }
+
+    public RealDistribution getDistributionThreadOfCars() {
+        return distributionThreadOfCars;
+    }
+
+    public void setDistributionThreadOfCars(RealDistribution distributionThreadOfCars) {
+        this.distributionThreadOfCars = distributionThreadOfCars;
+    }
+
+    public double getPartOfTrucks() {
+        return partOfTrucks;
+    }
+
+    public void setPartOfTrucks(double partOfTrucks) {
+        this.partOfTrucks = partOfTrucks;
+    }
+
+    public double getProbOfArrivalToParking() {
+        return probOfArrivalToParking;
+    }
+
+    public void setProbOfArrivalToParking(double probOfArrivalToParking) {
+        this.probOfArrivalToParking = probOfArrivalToParking;
+    }
+
+    public int getMxTime() {
+        return mxTime;
+    }
+
+    public void setMxTime(int mxTime) {
+        this.mxTime = mxTime;
+    }
+
+    public int getDxTime() {
+        return dxTime;
+    }
+
+    public void setDxTime(int dxTime) {
+        this.dxTime = dxTime;
+    }
+
+    public int getLambdaTime() {
+        return lambdaTime;
+    }
+
+    public void setLambdaTime(int lambdaTime) {
+        this.lambdaTime = lambdaTime;
+    }
+
+    public int getT1Time() {
+        return t1Time;
+    }
+
+    public void setT1Time(int t1Time) {
+        this.t1Time = t1Time;
+    }
+
+    public int getT2Time() {
+        return t2Time;
+    }
+
+    public void setT2Time(int t2Time) {
+        this.t2Time = t2Time;
+    }
+
+    public int getMxCars() {
+        return mxCars;
+    }
+
+    public void setMxCars(int mxCars) {
+        this.mxCars = mxCars;
+    }
+
+    public int getDxCars() {
+        return dxCars;
+    }
+
+    public void setDxCars(int dxCars) {
+        this.dxCars = dxCars;
+    }
+
+    public int getLambdaCars() {
+        return lambdaCars;
+    }
+
+    public void setLambdaCars(int lambdaCars) {
+        this.lambdaCars = lambdaCars;
+    }
+
+    public int getT1Cars() {
+        return t1Cars;
+    }
+
+    public void setT1Cars(int t1Cars) {
+        this.t1Cars = t1Cars;
+    }
+
+    public int getT2Cars() {
+        return t2Cars;
+    }
+
+    public void setT2Cars(int t2Cars) {
+        this.t2Cars = t2Cars;
+    }
+
+    public int getA() {
+        return a;
+    }
+
+    public void setA(int a) {
+        this.a = a;
+    }
+
+    public int getB() {
+        return b;
+    }
+
+    public void setB(int b) {
+        this.b = b;
     }
 }
