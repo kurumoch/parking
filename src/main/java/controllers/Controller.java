@@ -108,10 +108,7 @@ public class Controller implements Serializable{
                     tiles[i][j] = ROAD;
             }
         }
-//        vehicles = new ArrayList<>();
-        //   vehicles = new Vector<>();
         vehicles = new CopyOnWriteArrayList<>();
-        graph = new int[TILES_X][TILES_Y];
         initGraph();
     }
 

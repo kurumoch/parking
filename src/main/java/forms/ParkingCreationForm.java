@@ -27,9 +27,9 @@ public class ParkingCreationForm extends JFrame {
         xLabel = new JLabel("x: ");
         yLabel = new JLabel("y: ");
         xSpinner = new JSpinner();
-        xSpinner.setValue(5);
+        xSpinner.setValue(10);
         ySpinner = new JSpinner();
-        ySpinner.setValue(5);
+        ySpinner.setValue(10);
         submitButton = new JButton("Готово");
         GroupLayout layout = new GroupLayout(panel);
         layout.setAutoCreateGaps(true);
