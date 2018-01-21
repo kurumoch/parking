@@ -11,12 +11,13 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 
-public class Vehicle {
+public class Vehicle implements Serializable{
 
     private VehicleType type;
     private int parkingTime;
-    private boolean isParking;
+    public boolean isParking;
     private float x, y;
     private BufferedImage car;
     static final int SIZE = 35;
@@ -32,6 +33,7 @@ public class Vehicle {
 
 
     public Vehicle(Controller controller, int parkingTime, Path path) {
+        this.parkingTime = parkingTime;
         JPanel panel = controller.getSurface();
         Rectangle borderRect = controller.getRectangles()[controller.getxSize()-1][controller.getySize()-1];
         x=borderRect.x;
@@ -65,6 +67,14 @@ public class Vehicle {
             case LEFT: x+=speedX; break;
             case RIGHT: x-=speedX; break;
             case UP:y+=speedY; break;
+            case PARK:
+                try {
+                    isParking = true;
+                    Thread.currentThread().sleep(parkingTime);
+                    isParking = false;
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
         }
 
 //

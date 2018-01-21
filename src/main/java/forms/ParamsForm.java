@@ -351,6 +351,7 @@ public class ParamsForm extends JFrame {
                 controller.setLambdaCars(Integer.valueOf(lambdaFieldFlow.getText()));
                 controller.setT1Cars(Integer.valueOf(t1FieldFlow.getText()));
                 controller.setT2Cars(Integer.valueOf(t2FieldFlow.getText()));
+                dispose();
             }
         });
     }

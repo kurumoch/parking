@@ -19,11 +19,14 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
+import java.beans.Transient;
+import java.io.Serializable;
+import java.nio.file.Path;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import static models.TileType.*;
 
-public class Controller {
+public class Controller implements Serializable{
 
     private TileType[][] tiles;
     private Rectangle[][] rectangles;
@@ -33,7 +36,7 @@ public class Controller {
     private int ySize;
     private Surface surface;
     private State state;
-    public CopyOnWriteArrayList<Vehicle> vehicles;
+    public  CopyOnWriteArrayList<Vehicle> vehicles;
     // private int[][] graph;
 
 
@@ -69,12 +72,18 @@ public class Controller {
         this.rectangles = rectangles;
     }
 
-    public Controller(int x, int y) {
-        initParking(x, y);
+    public Controller() {
         vehicles = new CopyOnWriteArrayList<>();
     }
 
-    private void initParking(int x, int y) {
+    //чтение из файла
+    public Controller(Path path) {
+
+        vehicles = new CopyOnWriteArrayList<>();
+    }
+
+
+    public void initParking(int x, int y){
         state = State.CONSTRUCT;
         xSize = ++x;
         ySize = ++y;
@@ -102,7 +111,7 @@ public class Controller {
 //        vehicles = new ArrayList<>();
         //   vehicles = new Vector<>();
         vehicles = new CopyOnWriteArrayList<>();
-        // graph = new int[TILES_X][TILES_Y];
+        graph = new int[TILES_X][TILES_Y];
         initGraph();
     }
 
@@ -165,8 +174,7 @@ public class Controller {
             }
         }
     }
-
-    public int[] getTilesNumber(int x, int y) {
+    public int[] getTilesNumber(int x, int y){
         int xx = x - 20;
         int yy = y - 20;
         int[] arr = new int[2];
@@ -181,7 +189,6 @@ public class Controller {
         }
         return null;
     }
-
     public void setDefaultTiles() {
         DrawLines dr = new DrawLines(surface, this);
         dr.draw();
@@ -198,12 +205,20 @@ public class Controller {
         t.start();
     }
 
-    public State getState() {
+    public void stopModelling(){
+
+    }
+
+    public void pauseModelling(){
+
+    }
+
+    public State getState(){
         return state;
     }
 
-    public void setState(State state) {
-        this.state = state;
+    public void setState(State state){
+        this.state=state;
     }
 
     public Surface getSurface() {

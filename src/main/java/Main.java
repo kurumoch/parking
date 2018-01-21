@@ -12,7 +12,7 @@ import java.awt.*;
 public class Main {
 
     public static void main(String...args){
-        Controller c = new Controller(10, 10);
+        Controller c = new Controller();
 //        System.out.print(c.toString());
         new MainForm(c);
     }
