@@ -1,7 +1,13 @@
 package forms;
 
+import JPanels.Surface;
+import controllers.Controller;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 
 /**
  * Created by denis on 22.11.2017.
@@ -14,7 +20,7 @@ public class ParkingCreationForm extends JFrame {
     private JLabel label;
     private JLabel xLabel;
     private JLabel yLabel;
-    public ParkingCreationForm(){
+    public ParkingCreationForm(Controller controller, MainForm mainForm){
         super("Создание парковки");
         JPanel panel = new JPanel();
         label = new JLabel("Введите размер парковки");
@@ -37,8 +43,19 @@ public class ParkingCreationForm extends JFrame {
         panel.setLayout(layout);
         panel.setPreferredSize(new Dimension(300,100));
         setContentPane(panel);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+//        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         pack();
         setVisible(true);
+
+        submitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.initParking((int) xSpinner.getValue(), (int) ySpinner.getValue());
+                controller.setDefaultTiles();
+                mainForm.graphicsPanel.setTiles(controller.getTiles());
+                dispose();
+            }
+        });
     }
+
 }

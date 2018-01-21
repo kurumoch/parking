@@ -19,11 +19,10 @@ public class Surface extends JPanel implements ActionListener {
     public Surface(Controller controller) {
         super();
         this.controller = controller;
-        this.vehicles = controller.vehicles;
         tiles = controller.getTiles();
         this.setDoubleBuffered(true);
         setPreferredSize(new Dimension(400, 300));
-        for (Vehicle vehicle : vehicles) {
+        for (Vehicle vehicle : controller.vehicles) {
             vehicle.setBounds(500, 500);
         }
     }
@@ -50,37 +49,43 @@ public class Surface extends JPanel implements ActionListener {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        for (int i = 0; i < controller.getxSize(); i++) {
-            for (int j = 0; j < controller.getySize(); j++) {
-                switch (tiles[i][j]) {
-                    case LAWN:
-                        graphics2D.setColor(Color.LIGHT_GRAY);
-                        break;
-                    case PARKING:
-                        graphics2D.setColor(Color.ORANGE);
-                        break;
-                    case PARK_ROAD:
-                        graphics2D.setColor(Color.gray);
-                        break;
-                    case ROAD:
-                        graphics2D.setColor(Color.darkGray);
-                        break;
-                    case DOUBLE_PARKING:
-                        graphics2D.setColor(Color.RED);
-                        break;
+        if(tiles!=null) {
+            for (int i = 0; i < controller.getxSize(); i++) {
+                for (int j = 0; j < controller.getySize(); j++) {
+                    switch (tiles[i][j]) {
+                        case LAWN:
+                            graphics2D.setColor(Color.LIGHT_GRAY);
+                            break;
+                        case PARKING:
+                            graphics2D.setColor(Color.ORANGE);
+                            break;
+                        case PARK_ROAD:
+                            graphics2D.setColor(Color.gray);
+                            break;
+                        case ROAD:
+                            graphics2D.setColor(Color.darkGray);
+                            break;
+                        case DOUBLE_PARKING:
+                            graphics2D.setColor(Color.RED);
+                            break;
+                    }
+                    Rectangle r = controller.getRectangles()[i][j];
+                    graphics2D.fillRect(r.x + 1, r.y + 1, r.width - 1, r.height - 1);
                 }
-                Rectangle r = controller.getRectangles()[i][j];
-                graphics2D.fillRect(r.x+1,r.y+1,r.width-1,r.height-1);
+            }
+            for (Vehicle vehicle : controller.vehicles) {
+                vehicle.draw(g);
             }
         }
-        for (Vehicle vehicle : vehicles) {
-            vehicle.draw(g);
-        }
+    }
+
+    public void setTiles(TileType[][] tiles) {
+        this.tiles = tiles;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        for (Vehicle vehicle : vehicles) {
+        for (Vehicle vehicle : controller.vehicles) {
             vehicle.move();
         }
         repaint();

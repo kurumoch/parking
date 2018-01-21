@@ -17,6 +17,7 @@ import threads.CarsCreator;
 
 import javax.swing.*;
 import java.awt.*;
+import java.nio.file.Path;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import static models.TileType.*;
@@ -67,12 +68,18 @@ public class Controller {
         this.rectangles = rectangles;
     }
 
-    public Controller(int x, int y) {
-       initParking(x,y);
+    public Controller() {
         vehicles = new CopyOnWriteArrayList<>();
     }
 
-    private void initParking(int x, int y){
+    //чтение из файла
+    public Controller(Path path) {
+
+        vehicles = new CopyOnWriteArrayList<>();
+    }
+
+
+    public void initParking(int x, int y){
         state = State.CONSTRUCT;
         xSize = ++x;
         ySize = ++y;
@@ -190,8 +197,16 @@ public class Controller {
         CarsCreator carsCreator = new CarsCreator(this);
         carsCreator.start();
         Timer t = new Timer(100, surface);
-        t.setInitialDelay(0);
+//        t.setInitialDelay(10);
         t.start();
+    }
+
+    public void stopModelling(){
+
+    }
+
+    public void pauseModelling(){
+
     }
 
     public State getState(){
@@ -212,16 +227,16 @@ public class Controller {
 
     public void initGraph() {
 
-        SimpleWeightedGraph<Integer, DefaultWeightedEdge> graph1 = new SimpleWeightedGraph<Integer, DefaultWeightedEdge>(DefaultWeightedEdge.class);
-        for (int i = 0; i < TILES_X; i++) {
-            for (int j = 0; j < TILES_Y; j++) {
-                graph1.addVertex(3);
-            }
-        }
-        DijkstraShortestPath dijkstraShortestPath
-                = new DijkstraShortestPath(graph1);
-        java.util.List<String> shortestPath = dijkstraShortestPath
-                .getPath("v1", "v4").getVertexList();
+//        SimpleWeightedGraph<Integer, DefaultWeightedEdge> graph1 = new SimpleWeightedGraph<Integer, DefaultWeightedEdge>(DefaultWeightedEdge.class);
+//        for (int i = 0; i < TILES_X; i++) {
+//            for (int j = 0; j < TILES_Y; j++) {
+//                graph1.addVertex(3);
+//            }
+//        }
+//        DijkstraShortestPath dijkstraShortestPath
+//                = new DijkstraShortestPath(graph1);
+//        java.util.List<String> shortestPath = dijkstraShortestPath
+//                .getPath("v1", "v4").getVertexList();
 
 
 //        for (int i = 0; i < TILES_X; i++) {

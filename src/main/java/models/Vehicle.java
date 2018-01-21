@@ -44,7 +44,7 @@ public class Vehicle {
         point = path.next();
         this.rectangles = controller.getRectangles();
         try {
-            car = ImageIO.read(new File("red-dot-md.png"));
+            car = ImageIO.read(new File("car.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
