@@ -4,6 +4,9 @@ import controllers.Controller;
 import org.apache.commons.math3.distribution.RealDistribution;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Objects;
@@ -90,19 +93,20 @@ public class ParamsForm extends JFrame {
         xLabel = new JLabel("x: ");
         yLabel = new JLabel("y: ");
         xSpinner = new JSpinner();
-        xSpinner.setValue(5);
+        xSpinner.setModel(new SpinnerNumberModel(5,-999999,999999,1));
         ySpinner = new JSpinner();
-        ySpinner.setValue(5);
+        ySpinner.setModel(new SpinnerNumberModel(5,-999999,999999,1));
         ratesLabel = new JLabel("Тариф");
         oneHourLabel = new JLabel("до 1ч");
         oneToThreeHourLabel = new JLabel("от 1ч до 3ч");
         moreThreeHoursLabel = new JLabel("более 3ч");
         oneHourSpinner = new JSpinner();
-        oneHourSpinner.setValue(200);
+        //oneHourSpinner.setValue(200);
+        oneHourSpinner.setModel(new SpinnerNumberModel(200,-999999,999999,10));
         oneToThreeHourSpinner = new JSpinner();
-        oneToThreeHourSpinner.setValue(150);
+        oneToThreeHourSpinner.setModel(new SpinnerNumberModel(150,-999999,999999,10));
         moreThreeHoursSpinner = new JSpinner();
-        moreThreeHoursSpinner.setValue(100);
+        moreThreeHoursSpinner.setModel(new SpinnerNumberModel(100,-999999,999999,10));
         timeDistribLabel = new JLabel("Распределение времени нахождения на парковке");
         timeDistribComboBox = new JComboBox<String>(new String[]{"Детерминированный", "Стохастический"});
         determinePanelTime = new JPanel();
@@ -207,10 +211,10 @@ public class ParamsForm extends JFrame {
         stochasticLayoutFlow.setHorizontalGroup(stochasticLayoutFlow.createParallelGroup().addComponent(stochasticComboBoxFlow).addComponent(normalPanelFlow).addComponent(uniformPanelFlow).addComponent(exponentialPanelFlow));
         truckPartLabel = new JLabel("Доля грузового транспорта");
         truckPartSpinner = new JSpinner();
-        truckPartSpinner.setValue(0.3);
+        truckPartSpinner.setModel(new SpinnerNumberModel(0.5,-999999.0,999999.0,0.1));
         probLabel = new JLabel("Вероятность заезда на парковку");
         probSpinner = new JSpinner();
-        probSpinner.setValue(0.5);
+        probSpinner.setModel(new SpinnerNumberModel(0.5,-999999.0,999999.0,0.1));
         submitButton = new JButton("Готово");
         layout = new GroupLayout(panel);
         layout.setAutoCreateGaps(true);
@@ -378,6 +382,106 @@ public class ParamsForm extends JFrame {
                 if(!Objects.equals(intervalFieldTime.getText(), ""))
                 controller.setIntervalTime(Integer.valueOf(intervalFieldTime.getText()));
                 dispose();
+            }
+
+        });
+
+        xSpinner.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                ImageIcon icon = new ImageIcon("error.png");
+                if ((int)xSpinner.getValue()>10){
+                    JOptionPane.showMessageDialog(new JApplet(),"Максимальное значение - '10'!","Перебор",0,icon);
+                    xSpinner.setValue(10);
+                }
+                if ((int)xSpinner.getValue()<1){
+                    JOptionPane.showMessageDialog(new JApplet(),"Минимальное значение - '1'!","Недобор",0,icon);
+                    xSpinner.setValue(1);
+                }
+            }
+        });
+        ySpinner.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                ImageIcon icon = new ImageIcon("error.png");
+                if ((int)ySpinner.getValue()>10){
+                    JOptionPane.showMessageDialog(new JApplet(),"Максимальное значение - '10'!","Перебор",0,icon);
+                    ySpinner.setValue(10);
+                }
+                if ((int)ySpinner.getValue()<1){
+                    JOptionPane.showMessageDialog(new JApplet(),"Минимальное значение - '1'!","Недобор",0,icon);
+                    ySpinner.setValue(1);
+                }
+            }
+        });
+        oneHourSpinner.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                ImageIcon icon = new ImageIcon("error.png");
+                if ((int)oneHourSpinner.getValue()>400){
+                    JOptionPane.showMessageDialog(new JApplet(),"Максимальное значение - '400'!","Перебор",0,icon);
+                    oneHourSpinner.setValue(400);
+                }
+                if ((int)oneHourSpinner.getValue()<0){
+                    JOptionPane.showMessageDialog(new JApplet(),"Минимальное значение - '0'!","Недобор",0,icon);
+                    oneHourSpinner.setValue(0);
+                }
+            }
+        });
+        oneToThreeHourSpinner.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                ImageIcon icon = new ImageIcon("error.png");
+                if ((int)oneToThreeHourSpinner.getValue()>350){
+                    JOptionPane.showMessageDialog(new JApplet(),"Максимальное значение - '350'!","Перебор",0,icon);
+                    oneToThreeHourSpinner.setValue(350);
+                }
+                if ((int)oneToThreeHourSpinner.getValue()<50){
+                    JOptionPane.showMessageDialog(new JApplet(),"Минимальное значение - '50'!","Недобор",0,icon);
+                    oneToThreeHourSpinner.setValue(50);
+                }
+            }
+        });
+        moreThreeHoursSpinner.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                ImageIcon icon = new ImageIcon("error.png");
+                if ((int)moreThreeHoursSpinner.getValue()>300){
+                    JOptionPane.showMessageDialog(new JApplet(),"Максимальное значение - '300'!","Перебор",0,icon);
+                    moreThreeHoursSpinner.setValue(300);
+                }
+                if ((int)moreThreeHoursSpinner.getValue()<70){
+                    JOptionPane.showMessageDialog(new JApplet(),"Минимальное значение - '70'!","Недобор",0,icon);
+                    moreThreeHoursSpinner.setValue(70);
+                }
+            }
+        });
+        truckPartSpinner.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                ImageIcon icon = new ImageIcon("error.png");
+                if ((double)truckPartSpinner.getValue()>1.0){
+                    JOptionPane.showMessageDialog(new JApplet(),"Максимальное значение - '1'!","Перебор",0,icon);
+                    truckPartSpinner.setValue(1.0);
+                }
+                if ((double)truckPartSpinner.getValue()<0.0){
+                    JOptionPane.showMessageDialog(new JApplet(),"Минимальное значение - '0'!","Недобор",0,icon);
+                    truckPartSpinner.setValue(0.0);
+                }
+            }
+        });
+        probSpinner.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                ImageIcon icon = new ImageIcon("error.png");
+                if ((double)probSpinner.getValue()>1.0){
+                    JOptionPane.showMessageDialog(new JApplet(),"Максимальное значение - '1'!","Перебор",0,icon);
+                    probSpinner.setValue(1.0);
+                }
+                if ((double)probSpinner.getValue()<0.0){
+                    JOptionPane.showMessageDialog(new JApplet(),"Минимальное значение - '0'!","Недобор",0,icon);
+                    probSpinner.setValue(0.0);
+                }
             }
         });
     }
