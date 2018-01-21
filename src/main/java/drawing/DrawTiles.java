@@ -3,8 +3,11 @@ package drawing;
 import controllers.Controller;
 import models.TileType;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 public class DrawTiles {
     Graphics graphics;
@@ -20,7 +23,7 @@ public class DrawTiles {
             for (int j = 0; j < controller.getySize(); j++) {
                 switch (tiles[i][j]) {
                     case LAWN:
-                        graphics2D.setColor(Color.LIGHT_GRAY);
+                        graphics2D.setColor(Color.GREEN);
                         break;
                     case PARKING:
                         graphics2D.setColor(Color.ORANGE);

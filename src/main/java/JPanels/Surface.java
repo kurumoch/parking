@@ -5,10 +5,13 @@ import controllers.Controller;
 import models.TileType;
 import models.Vehicle;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Surface extends JPanel implements ActionListener {
@@ -51,7 +54,7 @@ public class Surface extends JPanel implements ActionListener {
                 for (int j = 0; j < controller.getySize(); j++) {
                     switch (controller.getTiles()[i][j]) {
                         case LAWN:
-                            graphics2D.setColor(Color.LIGHT_GRAY);
+                            graphics2D.setColor(Color.GREEN);
                             break;
                         case PARKING:
                             graphics2D.setColor(Color.ORANGE);
