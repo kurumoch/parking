@@ -216,9 +216,9 @@ public class MainForm extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-               // if(currentTileType != TileType.DOUBLE_PARKING)
-                 //   controller.setTile(e.getX(),e.getY(),currentTileType);
-//                else controller.setDoubleTile(e.getX(), e.getY(), /* is hotkey pressed*/);
+                if(currentTileType != TileType.DOUBLE_PARKING)
+                    controller.setTile(e.getX(),e.getY(),currentTileType);
+                else controller.setDoubleTile(e.getX(), e.getY(), false);
             }
         });
         lawnButton.addActionListener(e -> currentTileType = TileType.LAWN);

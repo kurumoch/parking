@@ -144,7 +144,7 @@ public class Controller implements Serializable{
     public void setTile(int x, int y, TileType tileType) {
         DrawRect drawRect = new DrawRect(surface.getGraphics());
         for (int i = 2; i < TILES_X - 1; i++) {
-            for (int j = 2; j < TILES_Y - 1; j++) {
+            for (int j = 2; j < TILES_Y - 2; j++) {
                 if (y > rectangles[i][j].y && y < rectangles[i + 1][j].y && x > rectangles[i][j].x && x < rectangles[i][j + 1].x) {
                     tiles[i][j] = tileType;
                     DrawTiles drawTiles = new DrawTiles(surface, this);
@@ -158,12 +158,14 @@ public class Controller implements Serializable{
     public void setDoubleTile(int x, int y, boolean vert) {
         DrawRect drawRect = new DrawRect(surface.getGraphics());
         for (int i = 2; i < TILES_X - 1; i++) {
-            for (int j = 2; j < TILES_Y - 1; j++) {
-                if (x > rectangles[i][j].y && x < rectangles[i + 1][j].y && y > rectangles[i][j].x && y < rectangles[i][j + 1].x) {
-                    tiles[j][i] = TileType.DOUBLE_PARKING;
-                    if (vert)
-                        tiles[--j][i] = TileType.DOUBLE_PARKING;
-                    else tiles[j][--i] = TileType.DOUBLE_PARKING;
+            for (int j = 2; j < TILES_Y - 2; j++) {
+                if (y > rectangles[i][j].y && y < rectangles[i + 1][j].y && x > rectangles[i][j].x && x < rectangles[i][j + 1].x) {
+                    if((j-1 > 1 && !vert)|| (i-1>1 &&vert)) {
+                    tiles[i][j] = TileType.DOUBLE_PARKING;
+                        if (vert)
+                            tiles[--i][j] = TileType.DOUBLE_PARKING;
+                        else tiles[i][--j] = TileType.DOUBLE_PARKING;
+                    }
                     DrawTiles drawTiles = new DrawTiles(surface, this);
                     drawTiles.draw(tiles);
                     return;
