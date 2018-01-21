@@ -35,7 +35,7 @@ public class Vehicle {
         JPanel panel = controller.getSurface();
         Rectangle borderRect = controller.getRectangles()[controller.getxSize()-1][controller.getySize()-1];
         x=borderRect.x;
-        y=borderRect.y+9;
+        y=borderRect.y;
         maxX=panel.getWidth();
         maxY=panel.getHeight();
         this.controller = controller;
@@ -44,7 +44,7 @@ public class Vehicle {
         point = path.next();
         this.rectangles = controller.getRectangles();
         try {
-            car = ImageIO.read(new File("red-dot-md.png"));
+            car = ImageIO.read(new File("car.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -56,7 +56,7 @@ public class Vehicle {
     }
 
     public void move() {
-        int[] arr = controller.getTilesNumber(Math.round(x), Math.round(y+9));
+        int[] arr = controller.getTilesNumber(Math.round(x), Math.round(y));
         if(arr[0] == point.getFirst().getFirst() && arr[1] == point.getFirst().getSecond()) {
             point = path.next();
         }
