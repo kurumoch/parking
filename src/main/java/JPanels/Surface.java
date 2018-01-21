@@ -14,12 +14,10 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class Surface extends JPanel implements ActionListener {
     private Controller controller;
     private CopyOnWriteArrayList<Vehicle> vehicles;
-    private TileType[][] tiles;
-    private Graphics2D graphics2D;
+    private transient Graphics2D graphics2D;
     public Surface(Controller controller) {
         super();
         this.controller = controller;
-        tiles = controller.getTiles();
         this.setDoubleBuffered(true);
         setPreferredSize(new Dimension(400, 300));
         for (Vehicle vehicle : controller.vehicles) {
@@ -49,10 +47,10 @@ public class Surface extends JPanel implements ActionListener {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        if(tiles!=null) {
+        if(controller.getTiles()!=null) {
             for (int i = 0; i < controller.getxSize(); i++) {
                 for (int j = 0; j < controller.getySize(); j++) {
-                    switch (tiles[i][j]) {
+                    switch (controller.getTiles()[i][j]) {
                         case LAWN:
                             graphics2D.setColor(Color.LIGHT_GRAY);
                             break;
@@ -79,9 +77,6 @@ public class Surface extends JPanel implements ActionListener {
         }
     }
 
-    public void setTiles(TileType[][] tiles) {
-        this.tiles = tiles;
-    }
 
     @Override
     public void actionPerformed(ActionEvent e) {

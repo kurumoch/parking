@@ -150,19 +150,20 @@ public class MainForm extends JFrame {
                 try {
 
                     ObjectInputStream inputStream = new ObjectInputStream((new FileInputStream(fileChooser.getSelectedFile())));
-                   Controller controller1 =  (Controller) inputStream.readObject();
+                    Controller controller1 =  (Controller) inputStream.readObject();
                     inputStream.close();
+                    controller.setRectangles(controller1.getRectangles());
                     controller.initParking(controller1.getxSize(), controller1.getySize());
                     controller.setTiles(controller1.getTiles());
                     controller.setCostOfOneHour(controller1.getCostOfOneHour());
                     controller.setCostToThreeHours(controller1.getCostToThreeHours());
                     controller.setCostMoreThreeHours(controller1.getCostMoreThreeHours());
-                controller.setTypeOfThreadTimeOnParking(controller1.getTypeOfThreadTimeOnParking());
-                controller.setDistributionTimeOnParking(controller1.getDistributionTimeOnParking());
+                    controller.setTypeOfThreadTimeOnParking(controller1.getTypeOfThreadTimeOnParking());
+                    controller.setDistributionTimeOnParking(controller1.getDistributionTimeOnParking());
                     controller.setLeftDetermInterval(controller1.getLeftDetermInterval());
                     controller.setRightDetermInterval(controller1.getRightDetermInterval());
-                controller.setTypeOfThreadOfCars(controller1.getTypeOfThreadOfCars());
-                controller.setDistributionThreadOfCars(controller1.getDistributionThreadOfCars());
+                    controller.setTypeOfThreadOfCars(controller1.getTypeOfThreadOfCars());
+                    controller.setDistributionThreadOfCars(controller1.getDistributionThreadOfCars());
                     controller.setPartOfTrucks(controller1.getPartOfTrucks());
                     controller.setProbOfArrivalToParking(controller1.getProbOfArrivalToParking());
                     controller.setMxTime(controller1.getMxTime());
@@ -175,6 +176,10 @@ public class MainForm extends JFrame {
                     controller.setLambdaCars(controller1.getLambdaCars());
                     controller.setT1Cars(controller1.getT1Cars());
                     controller.setT2Cars(controller1.getT2Cars());
+                    controller.setDefaultTiles();
+                    graphicsPanel = controller1.getSurface();
+                    controller.setSurface(controller1.getSurface());
+                    setEnabledConstructButtons(true);
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 } catch (ClassNotFoundException e1) {

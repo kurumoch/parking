@@ -17,12 +17,14 @@ import threads.CarsCreator;
 
 import javax.swing.*;
 import java.awt.*;
+import java.beans.Transient;
+import java.io.Serializable;
 import java.nio.file.Path;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import static models.TileType.*;
 
-public class Controller {
+public class Controller implements Serializable{
 
     private TileType[][] tiles;
     private Rectangle[][] rectangles;
@@ -32,7 +34,7 @@ public class Controller {
     private int ySize;
     private Surface surface;
     private State state;
-    public CopyOnWriteArrayList<Vehicle> vehicles;
+    public  CopyOnWriteArrayList<Vehicle> vehicles;
     private int[][] graph;
 
 

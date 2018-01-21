@@ -52,7 +52,6 @@ public class ParkingCreationForm extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 controller.initParking((int) xSpinner.getValue(), (int) ySpinner.getValue());
                 controller.setDefaultTiles();
-                mainForm.graphicsPanel.setTiles(controller.getTiles());
                 dispose();
             }
         });
