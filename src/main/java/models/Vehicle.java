@@ -46,7 +46,7 @@ public class Vehicle implements Serializable{
         point = path.next();
         this.rectangles = controller.getRectangles();
         try {
-            car = ImageIO.read(new File("car.png"));
+            car = ImageIO.read(new File("l_car.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
