@@ -226,7 +226,7 @@ public class Controller implements Serializable{
         this.surface = surface;
     }
 
-    public void initGraph() {
+    public java.util.List<Pair<TileType, Pair<Integer, Integer>>> initGraph() {
         ArrayList<Pair<TileType, Pair<Integer, Integer>>> list = new ArrayList<>();
         SimpleGraph<Pair<TileType, Pair<Integer, Integer>>, DefaultEdge> graph = new SimpleGraph<Pair<TileType, Pair<Integer, Integer>>, DefaultEdge>(DefaultEdge.class);
         for (int i = 0; i < TILES_X; i++) {
@@ -247,7 +247,7 @@ public class Controller implements Serializable{
 
          DijkstraShortestPath dijkstraShortestPath = new DijkstraShortestPath(graph);
          java.util.List<Pair<TileType, Pair<Integer, Integer>>> shortestPath = dijkstraShortestPath.getPath(list.get(0),list.get(42)).getVertexList();
-         System.out.println(shortestPath);
+         return shortestPath;
     }
 
     public int getxSize() {
