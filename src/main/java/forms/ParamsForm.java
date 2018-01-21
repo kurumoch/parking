@@ -1,6 +1,7 @@
 package forms;
 
 import controllers.Controller;
+import org.apache.commons.math3.distribution.RealDistribution;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -329,7 +330,27 @@ public class ParamsForm extends JFrame {
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                 controller.setCostOfOneHour((int)oneHourSpinner.getValue());
+                controller.setCostToThreeHours((int)oneToThreeHourSpinner.getValue());
+                controller.setCostMoreThreeHours((int)moreThreeHoursSpinner.getValue());
+//                controller.setTypeOfThreadTimeOnParking();
+//                controller.setDistributionTimeOnParking();
+                controller.setLeftDetermInterval(Integer.valueOf(t1FieldFlow.getText()));
+                controller.setRightDetermInterval(Integer.valueOf(t2FieldFlow.getText()));
+//                controller.setTypeOfThreadOfCars();
+//                controller.setDistributionThreadOfCars();
+                controller.setPartOfTrucks((int)truckPartSpinner.getValue());
+                controller.setProbOfArrivalToParking((int)probSpinner.getValue());
+                controller.setMxTime(Integer.valueOf(mxFieldTime.getText()));
+                controller.setDxTime(Integer.valueOf(dxFieldTime.getText()));
+                controller.setLambdaTime(Integer.valueOf(lambdaFieldTime.getText()));
+                controller.setT1Time(Integer.valueOf(t1FieldTime.getText()));
+                controller.setT2Time(Integer.valueOf(t2FieldTime.getText()));
+                controller.setMxCars(Integer.valueOf(mxFieldFlow.getText()));
+                controller.setDxCars(Integer.valueOf(dxFieldFlow.getText()));
+                controller.setLambdaCars(Integer.valueOf(lambdaFieldFlow.getText()));
+                controller.setT1Cars(Integer.valueOf(t1FieldFlow.getText()));
+                controller.setT2Cars(Integer.valueOf(t2FieldFlow.getText()));
             }
         });
     }
