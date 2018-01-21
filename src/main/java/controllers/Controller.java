@@ -4,9 +4,15 @@ import JPanels.Surface;
 import drawing.DrawLines;
 import drawing.DrawTiles;
 import drawing.DrawRect;
+import models.Tile;
 import models.TileType;
 import models.Vehicle;
 import org.apache.commons.math3.distribution.RealDistribution;
+import org.jgrapht.Graph;
+import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
+import org.jgrapht.graph.DefaultDirectedWeightedGraph;
+import org.jgrapht.graph.DefaultWeightedEdge;
+import org.jgrapht.graph.SimpleWeightedGraph;
 import threads.CarsCreator;
 
 import javax.swing.*;
@@ -25,6 +31,7 @@ public class Controller {
     private int ySize;
     private Surface surface;
     public CopyOnWriteArrayList<Vehicle> vehicles;
+    private int[][] graph;
 
     public int getxSize() {
         return TILES_X;
@@ -93,6 +100,8 @@ public class Controller {
 //        vehicles = new ArrayList<>();
         //   vehicles = new Vector<>();
         vehicles = new CopyOnWriteArrayList<>();
+        graph = new int[TILES_X][TILES_Y];
+        initGraph();
     }
 
 
@@ -155,7 +164,8 @@ public class Controller {
             }
         }
     }
-    public int[] getTilesNumber(int x, int y){
+
+    public int[] getTilesNumber(int x, int y) {
         int xx = x - 20;
         int yy = y - 20;
         int[] arr = new int[2];
@@ -170,12 +180,14 @@ public class Controller {
         }
         return null;
     }
+
     public void setDefaultTiles() {
         DrawLines dr = new DrawLines(surface, this);
         dr.draw();
         DrawTiles drawTiles = new DrawTiles(surface, this);
         drawTiles.draw(tiles);
     }
+
     public void startModelling() {
         CarsCreator carsCreator = new CarsCreator(this);
         carsCreator.start();
@@ -189,5 +201,50 @@ public class Controller {
 
     public void setSurface(Surface surface) {
         this.surface = surface;
+    }
+
+    public void initGraph() {
+
+        SimpleWeightedGraph<Integer, DefaultWeightedEdge> graph1 = new SimpleWeightedGraph<Integer, DefaultWeightedEdge>(DefaultWeightedEdge.class);
+        for (int i = 0; i < TILES_X; i++) {
+            for (int j = 0; j < TILES_Y; j++) {
+                graph1.addVertex(3);
+            }
+        }
+        DijkstraShortestPath dijkstraShortestPath
+                = new DijkstraShortestPath(graph1);
+        java.util.List<String> shortestPath = dijkstraShortestPath
+                .getPath("v1", "v4").getVertexList();
+
+
+//        for (int i = 0; i < TILES_X; i++) {
+//            for (int j = 0; j < TILES_Y; j++) {
+//                switch (tiles[i][j]) {
+//                    case LAWN:
+//                        if (i == 0) {
+//                            graph[i + 1][j] = Integer.MAX_VALUE;
+//                        }
+//                        if (j == 0) {
+//                            graph[i][j + 1] = Integer.MAX_VALUE;
+//                        }
+//                        if (j == TILES_X) {
+//                            graph[i][j - 1] = Integer.MAX_VALUE;
+//                        }
+//                        break;
+//                    case PARKING:
+//
+//                        break;
+//                    case PARK_ROAD:
+//
+//                        break;
+//                    case ROAD:
+//
+//                        break;
+//                    case DOUBLE_PARKING:
+//
+//                        break;
+//                }
+//            }
+//        }
     }
 }
