@@ -108,6 +108,7 @@ public class ParamsForm extends JFrame {
         determinePanelTime = new JPanel();
         intervalFieldTime = new JTextField();
         intervalLabelTime = new JLabel("Интервал");
+        intervalFieldTime.setText("5000");
         determineLayoutTime = new GroupLayout(determinePanelTime);
         determineLayoutTime.setAutoCreateGaps(true);
         determineLayoutTime.setAutoCreateContainerGaps(true);
@@ -158,6 +159,7 @@ public class ParamsForm extends JFrame {
         determinePanelFlow = new JPanel();
         intervalFieldFlow = new JTextField();
         intervalLabelFlow = new JLabel("Интервал");
+        intervalFieldFlow.setText("5000");
         determineLayoutFlow = new GroupLayout(determinePanelFlow);
         determineLayoutFlow.setAutoCreateGaps(true);
         determineLayoutFlow.setAutoCreateContainerGaps(true);

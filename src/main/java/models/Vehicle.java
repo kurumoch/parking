@@ -78,32 +78,6 @@ public class Vehicle implements Serializable{
                     e.printStackTrace();
                 }
         }
-
-//
-//        if ((arr != null) && (tiles[arr[0]][arr[1]].equals(TileType.PARK_ROAD)) && (x == rectangles[arr[0]][arr[1]+1].x)) {
-//            y -= 10;
-//            x-=20;
-//        }
-//        x += speedX;
-//        //  y += speedY;
-//        if (x < 0) {
-//            speedX = -speedX;
-//            x = 0;
-//        }
-////        if (y < 0) {
-////            speedY = -speedY;
-////            y = 0;
-////        }
-//        if (x + SIZE > maxX) {
-//            speedX = -speedX;
-//            x = maxX - SIZE;
-//        }
-////        if (y + SIZE > maxY) {
-////            speedY = -speedY;
-////            y = maxY - SIZE;
-////        }
-
-
     }
 
     public void draw(Graphics g) {
