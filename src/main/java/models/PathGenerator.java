@@ -24,7 +24,7 @@ public class PathGenerator {
         LinkedList<Pair<Pair<Integer, Integer>, Direction>> list = new LinkedList<>();
 
 
-        for(int i = 0; i < list1.size()-1;i++) {
+        for(int i = 0; i < list1.size();i++) {
             int x1, x2 = 0;
             int y1, y2 = 0;
             x1 = list1.get(i).getSecond().getFirst();
@@ -43,7 +43,7 @@ public class PathGenerator {
             else if (y1 < y2) {
                 list.add(new Pair<>(iterator.next().getSecond(), Direction.UP));
             }
-
+            list.add(new Pair<>((list1.get(list1.size()-1).getSecond()), Direction.PARK));
         }
 //
 //        LinkedList<Pair<Integer, Integer>> temp = new LinkedList<>();
