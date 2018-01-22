@@ -26,7 +26,9 @@ public class PathGenerator {
         Pair<Integer, Integer> exit = controller.getExit();
         DijkstraShortestPath dijkstraShortestPath = new DijkstraShortestPath(controller.getGraph());
         ArrayList<Pair<TileType, Pair<Integer, Integer>>> list = controller.getAllVertexes();
-        java.util.List<Pair<TileType, Pair<Integer, Integer>>> shortestPath = dijkstraShortestPath.getPath(list.get(180), list.get(58)).getVertexList();
+        int q = entrance.getSecond()*controller.getTILES_Y()+ entrance.getFirst() - 1;
+        int qq = exit.getSecond()*controller.getTILES_Y()+ exit.getFirst() - 1;
+        java.util.List<Pair<TileType, Pair<Integer, Integer>>> shortestPath = dijkstraShortestPath.getPath(list.get(q), list.get(58)).getVertexList();
         Iterator<Pair<TileType, Pair<Integer, Integer>>> iterator = shortestPath.iterator();
         LinkedList<Pair<Pair<Integer, Integer>, Direction>> result = new LinkedList<>();
        // result.add(new Pair<>(iterator.next().getSecond(), Direction.LEFT));
@@ -89,7 +91,7 @@ public class PathGenerator {
 
 
         result.add(new Pair<>(shortestPath.get(shortestPath.size()-1).getSecond(), Direction.PARK));
-        shortestPath = dijkstraShortestPath.getPath(list.get(58), list.get(40)).getVertexList();
+        shortestPath = dijkstraShortestPath.getPath(list.get(58), list.get(169)).getVertexList();
         iterator = shortestPath.iterator();
         for (int i = 0; i < shortestPath.size() - 1; i++) {
             int xx1, xx2 = 0;
@@ -109,7 +111,7 @@ public class PathGenerator {
                 result.add(new Pair<>(iterator.next().getSecond(), Direction.DOWN));
             }
         }
-
+        result.add(new Pair<>(new Pair<12,0>, Direction.LEFT));
         return new Path(result);
     }
 

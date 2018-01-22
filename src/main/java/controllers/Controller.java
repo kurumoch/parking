@@ -287,8 +287,32 @@ public class Controller implements Serializable {
                     graph.addEdge(allVertexes.get(i * TILES_Y + j), allVertexes.get(i * TILES_Y + j + 1));
                     graph.addEdge(allVertexes.get(i * TILES_Y + j), allVertexes.get((i + 1) * TILES_Y + j));
                 }
+
+//                if (tiles[i][j].equals(TileType.PARK_ROAD)) {
+//                    if (tiles[i+1][j].equals(TileType.PARK_ROAD) || tiles[i+1][j].equals(TileType.PARKING) || tiles[i+1][j].equals(TileType.ROAD)) {
+//                        graph.addEdge(allVertexes.get(i * TILES_Y + j), allVertexes.get(i * TILES_Y + j + 1));
+//                    }
+//                    if (tiles[i][j+1].equals(TileType.PARK_ROAD) || tiles[i][j+1].equals(TileType.PARKING) ||tiles[i][j+1].equals(TileType.ROAD) ) {
+//                        graph.addEdge(allVertexes.get(i * TILES_Y + j), allVertexes.get((i + 1) * TILES_Y + j));
+//                    }
+//                }
+//
+//                if (tiles[i][j].equals(TileType.PARKING)) {
+//                    if (tiles[i+1][j].equals(TileType.PARK_ROAD)) {
+//                        graph.addEdge(allVertexes.get(i * TILES_Y + j), allVertexes.get(i * TILES_Y + j + 1));
+//                    }
+//                    if (tiles[i][j+1].equals(TileType.PARK_ROAD)) {
+//                        graph.addEdge(allVertexes.get(i * TILES_Y + j), allVertexes.get((i + 1) * TILES_Y + j));
+//                    }
+//                }
+
+
+
             }
+
         }
+
+        System.out.println("qwe");
     }
 
     public int getxSize() {
