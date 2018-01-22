@@ -64,6 +64,7 @@ public class Controller implements Serializable {
     int a;
     int b;
 
+
     public int getIntervalCars() {
         return intervalCars;
     }
@@ -90,12 +91,19 @@ public class Controller implements Serializable {
     }
 
     public Controller() {
+        typeOfThreadOfCars = "Детерминированный";
+        typeOfThreadTimeOnParking = "Детерминированный";
+        intervalCars = 5000;
+        intervalTime = 5000;
         vehicles = new CopyOnWriteArrayList<>();
     }
 
     //чтение из файла
     public Controller(Path path) {
-
+        typeOfThreadOfCars = "Детерминированный";
+        typeOfThreadTimeOnParking = "Детерминированный";
+        intervalCars = 5000;
+        intervalTime = 5000;
         vehicles = new CopyOnWriteArrayList<>();
     }
 
@@ -255,6 +263,7 @@ public class Controller implements Serializable {
     public java.util.List<Pair<TileType, Pair<Integer, Integer>>> initGraph() {
         ArrayList<Pair<TileType, Pair<Integer, Integer>>> list = new ArrayList<>();
         SimpleGraph<Pair<TileType, Pair<Integer, Integer>>, DefaultEdge> graph = new SimpleGraph<Pair<TileType, Pair<Integer, Integer>>, DefaultEdge>(DefaultEdge.class);
+
         for (int i = 0; i < TILES_X; i++) {
             for (int j = 0; j < TILES_Y; j++) {
                 Pair<TileType, Pair<Integer, Integer>> pair = new Pair<>(tiles[i][j], new Pair<>(i, j));
