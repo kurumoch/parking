@@ -277,7 +277,7 @@ public class Controller implements Serializable {
         for (int i = 0; i < TILES_X-1; i++) {
             for (int j = 0; j < TILES_Y-1; j++) {
                   if (tiles[i][j].ordinal()==TileType.PARK_ROAD.ordinal()
-                          || tiles[i][j].ordinal()==TileType.ROAD.ordinal()|| tiles[i][j].ordinal()==TileType.PARKING.ordinal()) {
+                          || tiles[i][j].ordinal()==TileType.PARKING.ordinal()) {
                 graph.addEdge(list.get(i * TILES_Y + j), list.get(i * TILES_Y + j + 1));
                 graph.addEdge(list.get(i * TILES_Y + j), list.get((i + 1) * TILES_Y + j));
                   }
