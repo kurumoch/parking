@@ -61,6 +61,8 @@ public class Controller implements Serializable {
     private int t2Cars;
     private int intervalCars;
     private int intervalTime;
+    private SimpleGraph<Pair<TileType, Pair<Integer, Integer>>, DefaultEdge> graph;
+    ArrayList<Pair<TileType, Pair<Integer, Integer>>> list;
     int a;
     int b;
 
@@ -250,9 +252,9 @@ public class Controller implements Serializable {
         this.surface = surface;
     }
 
-    public java.util.List<Pair<TileType, Pair<Integer, Integer>>> initGraph() {
-        ArrayList<Pair<TileType, Pair<Integer, Integer>>> list = new ArrayList<>();
-        SimpleGraph<Pair<TileType, Pair<Integer, Integer>>, DefaultEdge> graph = new SimpleGraph<Pair<TileType, Pair<Integer, Integer>>, DefaultEdge>(DefaultEdge.class);
+    public void initGraph() {
+        list = new ArrayList<>();
+        graph = new SimpleGraph<Pair<TileType, Pair<Integer, Integer>>, DefaultEdge>(DefaultEdge.class);
 
         for (int i = 0; i < TILES_X; i++) {
             for (int j = 0; j < TILES_Y; j++) {
@@ -281,10 +283,6 @@ public class Controller implements Serializable {
                   }
             }
         }
-
-        DijkstraShortestPath dijkstraShortestPath = new DijkstraShortestPath(graph);
-        java.util.List<Pair<TileType, Pair<Integer, Integer>>> shortestPath = dijkstraShortestPath.getPath(list.get(res[0]*TILES_X+res[1]), list.get(180)).getVertexList();
-        return shortestPath;
     }
 
     public int getxSize() {
@@ -396,6 +394,23 @@ public class Controller implements Serializable {
         this.probOfArrivalToParking = probOfArrivalToParking;
     }
 
+
+    public boolean[][] getIsEmpty() {
+        return isEmpty;
+    }
+
+    public void setIsEmpty(boolean[][] isEmpty) {
+        this.isEmpty = isEmpty;
+    }
+
+    public ArrayList<Pair<TileType, Pair<Integer, Integer>>> getList() {
+        return list;
+    }
+
+    public void setList(ArrayList<Pair<TileType, Pair<Integer, Integer>>> list) {
+        this.list = list;
+    }
+
     public int getMxTime() {
         return mxTime;
     }
@@ -442,6 +457,14 @@ public class Controller implements Serializable {
 
     public void setMxCars(int mxCars) {
         this.mxCars = mxCars;
+    }
+
+    public SimpleGraph<Pair<TileType, Pair<Integer, Integer>>, DefaultEdge> getGraph() {
+        return graph;
+    }
+
+    public void setGraph(SimpleGraph<Pair<TileType, Pair<Integer, Integer>>, DefaultEdge> graph) {
+        this.graph = graph;
     }
 
     public int getDxCars() {

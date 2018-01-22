@@ -2,7 +2,9 @@ package models;
 
 import controllers.Controller;
 import org.apache.commons.math3.util.Pair;
+import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,10 +20,10 @@ public class PathGenerator {
     }
 
     public Path generate() {
-        List<Pair<TileType, Pair<Integer, Integer>>> list1 = controller.initGraph();
-        Iterator<Pair<TileType, Pair<Integer, Integer>>> iterator = list1.iterator();
-
-        LinkedList<Pair<Pair<Integer, Integer>, Direction>> list = new LinkedList<>();
+        DijkstraShortestPath dijkstraShortestPath = new DijkstraShortestPath(controller.getGraph());
+        ArrayList<Pair<TileType, Pair<Integer, Integer>>> list = controller.getList();
+        java.util.List<Pair<TileType, Pair<Integer, Integer>>> shortestPath = dijkstraShortestPath.getPath(list.get(/*res[0]*TILES_X+res[1]*/), list.get(180)).getVertexList();
+        Iterator<Pair<TileType, Pair<Integer, Integer>>> iterator = controller.getList().iterator();
 
 
         for (int i = 0; i < list1.size() - 1; i++) {
