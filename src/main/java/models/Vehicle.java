@@ -24,7 +24,7 @@ public class Vehicle implements Serializable{
     private float x, y;
     private BufferedImage car;
     static final int SIZE = 35;
-    static final float SPEED = -31f;
+    static final float SPEED = -29f;
     int maxX, maxY;
     private Controller controller;
     float speedX = SPEED, speedY = SPEED;
