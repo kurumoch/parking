@@ -84,7 +84,7 @@ public class MainForm extends JFrame {
         modelMenu.addSeparator();
         modelMenu.add(paramsItem);
         aboutMenu = new JMenu("Справка");
-        JMenuItem aboutAuthorsItem = new JMenuItem("О Авторах..");
+        JMenuItem aboutAuthorsItem = new JMenuItem("Об Авторах..");
         JMenuItem aboutProgramm = new JMenuItem("О Программе..");
         aboutMenu.add(aboutAuthorsItem);
         aboutMenu.add(aboutProgramm);
@@ -244,6 +244,7 @@ public class MainForm extends JFrame {
 //        stopButton.addActionListener(e -> System.out.println(controller.toString()));
 
         aboutAuthorsItem.addActionListener(e -> new AboutAuthorsForm());
+        aboutProgramm.addActionListener(e -> new AboutProgramForm());
     }
 
     public void setEnabledConstructButtons(boolean var){
