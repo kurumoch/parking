@@ -24,7 +24,7 @@ public class Vehicle implements Serializable{
     private float x, y;
     private BufferedImage car;
     static final int SIZE = 35;
-    static final float SPEED = -25f;
+    static final float SPEED = -31f;
     int maxX, maxY;
     private Controller controller;
     float speedX = SPEED, speedY = SPEED;
@@ -33,7 +33,6 @@ public class Vehicle implements Serializable{
     JPanel panel;
     Path path;
     Pair<Pair<Integer, Integer>, Direction> point;
-    Pair<Pair<Integer, Integer>, Direction> oldPoint;
 
 
     public Vehicle(Controller controller, int parkingTime, Path path) {
@@ -60,8 +59,6 @@ public class Vehicle implements Serializable{
 
     public void move() {
 
-
-        oldPoint = point;
 //        int[] arr = controller.getTilesNumber(Math.round(x), Math.round(y));
 
         point = path.next();
@@ -119,7 +116,7 @@ public class Vehicle implements Serializable{
         }
         AffineTransform t = new AffineTransform();
         t.scale(1,1);
-        t.translate(x, y);
+        t.translate(x-21, y-12);
         ((Graphics2D) g).drawImage(car, t, panel);
 
     }

@@ -256,15 +256,14 @@ public class Controller implements Serializable {
 
         for (int i = 0; i < TILES_X; i++) {
             for (int j = 0; j < TILES_Y; j++) {
-                Pair<TileType, Pair<Integer, Integer>> pair = new Pair<>(tiles[i][j], new Pair<>(i, j));
+                Pair<TileType, Pair<Integer, Integer>> pair = new Pair<>(tiles[i][j], new Pair<>(j, i));
                 graph.addVertex(pair);
                 list.add(pair);
             }
         }
-
         int res[] = new int[2];
-        for (int j = 0; j < TILES_Y; j++) {
-            for (int i = 0; i < TILES_X; i++) {
+        for (int i = 0; i < TILES_X; i++) {
+            for (int j = 0; j < TILES_Y; j++) {
                 if(tiles[i][j].equals(TileType.PARKING) && isEmpty[i][j]) {
                     res[0] = i;
                     res[1] = j;
@@ -275,15 +274,15 @@ public class Controller implements Serializable {
         }
         for (int i = 0; i < TILES_X-1; i++) {
             for (int j = 0; j < TILES_Y-1; j++) {
-                if (tiles[i][j].equals(TileType.PARK_ROAD) || tiles[i][j].equals(TileType.PARKING)) {
-                    graph.addEdge(list.get(i * TILES_Y + j), list.get(i * TILES_Y + j + 1));
-                    graph.addEdge(list.get(i * TILES_Y + j), list.get((i + 1) * TILES_Y + j));
-                }
+                  if (tiles[i][j].equals(TileType.PARK_ROAD) || tiles[i][j].equals(TileType.PARKING)) {
+                graph.addEdge(list.get(i * TILES_Y + j), list.get(i * TILES_Y + j + 1));
+                graph.addEdge(list.get(i * TILES_Y + j), list.get((i + 1) * TILES_Y + j));
+                  }
             }
         }
 
         DijkstraShortestPath dijkstraShortestPath = new DijkstraShortestPath(graph);
-        java.util.List<Pair<TileType, Pair<Integer, Integer>>> shortestPath = dijkstraShortestPath.getPath(list.get(), list.get(180)).getVertexList();
+        java.util.List<Pair<TileType, Pair<Integer, Integer>>> shortestPath = dijkstraShortestPath.getPath(list.get(res[0]*TILES_X+res[1]), list.get(180)).getVertexList();
         return shortestPath;
     }
 
