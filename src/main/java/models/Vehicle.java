@@ -91,16 +91,16 @@ public class Vehicle implements Serializable{
         try {
             switch (point.getSecond()) {
                 case DOWN:
-                    car = ImageIO.read(new File("card.png"));
+                    car = ImageIO.read(new File("card1.png"));
                     break;
                 case LEFT:
-                    car = ImageIO.read(new File("carl.png"));
+                    car = ImageIO.read(new File("carl1.png"));
                     break;
                 case RIGHT:
-                    car = ImageIO.read(new File("carr.png"));
+                    car = ImageIO.read(new File("carr1.png"));
                     break;
                 case UP:
-                    car = ImageIO.read(new File("caru.png"));
+                    car = ImageIO.read(new File("caru1.png"));
                     break;
                 case PARK:
                     try {
