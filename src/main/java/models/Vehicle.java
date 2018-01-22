@@ -24,10 +24,10 @@ public class Vehicle implements Serializable{
     private float x, y;
     private BufferedImage car;
     static final int SIZE = 35;
-    static final float SPEED = -29f;
+    static final float SPEED = -28f;
     int maxX, maxY;
     private Controller controller;
-    float speedX = SPEED, speedY = SPEED;
+    float speedX = SPEED, speedY = -25f;
     private TileType[][] tiles;
     private Rectangle[][] rectangles;
     JPanel panel;
