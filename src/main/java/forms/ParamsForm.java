@@ -383,6 +383,7 @@ public class ParamsForm extends JFrame {
                 controller.setIntervalCars(Integer.valueOf(intervalFieldFlow.getText()));
                 if(!Objects.equals(intervalFieldTime.getText(), ""))
                 controller.setIntervalTime(Integer.valueOf(intervalFieldTime.getText()));
+                controller.initParking((int)xSpinner.getValue(), (int)ySpinner.getValue());
                 dispose();
             }
 

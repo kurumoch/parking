@@ -8,10 +8,10 @@ import org.apache.commons.math3.distribution.*;
 import org.apache.commons.math3.random.RandomGenerator;
 
 public class CarsCreator extends Thread {
-    Controller controller;
+    private Controller controller;
 
-    AbstractRealDistribution distributionCars;
-    AbstractRealDistribution distributionTime;
+    private AbstractRealDistribution distributionCars;
+    private AbstractRealDistribution distributionTime;
 
 
     public CarsCreator(Controller controller) {

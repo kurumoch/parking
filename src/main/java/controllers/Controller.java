@@ -7,21 +7,14 @@ import drawing.DrawRect;
 import models.State;
 import models.TileType;
 import models.Vehicle;
-import org.apache.commons.math3.distribution.RealDistribution;
 import org.apache.commons.math3.util.Pair;
-import org.jgrapht.Graph;
-import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
 import org.jgrapht.graph.*;
 import threads.CarsCreator;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Set;
-import java.beans.Transient;
 import java.io.Serializable;
-import java.nio.file.Path;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import static models.TileType.*;
@@ -37,9 +30,7 @@ public class Controller implements Serializable {
     private Surface surface;
     private State state;
     public CopyOnWriteArrayList<Vehicle> vehicles;
-    // private int[][] graph;
     private boolean[][] isEmpty;
-
     private int costOfOneHour;
     private int costToThreeHours;
     private int costMoreThreeHours;
@@ -61,6 +52,9 @@ public class Controller implements Serializable {
     private int t2Cars;
     private int intervalCars;
     private int intervalTime;
+    private int entrance, exit;
+    private SimpleGraph<Pair<TileType, Pair<Integer, Integer>>, DefaultEdge> graph;
+    private ArrayList<Pair<TileType, Pair<Integer, Integer>>> allVertexes;
     int a;
     int b;
 
@@ -93,12 +87,21 @@ public class Controller implements Serializable {
     public Controller() {
         typeOfThreadOfCars = "Детерминированный";
         typeOfThreadTimeOnParking = "Детерминированный";
-        intervalCars = 5000;
-        intervalTime = 5000;
+        intervalCars = 1000;
+        intervalTime = 700;
         vehicles = new CopyOnWriteArrayList<>();
     }
 
-    public void initParking(int x, int y) {
+    private void initEmptyParking(){
+        isEmpty = new boolean[TILES_X][TILES_Y];
+        for (int i = 0; i < TILES_X; i++) {
+            for (int j = 0; j < TILES_X; j++) {
+                isEmpty[i][j] = true;
+            }
+        }
+    }
+
+    private void calcEntranceExit(int x, int y){
         state = State.CONSTRUCT;
         xSize = ++x;
         ySize = ++y;
@@ -106,12 +109,9 @@ public class Controller implements Serializable {
         a = Math.round(mid_x - ((float) xSize) / 2) - 1;
         b = Math.round(mid_x + ((float) xSize) / 2) - 1;
         tiles = new TileType[TILES_X][TILES_Y];
-        isEmpty = new boolean[TILES_X][TILES_Y];
-        for(int i = 0; i < TILES_X; i++){
-            for(int j = 0; j < TILES_X; j++){
-                isEmpty[i][j] = true;
-            }
-        }
+    }
+
+    private void fillDefaultTiles(){
         for (int j = 0; j < TILES_Y; j++) {
             for (int i = 0; i < TILES_X; i++) {
                 tiles[i][j] = LAWN;
@@ -128,6 +128,14 @@ public class Controller implements Serializable {
                     tiles[i][j] = ROAD;
             }
         }
+    }
+
+    public void initParking(int x, int y) {
+        calcEntranceExit(x,y);
+        initEmptyParking();
+        fillDefaultTiles();
+        entrance = b+1;
+        exit = a+1;
         vehicles = new CopyOnWriteArrayList<>();
         initGraph();
     }
@@ -162,26 +170,29 @@ public class Controller implements Serializable {
     }
 
     public void setTile(int x, int y, TileType tileType) {
-        DrawRect drawRect = new DrawRect(surface.getGraphics());
-        for (int i = 2; i < TILES_X - 1; i++) {
-            for (int j = 2; j < TILES_Y - 2; j++) {
-                if (y > rectangles[i][j].y && y < rectangles[i + 1][j].y && x > rectangles[i][j].x && x < rectangles[i][j + 1].x) {
-                    tiles[i][j] = tileType;
-                    DrawTiles drawTiles = new DrawTiles(surface, this);
-                    drawTiles.draw(tiles);
-                    return;
+        if(state == State.CONSTRUCT) {
+            DrawRect drawRect = new DrawRect(surface.getGraphics());
+            for (int i = 2; i < TILES_X - 1; i++) {
+                for (int j = 2; j < TILES_Y - 2; j++) {
+                    if (y > rectangles[i][j].y && y < rectangles[i + 1][j].y && x > rectangles[i][j].x && x < rectangles[i][j + 1].x) {
+                        tiles[i][j] = tileType;
+                        DrawTiles drawTiles = new DrawTiles(surface, this);
+                        drawTiles.draw(tiles);
+                        return;
+                    }
                 }
             }
         }
     }
 
     public void setDoubleTile(int x, int y, boolean vert) {
+        if(state == State.CONSTRUCT){
         DrawRect drawRect = new DrawRect(surface.getGraphics());
         for (int i = 2; i < TILES_X - 1; i++) {
             for (int j = 2; j < TILES_Y - 2; j++) {
                 if (y > rectangles[i][j].y && y < rectangles[i + 1][j].y && x > rectangles[i][j].x && x < rectangles[i][j + 1].x) {
-                    if((j-1 > 1 && !vert)|| (i-1>1 &&vert)) {
-                    tiles[i][j] = TileType.DOUBLE_PARKING;
+                    if ((j - 1 > 1 && !vert) || (i - 1 > 1 && vert)) {
+                        tiles[i][j] = TileType.DOUBLE_PARKING;
                         if (vert)
                             tiles[--i][j] = TileType.DOUBLE_PARKING;
                         else tiles[i][--j] = TileType.DOUBLE_PARKING;
@@ -191,6 +202,7 @@ public class Controller implements Serializable {
                     return;
                 }
             }
+        }
         }
     }
 
@@ -221,7 +233,7 @@ public class Controller implements Serializable {
         state = State.MODELLING;
         CarsCreator carsCreator = new CarsCreator(this);
         carsCreator.start();
-        Timer t = new Timer(100, surface);
+        Timer t = new Timer(20, surface);
         t.setInitialDelay(0);
         t.start();
     }
@@ -250,41 +262,33 @@ public class Controller implements Serializable {
         this.surface = surface;
     }
 
-    public java.util.List<Pair<TileType, Pair<Integer, Integer>>> initGraph() {
-        ArrayList<Pair<TileType, Pair<Integer, Integer>>> list = new ArrayList<>();
-        SimpleGraph<Pair<TileType, Pair<Integer, Integer>>, DefaultEdge> graph = new SimpleGraph<Pair<TileType, Pair<Integer, Integer>>, DefaultEdge>(DefaultEdge.class);
+    public void initGraph() {
+        allVertexes = new ArrayList<>();
+        graph = new SimpleGraph<>(DefaultEdge.class);
+        initVertex();
+        initEdges();
+    }
 
+    private void initVertex(){
         for (int i = 0; i < TILES_X; i++) {
             for (int j = 0; j < TILES_Y; j++) {
                 Pair<TileType, Pair<Integer, Integer>> pair = new Pair<>(tiles[i][j], new Pair<>(j, i));
                 graph.addVertex(pair);
-                list.add(pair);
+                allVertexes.add(pair);
             }
         }
-        int res[] = new int[2];
-        for (int i = 0; i < TILES_X; i++) {
-            for (int j = 0; j < TILES_Y; j++) {
-                if(tiles[i][j].equals(TileType.PARKING) && isEmpty[i][j]) {
-                    res[0] = i;
-                    res[1] = j;
-                    isEmpty[i][j] = false;
-                    break;
+    }
+
+    private void initEdges(){
+        for (int i = 0; i < TILES_X - 1; i++) {
+            for (int j = 0; j < TILES_Y - 1; j++) {
+                if (tiles[i][j].ordinal() == TileType.PARK_ROAD.ordinal()
+                        || tiles[i][j].ordinal() == TileType.PARKING.ordinal()) {
+                    graph.addEdge(allVertexes.get(i * TILES_Y + j), allVertexes.get(i * TILES_Y + j + 1));
+                    graph.addEdge(allVertexes.get(i * TILES_Y + j), allVertexes.get((i + 1) * TILES_Y + j));
                 }
             }
         }
-        for (int i = 0; i < TILES_X-1; i++) {
-            for (int j = 0; j < TILES_Y-1; j++) {
-                  if (tiles[i][j].ordinal()==TileType.PARK_ROAD.ordinal()
-                          || tiles[i][j].ordinal()==TileType.ROAD.ordinal()|| tiles[i][j].ordinal()==TileType.PARKING.ordinal()) {
-                graph.addEdge(list.get(i * TILES_Y + j), list.get(i * TILES_Y + j + 1));
-                graph.addEdge(list.get(i * TILES_Y + j), list.get((i + 1) * TILES_Y + j));
-                  }
-            }
-        }
-
-        DijkstraShortestPath dijkstraShortestPath = new DijkstraShortestPath(graph);
-        java.util.List<Pair<TileType, Pair<Integer, Integer>>> shortestPath = dijkstraShortestPath.getPath(list.get(res[0]*TILES_X+res[1]), list.get(180)).getVertexList();
-        return shortestPath;
     }
 
     public int getxSize() {
@@ -333,6 +337,22 @@ public class Controller implements Serializable {
 
     public int getCostToThreeHours() {
         return costToThreeHours;
+    }
+
+    public Pair<Integer, Integer> getEntrance() {
+        return new Pair<Integer, Integer>(TILES_Y-1,entrance);
+    }
+
+    public void setEntrance(int entrance) {
+        this.entrance = entrance;
+    }
+
+    public Pair<Integer, Integer> getExit() {
+        return new Pair<Integer, Integer>(TILES_Y-1,exit);
+    }
+
+    public void setExit(int exit) {
+        this.exit = exit;
     }
 
     public void setCostToThreeHours(int costToThreeHours) {
@@ -396,6 +416,23 @@ public class Controller implements Serializable {
         this.probOfArrivalToParking = probOfArrivalToParking;
     }
 
+
+    public boolean[][] getIsEmpty() {
+        return isEmpty;
+    }
+
+    public void setIsEmpty(boolean[][] isEmpty) {
+        this.isEmpty = isEmpty;
+    }
+
+    public ArrayList<Pair<TileType, Pair<Integer, Integer>>> getAllVertexes() {
+        return allVertexes;
+    }
+
+    public void setAllVertexes(ArrayList<Pair<TileType, Pair<Integer, Integer>>> allVertexes) {
+        this.allVertexes = allVertexes;
+    }
+
     public int getMxTime() {
         return mxTime;
     }
@@ -442,6 +479,14 @@ public class Controller implements Serializable {
 
     public void setMxCars(int mxCars) {
         this.mxCars = mxCars;
+    }
+
+    public SimpleGraph<Pair<TileType, Pair<Integer, Integer>>, DefaultEdge> getGraph() {
+        return graph;
+    }
+
+    public void setGraph(SimpleGraph<Pair<TileType, Pair<Integer, Integer>>, DefaultEdge> graph) {
+        this.graph = graph;
     }
 
     public int getDxCars() {
