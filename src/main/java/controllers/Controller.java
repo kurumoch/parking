@@ -57,7 +57,29 @@ public class Controller implements Serializable {
     private ArrayList<Pair<TileType, Pair<Integer, Integer>>> allVertexes;
     int a;
     int b;
+    Timer t;
+    CarsCreator carsCreator;
+    int defaultDelay;
 
+    public int getDefaultDelay() {
+        return defaultDelay;
+    }
+
+    public int getDelay(){
+        return t.getDelay();
+    }
+
+    public void stopTimer(){
+        t.stop();
+    }
+
+    public void startTimer(){
+        t.start();
+    }
+
+    public void setDelay(int delay) {
+        t.setDelay(delay);
+    }
 
     public int getIntervalCars() {
         return intervalCars;
@@ -230,12 +252,17 @@ public class Controller implements Serializable {
     }
 
     public void startModelling() {
-        state = State.MODELLING;
-        CarsCreator carsCreator = new CarsCreator(this);
-        carsCreator.start();
-        Timer t = new Timer(20, surface);
-        t.setInitialDelay(0);
-        t.start();
+        if(carsCreator == null)
+            carsCreator = new CarsCreator(this);
+        if(t == null) {
+            state = State.MODELLING;
+            carsCreator.start();
+
+            t = new Timer(20, surface);
+            t.setInitialDelay(0);
+            t.start();
+        }
+        else {t.start();carsCreator.start();}
     }
 
     public void stopModelling() {
@@ -281,7 +308,7 @@ public class Controller implements Serializable {
 
     private void initEdges(){
         for (int i = 0; i < TILES_X ; i++) {
-            for (int j = 0; j < TILES_Y; j++) {
+            for (int j = 0; j < TILES_Y-1; j++) {
                 if (tiles[i][j].ordinal() == TileType.PARK_ROAD.ordinal()) {
                     if(tiles[i][j+1].ordinal() == TileType.PARKING.ordinal() || tiles[i][j+1].ordinal() == TileType.PARK_ROAD.ordinal())
                     graph.addEdge(allVertexes.get(i * TILES_Y + j), allVertexes.get(i * TILES_Y + j + 1));
@@ -292,32 +319,8 @@ public class Controller implements Serializable {
                     if(tiles[i][j-1].ordinal() == TileType.PARKING.ordinal() || tiles[i][j-1].ordinal() == TileType.PARK_ROAD.ordinal())
                     graph.addEdge(allVertexes.get(i * TILES_Y + j), allVertexes.get(i * TILES_Y + j - 1));
                 }
-
-//                if (tiles[i][j].equals(TileType.PARK_ROAD)) {
-//                    if (tiles[i+1][j].equals(TileType.PARK_ROAD) || tiles[i+1][j].equals(TileType.PARKING) || tiles[i+1][j].equals(TileType.ROAD)) {
-//                        graph.addEdge(allVertexes.get(i * TILES_Y + j), allVertexes.get(i * TILES_Y + j + 1));
-//                    }
-//                    if (tiles[i][j+1].equals(TileType.PARK_ROAD) || tiles[i][j+1].equals(TileType.PARKING) ||tiles[i][j+1].equals(TileType.ROAD) ) {
-//                        graph.addEdge(allVertexes.get(i * TILES_Y + j), allVertexes.get((i + 1) * TILES_Y + j));
-//                    }
-//                }
-//
-//                if (tiles[i][j].equals(TileType.PARKING)) {
-//                    if (tiles[i+1][j].equals(TileType.PARK_ROAD)) {
-//                        graph.addEdge(allVertexes.get(i * TILES_Y + j), allVertexes.get(i * TILES_Y + j + 1));
-//                    }
-//                    if (tiles[i][j+1].equals(TileType.PARK_ROAD)) {
-//                        graph.addEdge(allVertexes.get(i * TILES_Y + j), allVertexes.get((i + 1) * TILES_Y + j));
-//                    }
-//                }
-
-
-
             }
-
         }
-
-        System.out.println("qwe");
     }
 
     public static int vForGen(int i, int j){
