@@ -283,7 +283,7 @@ public class Controller implements Serializable {
         }
 
         DijkstraShortestPath dijkstraShortestPath = new DijkstraShortestPath(graph);
-        java.util.List<Pair<TileType, Pair<Integer, Integer>>> shortestPath = dijkstraShortestPath.getPath(list.get(res[0]*TILES_Y+res[1]), list.get(180)).getVertexList();
+        java.util.List<Pair<TileType, Pair<Integer, Integer>>> shortestPath = dijkstraShortestPath.getPath(list.get(), list.get(180)).getVertexList();
         return shortestPath;
     }
 
