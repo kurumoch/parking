@@ -384,6 +384,7 @@ public class ParamsForm extends JFrame {
                 if(!Objects.equals(intervalFieldTime.getText(), ""))
                 controller.setIntervalTime(Integer.valueOf(intervalFieldTime.getText()));
                 controller.initParking((int)xSpinner.getValue(), (int)ySpinner.getValue());
+                controller.drawTiles();
                 dispose();
             }
 

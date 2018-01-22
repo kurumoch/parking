@@ -23,8 +23,8 @@ public class Controller implements Serializable {
 
     private TileType[][] tiles;
     private Rectangle[][] rectangles;
-    private final int TILES_X = 13;
-    private final int TILES_Y = 14;
+    private static final int TILES_X = 13;
+    private static final int TILES_Y = 14;
     private int xSize;
     private int ySize;
     private Surface surface;
@@ -88,7 +88,7 @@ public class Controller implements Serializable {
         typeOfThreadOfCars = "Детерминированный";
         typeOfThreadTimeOnParking = "Детерминированный";
         intervalCars = 1000;
-        intervalTime = 700;
+        intervalTime = 300;
         vehicles = new CopyOnWriteArrayList<>();
     }
 
@@ -222,7 +222,7 @@ public class Controller implements Serializable {
         return null;
     }
 
-    public void setDefaultTiles() {
+    public void drawTiles() {
         DrawLines dr = new DrawLines(surface, this);
         dr.draw();
         DrawTiles drawTiles = new DrawTiles(surface, this);
@@ -280,15 +280,24 @@ public class Controller implements Serializable {
     }
 
     private void initEdges(){
-        for (int i = 0; i < TILES_X - 1; i++) {
-            for (int j = 0; j < TILES_Y - 1; j++) {
-                if (tiles[i][j].ordinal() == TileType.PARK_ROAD.ordinal()
-                        || tiles[i][j].ordinal() == TileType.PARKING.ordinal()) {
+        for (int i = 0; i < TILES_X ; i++) {
+            for (int j = 0; j < TILES_Y; j++) {
+                if (tiles[i][j].ordinal() == TileType.PARK_ROAD.ordinal()) {
+                    if(tiles[i][j+1].ordinal() == TileType.PARKING.ordinal() || tiles[i][j+1].ordinal() == TileType.PARK_ROAD.ordinal())
                     graph.addEdge(allVertexes.get(i * TILES_Y + j), allVertexes.get(i * TILES_Y + j + 1));
+                    if(tiles[i+1][j].ordinal() == TileType.PARKING.ordinal() || tiles[i+1][j].ordinal() == TileType.PARK_ROAD.ordinal())
                     graph.addEdge(allVertexes.get(i * TILES_Y + j), allVertexes.get((i + 1) * TILES_Y + j));
+                    if(tiles[i-1][j].ordinal() == TileType.PARKING.ordinal() || tiles[i-1][j].ordinal() == TileType.PARK_ROAD.ordinal())
+                    graph.addEdge(allVertexes.get(i * TILES_Y + j), allVertexes.get((i-1) * TILES_Y + j));
+                    if(tiles[i][j-1].ordinal() == TileType.PARKING.ordinal() || tiles[i][j-1].ordinal() == TileType.PARK_ROAD.ordinal())
+                    graph.addEdge(allVertexes.get(i * TILES_Y + j), allVertexes.get(i * TILES_Y + j - 1));
                 }
             }
         }
+    }
+
+    public static int vForGen(int i, int j){
+        return (j-1) * TILES_Y + (i-1);
     }
 
     public int getxSize() {

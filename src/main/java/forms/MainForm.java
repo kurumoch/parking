@@ -2,7 +2,6 @@ package forms;
 
 import JPanels.Surface;
 import controllers.Controller;
-import javafx.stage.FileChooser;
 import models.State;
 import models.TileType;
 
@@ -13,7 +12,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.*;
-import java.util.ArrayList;
 
 /**
  * Created by denis on 22.11.2017.
@@ -137,7 +135,7 @@ public class MainForm extends JFrame {
         setVisible(true);
 
         paramsItem.addActionListener(e -> new ParamsForm(controller));
-//        controller.setDefaultTiles();
+//        controller.drawTiles();
         setEnabledConstructButtons(false);
         setEnableModellingButtons(false);
         startButton.addActionListener(e -> {
@@ -167,8 +165,8 @@ public class MainForm extends JFrame {
                     ObjectInputStream inputStream = new ObjectInputStream((new FileInputStream(fileChooser.getSelectedFile())));
                     Controller controller1 =  (Controller) inputStream.readObject();
                     inputStream.close();
-                    controller.setRectangles(controller1.getRectangles());
                     controller.initParking(controller1.getxSize(), controller1.getySize());
+                    controller.setRectangles(controller1.getRectangles());
                     controller.setTiles(controller1.getTiles());
                     controller.setCostOfOneHour(controller1.getCostOfOneHour());
                     controller.setCostToThreeHours(controller1.getCostToThreeHours());
@@ -191,7 +189,7 @@ public class MainForm extends JFrame {
                     controller.setLambdaCars(controller1.getLambdaCars());
                     controller.setT1Cars(controller1.getT1Cars());
                     controller.setT2Cars(controller1.getT2Cars());
-                    controller.setDefaultTiles();
+                    controller.drawTiles();
                     graphicsPanel = controller1.getSurface();
                     controller.setSurface(controller1.getSurface());
                     graphicsPanel.setController(controller);

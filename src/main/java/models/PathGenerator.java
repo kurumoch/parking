@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import static controllers.Controller.vForGen;
+
 /**
  * Created by denis on 21.01.2018.
  */
@@ -26,10 +28,12 @@ public class PathGenerator {
         Pair<Integer, Integer> exit = controller.getExit();
         DijkstraShortestPath dijkstraShortestPath = new DijkstraShortestPath(controller.getGraph());
         ArrayList<Pair<TileType, Pair<Integer, Integer>>> list = controller.getAllVertexes();
-        java.util.List<Pair<TileType, Pair<Integer, Integer>>> shortestPath = dijkstraShortestPath.getPath(list.get(180), list.get(151)).getVertexList();
+        java.util.List<Pair<TileType, Pair<Integer, Integer>>> shortestPath = dijkstraShortestPath.getPath(list.get(vForGen(13,12)), list.get(vForGen(12,10))).getVertexList();
         Iterator<Pair<TileType, Pair<Integer, Integer>>> iterator = shortestPath.iterator();
         LinkedList<Pair<Pair<Integer, Integer>, Direction>> result = new LinkedList<>();
        // result.add(new Pair<>(iterator.next().getSecond(), Direction.LEFT));
+            result.add(new Pair<>(controller.getEntrance(), Direction.LEFT));
+            result.add(new Pair<>(new Pair<>(controller.getEntrance().getFirst(), controller.getEntrance().getSecond() - 1), Direction.UP));
         for (int i = 0; i < shortestPath.size() - 1; i++) {
             int x1, x2 = 0;
             int y1, y2 = 0;
@@ -68,28 +72,28 @@ public class PathGenerator {
                 }
             }
         }
-        int x1,x2 = 0;
-        int y1,y2 = 0;
-        x1 = shortestPath.get(shortestPath.size()-2).getSecond().getFirst();
-        y1 = shortestPath.get(shortestPath.size()-2).getSecond().getSecond();
-        x2 = shortestPath.get(shortestPath.size()-1).getSecond().getFirst();
-        y2 = shortestPath.get(shortestPath.size()-1).getSecond().getSecond();
-        if (x1 > x2) {
-            result.add(new Pair<>(iterator.next().getSecond(), Direction.LEFT));
-        } else if (x1 < x2) {
-            result.add(new Pair<>(iterator.next().getSecond(), Direction.RIGHT));
-        }
-        if (y1 > y2) {
-            result.add(new Pair<>(iterator.next().getSecond(), Direction.UP));
-        } else if (y1 < y2) {
-            result.add(new Pair<>(iterator.next().getSecond(), Direction.DOWN));
-        }
+//        int x1,x2 = 0;
+//        int y1,y2 = 0;
+//        x1 = shortestPath.get(shortestPath.size()-2).getSecond().getFirst();
+//        y1 = shortestPath.get(shortestPath.size()-2).getSecond().getSecond();
+//        x2 = shortestPath.get(shortestPath.size()-1).getSecond().getFirst();
+//        y2 = shortestPath.get(shortestPath.size()-1).getSecond().getSecond();
+//        if (x1 > x2) {
+//            result.add(new Pair<>(iterator.next().getSecond(), Direction.LEFT));
+//        } else if (x1 < x2) {
+//            result.add(new Pair<>(iterator.next().getSecond(), Direction.RIGHT));
+//        }
+//        if (y1 > y2) {
+//            result.add(new Pair<>(iterator.next().getSecond(), Direction.UP));
+//        } else if (y1 < y2) {
+//            result.add(new Pair<>(iterator.next().getSecond(), Direction.DOWN));
+//        }
 
 
 
 
         result.add(new Pair<>(shortestPath.get(shortestPath.size()-1).getSecond(), Direction.PARK));
-        shortestPath = dijkstraShortestPath.getPath(list.get(151), list.get(40)).getVertexList();
+        shortestPath = dijkstraShortestPath.getPath(list.get(vForGen(12,10)), list.get(vForGen(2,12))).getVertexList();
         iterator = shortestPath.iterator();
         for (int i = 0; i < shortestPath.size() - 1; i++) {
             int xx1, xx2 = 0;
