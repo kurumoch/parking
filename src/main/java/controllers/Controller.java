@@ -107,8 +107,8 @@ public class Controller implements Serializable {
         b = Math.round(mid_x + ((float) xSize) / 2) - 1;
         tiles = new TileType[TILES_X][TILES_Y];
         isEmpty = new boolean[TILES_X][TILES_Y];
-        for (int i = 0; i < TILES_X; i++) {
-            for (int j = 0; j < TILES_X; j++) {
+        for(int i = 0; i < TILES_X; i++){
+            for(int j = 0; j < TILES_X; j++){
                 isEmpty[i][j] = true;
             }
         }
@@ -180,8 +180,8 @@ public class Controller implements Serializable {
         for (int i = 2; i < TILES_X - 1; i++) {
             for (int j = 2; j < TILES_Y - 2; j++) {
                 if (y > rectangles[i][j].y && y < rectangles[i + 1][j].y && x > rectangles[i][j].x && x < rectangles[i][j + 1].x) {
-                    if ((j - 1 > 1 && !vert) || (i - 1 > 1 && vert)) {
-                        tiles[i][j] = TileType.DOUBLE_PARKING;
+                    if((j-1 > 1 && !vert)|| (i-1>1 &&vert)) {
+                    tiles[i][j] = TileType.DOUBLE_PARKING;
                         if (vert)
                             tiles[--i][j] = TileType.DOUBLE_PARKING;
                         else tiles[i][--j] = TileType.DOUBLE_PARKING;
@@ -264,7 +264,7 @@ public class Controller implements Serializable {
         int res[] = new int[2];
         for (int i = 0; i < TILES_X; i++) {
             for (int j = 0; j < TILES_Y; j++) {
-                if (tiles[i][j].equals(TileType.PARKING) && isEmpty[i][j]) {
+                if(tiles[i][j].equals(TileType.PARKING) && isEmpty[i][j]) {
                     res[0] = i;
                     res[1] = j;
                     isEmpty[i][j] = false;
@@ -272,17 +272,18 @@ public class Controller implements Serializable {
                 }
             }
         }
-        for (int i = 0; i < TILES_X - 1; i++) {
-            for (int j = 0; j < TILES_Y - 1; j++) {
-                if (tiles[i][j].equals(TileType.PARK_ROAD) || tiles[i][j].equals(TileType.PARKING)) {
-                    graph.addEdge(list.get(i * TILES_Y + j), list.get(i * TILES_Y + j + 1));
-                    graph.addEdge(list.get(i * TILES_Y + j), list.get((i + 1) * TILES_Y + j));
-                }
+        for (int i = 0; i < TILES_X-1; i++) {
+            for (int j = 0; j < TILES_Y-1; j++) {
+                  if (tiles[i][j].ordinal()==TileType.PARK_ROAD.ordinal()
+                          || tiles[i][j].ordinal()==TileType.ROAD.ordinal()|| tiles[i][j].ordinal()==TileType.PARKING.ordinal()) {
+                graph.addEdge(list.get(i * TILES_Y + j), list.get(i * TILES_Y + j + 1));
+                graph.addEdge(list.get(i * TILES_Y + j), list.get((i + 1) * TILES_Y + j));
+                  }
             }
         }
 
         DijkstraShortestPath dijkstraShortestPath = new DijkstraShortestPath(graph);
-        java.util.List<Pair<TileType, Pair<Integer, Integer>>> shortestPath = dijkstraShortestPath.getPath(list.get(res[0] * TILES_Y + res[1]), list.get(180)).getVertexList();
+        java.util.List<Pair<TileType, Pair<Integer, Integer>>> shortestPath = dijkstraShortestPath.getPath(list.get(res[0]*TILES_X+res[1]), list.get(180)).getVertexList();
         return shortestPath;
     }
 
