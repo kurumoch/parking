@@ -89,8 +89,8 @@ public class Controller implements Serializable {
     public Controller() {
         typeOfThreadOfCars = "Детерминированный";
         typeOfThreadTimeOnParking = "Детерминированный";
-        intervalCars = 2000;
-        intervalTime = 1000;
+        intervalCars = 1000;
+        intervalTime = 200;
         vehicles = new CopyOnWriteArrayList<>();
     }
 
@@ -163,20 +163,23 @@ public class Controller implements Serializable {
     }
 
     public void setTile(int x, int y, TileType tileType) {
-        DrawRect drawRect = new DrawRect(surface.getGraphics());
-        for (int i = 2; i < TILES_X - 1; i++) {
-            for (int j = 2; j < TILES_Y - 2; j++) {
-                if (y > rectangles[i][j].y && y < rectangles[i + 1][j].y && x > rectangles[i][j].x && x < rectangles[i][j + 1].x) {
-                    tiles[i][j] = tileType;
-                    DrawTiles drawTiles = new DrawTiles(surface, this);
-                    drawTiles.draw(tiles);
-                    return;
+        if(state == State.CONSTRUCT) {
+            DrawRect drawRect = new DrawRect(surface.getGraphics());
+            for (int i = 2; i < TILES_X - 1; i++) {
+                for (int j = 2; j < TILES_Y - 2; j++) {
+                    if (y > rectangles[i][j].y && y < rectangles[i + 1][j].y && x > rectangles[i][j].x && x < rectangles[i][j + 1].x) {
+                        tiles[i][j] = tileType;
+                        DrawTiles drawTiles = new DrawTiles(surface, this);
+                        drawTiles.draw(tiles);
+                        return;
+                    }
                 }
             }
         }
     }
 
     public void setDoubleTile(int x, int y, boolean vert) {
+        if(state == State.CONSTRUCT){
         DrawRect drawRect = new DrawRect(surface.getGraphics());
         for (int i = 2; i < TILES_X - 1; i++) {
             for (int j = 2; j < TILES_Y - 2; j++) {
@@ -192,6 +195,7 @@ public class Controller implements Serializable {
                     return;
                 }
             }
+        }
         }
     }
 
@@ -222,7 +226,7 @@ public class Controller implements Serializable {
         state = State.MODELLING;
         CarsCreator carsCreator = new CarsCreator(this);
         carsCreator.start();
-        Timer t = new Timer(100, surface);
+        Timer t = new Timer(20, surface);
         t.setInitialDelay(0);
         t.start();
     }

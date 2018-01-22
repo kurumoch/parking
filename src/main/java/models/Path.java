@@ -25,4 +25,8 @@ public class Path {//массив точек и направление
         return path.pop();
     }
 
+    public boolean hasNext(){
+        return path.size()>0;
+    }
+
 }
