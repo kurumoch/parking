@@ -18,22 +18,10 @@ public class PathGenerator {
         this.controller = controller;
     }
 
+
     public Path generate() {
-        int coordsOfParkingPlace[] = new int[2];
-        TileType[][] tiles = controller.getTiles();
-        int TILES_X = controller.getTILES_X();
-        int TILES_Y = controller.getTILES_Y();
-        boolean[][] isEmpty = controller.getIsEmpty();
-        for (int i = 0; i < TILES_X; i++) {
-            for (int j = 0; j < TILES_Y; j++) {
-                if (tiles[i][j].equals(TileType.PARKING) && isEmpty[i][j]) {
-                    coordsOfParkingPlace[0] = i;
-                    coordsOfParkingPlace[1] = j;
-                    isEmpty[i][j] = false;
-                    break;
-                }
-            }
-        }
+        int coordsOfParkingPlace[] = getFreePlace();
+
         Pair<Integer, Integer> entrance = controller.getEntrance();
         Pair<Integer, Integer> exit = controller.getExit();
         DijkstraShortestPath dijkstraShortestPath = new DijkstraShortestPath(controller.getGraph());
@@ -125,5 +113,24 @@ public class PathGenerator {
         return new Path(result);
     }
 
+
+    public int[] getFreePlace(){
+        int coordsOfParkingPlace[] = new int[2];
+        TileType[][] tiles = controller.getTiles();
+        int TILES_X = controller.getTILES_X();
+        int TILES_Y = controller.getTILES_Y();
+        boolean[][] isEmpty = controller.getIsEmpty();
+        for (int i = 0; i < TILES_X; i++) {
+            for (int j = 0; j < TILES_Y; j++) {
+                if (tiles[i][j].equals(TileType.PARKING) && isEmpty[i][j]) {
+                    coordsOfParkingPlace[0] = i;
+                    coordsOfParkingPlace[1] = j;
+                    isEmpty[i][j] = false;
+                    break;
+                }
+            }
+        }
+        return coordsOfParkingPlace;
+    }
 
 }

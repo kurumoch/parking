@@ -30,9 +30,7 @@ public class Controller implements Serializable {
     private Surface surface;
     private State state;
     public CopyOnWriteArrayList<Vehicle> vehicles;
-    // private int[][] graph;
     private boolean[][] isEmpty;
-
     private int costOfOneHour;
     private int costToThreeHours;
     private int costMoreThreeHours;
@@ -56,7 +54,7 @@ public class Controller implements Serializable {
     private int intervalTime;
     private int entrance, exit;
     private SimpleGraph<Pair<TileType, Pair<Integer, Integer>>, DefaultEdge> graph;
-    ArrayList<Pair<TileType, Pair<Integer, Integer>>> allVertexes;
+    private ArrayList<Pair<TileType, Pair<Integer, Integer>>> allVertexes;
     int a;
     int b;
 
@@ -90,13 +88,20 @@ public class Controller implements Serializable {
         typeOfThreadOfCars = "Детерминированный";
         typeOfThreadTimeOnParking = "Детерминированный";
         intervalCars = 1000;
-        intervalTime = 200;
+        intervalTime = 700;
         vehicles = new CopyOnWriteArrayList<>();
     }
 
+    private void initEmptyParking(){
+        isEmpty = new boolean[TILES_X][TILES_Y];
+        for (int i = 0; i < TILES_X; i++) {
+            for (int j = 0; j < TILES_X; j++) {
+                isEmpty[i][j] = true;
+            }
+        }
+    }
 
-
-    public void initParking(int x, int y) {
+    private void calcEntranceExit(int x, int y){
         state = State.CONSTRUCT;
         xSize = ++x;
         ySize = ++y;
@@ -104,12 +109,9 @@ public class Controller implements Serializable {
         a = Math.round(mid_x - ((float) xSize) / 2) - 1;
         b = Math.round(mid_x + ((float) xSize) / 2) - 1;
         tiles = new TileType[TILES_X][TILES_Y];
-        isEmpty = new boolean[TILES_X][TILES_Y];
-        for (int i = 0; i < TILES_X; i++) {
-            for (int j = 0; j < TILES_X; j++) {
-                isEmpty[i][j] = true;
-            }
-        }
+    }
+
+    private void fillDefaultTiles(){
         for (int j = 0; j < TILES_Y; j++) {
             for (int i = 0; i < TILES_X; i++) {
                 tiles[i][j] = LAWN;
@@ -126,9 +128,14 @@ public class Controller implements Serializable {
                     tiles[i][j] = ROAD;
             }
         }
+    }
+
+    public void initParking(int x, int y) {
+        calcEntranceExit(x,y);
+        initEmptyParking();
+        fillDefaultTiles();
         entrance = b+1;
         exit = a+1;
-
         vehicles = new CopyOnWriteArrayList<>();
         initGraph();
     }
@@ -257,7 +264,12 @@ public class Controller implements Serializable {
 
     public void initGraph() {
         allVertexes = new ArrayList<>();
-        graph = new SimpleGraph<Pair<TileType, Pair<Integer, Integer>>, DefaultEdge>(DefaultEdge.class);
+        graph = new SimpleGraph<>(DefaultEdge.class);
+        initVertex();
+        initEdges();
+    }
+
+    private void initVertex(){
         for (int i = 0; i < TILES_X; i++) {
             for (int j = 0; j < TILES_Y; j++) {
                 Pair<TileType, Pair<Integer, Integer>> pair = new Pair<>(tiles[i][j], new Pair<>(j, i));
@@ -265,6 +277,9 @@ public class Controller implements Serializable {
                 allVertexes.add(pair);
             }
         }
+    }
+
+    private void initEdges(){
         for (int i = 0; i < TILES_X - 1; i++) {
             for (int j = 0; j < TILES_Y - 1; j++) {
                 if (tiles[i][j].ordinal() == TileType.PARK_ROAD.ordinal()
@@ -274,8 +289,6 @@ public class Controller implements Serializable {
                 }
             }
         }
-
-        System.out.println("q");
     }
 
     public int getxSize() {
