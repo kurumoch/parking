@@ -58,6 +58,7 @@ public class PathGenerator {
                 result.add(new Pair<>(iterator.next().getSecond(), Direction.DOWN));
             }
         }
+       // result.add(new Pair<>(shortestPath.get(shortestPath.size()-1).getSecond(), Direction.PARK));
         return new Path(result);
     }
 

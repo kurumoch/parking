@@ -102,8 +102,8 @@ public class Controller implements Serializable {
         b = Math.round(mid_x + ((float) xSize) / 2) - 1;
         tiles = new TileType[TILES_X][TILES_Y];
         isEmpty = new boolean[TILES_X][TILES_Y];
-        for(int i = 0; i < TILES_X; i++){
-            for(int j = 0; j < TILES_X; j++){
+        for (int i = 0; i < TILES_X; i++) {
+            for (int j = 0; j < TILES_X; j++) {
                 isEmpty[i][j] = true;
             }
         }
@@ -175,8 +175,8 @@ public class Controller implements Serializable {
         for (int i = 2; i < TILES_X - 1; i++) {
             for (int j = 2; j < TILES_Y - 2; j++) {
                 if (y > rectangles[i][j].y && y < rectangles[i + 1][j].y && x > rectangles[i][j].x && x < rectangles[i][j + 1].x) {
-                    if((j-1 > 1 && !vert)|| (i-1>1 &&vert)) {
-                    tiles[i][j] = TileType.DOUBLE_PARKING;
+                    if ((j - 1 > 1 && !vert) || (i - 1 > 1 && vert)) {
+                        tiles[i][j] = TileType.DOUBLE_PARKING;
                         if (vert)
                             tiles[--i][j] = TileType.DOUBLE_PARKING;
                         else tiles[i][--j] = TileType.DOUBLE_PARKING;
@@ -255,8 +255,8 @@ public class Controller implements Serializable {
                 allVertexes.add(pair);
             }
         }
-        for (int i = 0; i < TILES_X-1; i++) {
-            for (int j = 0; j < TILES_Y-1; j++) {
+        for (int i = 0; i < TILES_X - 1; i++) {
+            for (int j = 0; j < TILES_Y - 1; j++) {
                 if (tiles[i][j].ordinal() == TileType.PARK_ROAD.ordinal()
                         || tiles[i][j].ordinal() == TileType.PARKING.ordinal()) {
                     graph.addEdge(allVertexes.get(i * TILES_Y + j), allVertexes.get(i * TILES_Y + j + 1));
