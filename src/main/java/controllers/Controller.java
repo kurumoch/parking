@@ -7,21 +7,14 @@ import drawing.DrawRect;
 import models.State;
 import models.TileType;
 import models.Vehicle;
-import org.apache.commons.math3.distribution.RealDistribution;
 import org.apache.commons.math3.util.Pair;
-import org.jgrapht.Graph;
-import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
 import org.jgrapht.graph.*;
 import threads.CarsCreator;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Set;
-import java.beans.Transient;
 import java.io.Serializable;
-import java.nio.file.Path;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import static models.TileType.*;
@@ -62,7 +55,7 @@ public class Controller implements Serializable {
     private int intervalCars;
     private int intervalTime;
     private SimpleGraph<Pair<TileType, Pair<Integer, Integer>>, DefaultEdge> graph;
-    ArrayList<Pair<TileType, Pair<Integer, Integer>>> list;
+    ArrayList<Pair<TileType, Pair<Integer, Integer>>> allVertexes;
     int a;
     int b;
 
@@ -253,34 +246,22 @@ public class Controller implements Serializable {
     }
 
     public void initGraph() {
-        list = new ArrayList<>();
+        allVertexes = new ArrayList<>();
         graph = new SimpleGraph<Pair<TileType, Pair<Integer, Integer>>, DefaultEdge>(DefaultEdge.class);
-
         for (int i = 0; i < TILES_X; i++) {
             for (int j = 0; j < TILES_Y; j++) {
                 Pair<TileType, Pair<Integer, Integer>> pair = new Pair<>(tiles[i][j], new Pair<>(j, i));
                 graph.addVertex(pair);
-                list.add(pair);
-            }
-        }
-        int res[] = new int[2];
-        for (int i = 0; i < TILES_X; i++) {
-            for (int j = 0; j < TILES_Y; j++) {
-                if(tiles[i][j].equals(TileType.PARKING) && isEmpty[i][j]) {
-                    res[0] = i;
-                    res[1] = j;
-                    isEmpty[i][j] = false;
-                    break;
-                }
+                allVertexes.add(pair);
             }
         }
         for (int i = 0; i < TILES_X-1; i++) {
             for (int j = 0; j < TILES_Y-1; j++) {
-                  if (tiles[i][j].ordinal()==TileType.PARK_ROAD.ordinal()
-                          || tiles[i][j].ordinal()==TileType.PARKING.ordinal()) {
-                graph.addEdge(list.get(i * TILES_Y + j), list.get(i * TILES_Y + j + 1));
-                graph.addEdge(list.get(i * TILES_Y + j), list.get((i + 1) * TILES_Y + j));
-                  }
+                if (tiles[i][j].ordinal() == TileType.PARK_ROAD.ordinal()
+                        || tiles[i][j].ordinal() == TileType.PARKING.ordinal()) {
+                    graph.addEdge(allVertexes.get(i * TILES_Y + j), allVertexes.get(i * TILES_Y + j + 1));
+                    graph.addEdge(allVertexes.get(i * TILES_Y + j), allVertexes.get((i + 1) * TILES_Y + j));
+                }
             }
         }
     }
@@ -403,12 +384,12 @@ public class Controller implements Serializable {
         this.isEmpty = isEmpty;
     }
 
-    public ArrayList<Pair<TileType, Pair<Integer, Integer>>> getList() {
-        return list;
+    public ArrayList<Pair<TileType, Pair<Integer, Integer>>> getAllVertexes() {
+        return allVertexes;
     }
 
-    public void setList(ArrayList<Pair<TileType, Pair<Integer, Integer>>> list) {
-        this.list = list;
+    public void setAllVertexes(ArrayList<Pair<TileType, Pair<Integer, Integer>>> allVertexes) {
+        this.allVertexes = allVertexes;
     }
 
     public int getMxTime() {
