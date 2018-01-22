@@ -54,6 +54,7 @@ public class Controller implements Serializable {
     private int t2Cars;
     private int intervalCars;
     private int intervalTime;
+    private int entrance, exit;
     private SimpleGraph<Pair<TileType, Pair<Integer, Integer>>, DefaultEdge> graph;
     ArrayList<Pair<TileType, Pair<Integer, Integer>>> allVertexes;
     int a;
@@ -88,10 +89,12 @@ public class Controller implements Serializable {
     public Controller() {
         typeOfThreadOfCars = "Детерминированный";
         typeOfThreadTimeOnParking = "Детерминированный";
-        intervalCars = 5000;
-        intervalTime = 5000;
+        intervalCars = 2000;
+        intervalTime = 1000;
         vehicles = new CopyOnWriteArrayList<>();
     }
+
+
 
     public void initParking(int x, int y) {
         state = State.CONSTRUCT;
@@ -123,6 +126,9 @@ public class Controller implements Serializable {
                     tiles[i][j] = ROAD;
             }
         }
+        entrance = b+1;
+        exit = a+1;
+
         vehicles = new CopyOnWriteArrayList<>();
         initGraph();
     }
@@ -312,6 +318,22 @@ public class Controller implements Serializable {
 
     public int getCostToThreeHours() {
         return costToThreeHours;
+    }
+
+    public Pair<Integer, Integer> getEntrance() {
+        return new Pair<Integer, Integer>(TILES_Y-1,entrance);
+    }
+
+    public void setEntrance(int entrance) {
+        this.entrance = entrance;
+    }
+
+    public Pair<Integer, Integer> getExit() {
+        return new Pair<Integer, Integer>(TILES_Y-1,exit);
+    }
+
+    public void setExit(int exit) {
+        this.exit = exit;
     }
 
     public void setCostToThreeHours(int costToThreeHours) {

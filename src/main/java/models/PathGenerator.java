@@ -34,6 +34,7 @@ public class PathGenerator {
                 }
             }
         }
+        controller.getEntrance();
         DijkstraShortestPath dijkstraShortestPath = new DijkstraShortestPath(controller.getGraph());
         ArrayList<Pair<TileType, Pair<Integer, Integer>>> list = controller.getAllVertexes();
         java.util.List<Pair<TileType, Pair<Integer, Integer>>> shortestPath = dijkstraShortestPath.getPath(list.get(179), list.get(58)).getVertexList();
