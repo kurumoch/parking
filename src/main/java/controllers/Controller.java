@@ -274,6 +274,8 @@ public class Controller implements Serializable {
                 }
             }
         }
+
+        System.out.println("q");
     }
 
     public int getxSize() {

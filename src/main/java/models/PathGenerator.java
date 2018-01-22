@@ -34,13 +34,14 @@ public class PathGenerator {
                 }
             }
         }
-        controller.getEntrance();
+        Pair<Integer, Integer> entrance = controller.getEntrance();
+        Pair<Integer, Integer> exit = controller.getExit();
         DijkstraShortestPath dijkstraShortestPath = new DijkstraShortestPath(controller.getGraph());
         ArrayList<Pair<TileType, Pair<Integer, Integer>>> list = controller.getAllVertexes();
-        java.util.List<Pair<TileType, Pair<Integer, Integer>>> shortestPath = dijkstraShortestPath.getPath(list.get(180), list.get(58)).getVertexList();
+        java.util.List<Pair<TileType, Pair<Integer, Integer>>> shortestPath = dijkstraShortestPath.getPath(list.get(180), list.get(151)).getVertexList();
         Iterator<Pair<TileType, Pair<Integer, Integer>>> iterator = shortestPath.iterator();
-
         LinkedList<Pair<Pair<Integer, Integer>, Direction>> result = new LinkedList<>();
+       // result.add(new Pair<>(iterator.next().getSecond(), Direction.LEFT));
         for (int i = 0; i < shortestPath.size() - 1; i++) {
             int x1, x2 = 0;
             int y1, y2 = 0;
@@ -49,37 +50,78 @@ public class PathGenerator {
             x2 = shortestPath.get(i + 1).getSecond().getFirst();
             y2 = shortestPath.get(i + 1).getSecond().getSecond();
             if (x1 > x2) {
-                result.add(new Pair<>(iterator.next().getSecond(), Direction.LEFT));
+                Pair<Integer, Integer> pair = iterator.next().getSecond();
+               // result.add(new Pair<>(iterator.next().getSecond(), Direction.LEFT));
+                result.add(new Pair<>(pair,Direction.LEFT));
+                if(i == 0) {
+                    result.add(new Pair<>(pair,Direction.LEFT));
+                }
             } else if (x1 < x2) {
-                result.add(new Pair<>(iterator.next().getSecond(), Direction.RIGHT));
+                Pair<Integer, Integer> pair = iterator.next().getSecond();
+                //result.add(new Pair<>(iterator.next().getSecond(), Direction.RIGHT));
+                result.add(new Pair<>(pair,Direction.RIGHT));
+                if(i == 0) {
+                    result.add(new Pair<>(pair,Direction.RIGHT));
+                }
             }
             if (y1 > y2) {
-                result.add(new Pair<>(iterator.next().getSecond(), Direction.UP));
+                Pair<Integer, Integer> pair = iterator.next().getSecond();
+               // result.add(new Pair<>(iterator.next().getSecond(), Direction.UP));
+                result.add(new Pair<>(pair,Direction.UP));
+                if(i == 0) {
+                    result.add(new Pair<>(pair,Direction.UP));
+                }
             } else if (y1 < y2) {
-                result.add(new Pair<>(iterator.next().getSecond(), Direction.DOWN));
+                Pair<Integer, Integer> pair = iterator.next().getSecond();
+               // result.add(new Pair<>(iterator.next().getSecond(), Direction.DOWN));
+                result.add(new Pair<>(pair,Direction.DOWN));
+                if(i == 0) {
+                    result.add(new Pair<>(pair,Direction.DOWN));
+                }
             }
         }
+        int x1,x2 = 0;
+        int y1,y2 = 0;
+        x1 = shortestPath.get(shortestPath.size()-2).getSecond().getFirst();
+        y1 = shortestPath.get(shortestPath.size()-2).getSecond().getSecond();
+        x2 = shortestPath.get(shortestPath.size()-1).getSecond().getFirst();
+        y2 = shortestPath.get(shortestPath.size()-1).getSecond().getSecond();
+        if (x1 > x2) {
+            result.add(new Pair<>(iterator.next().getSecond(), Direction.LEFT));
+        } else if (x1 < x2) {
+            result.add(new Pair<>(iterator.next().getSecond(), Direction.RIGHT));
+        }
+        if (y1 > y2) {
+            result.add(new Pair<>(iterator.next().getSecond(), Direction.UP));
+        } else if (y1 < y2) {
+            result.add(new Pair<>(iterator.next().getSecond(), Direction.DOWN));
+        }
+
+
+
+
         result.add(new Pair<>(shortestPath.get(shortestPath.size()-1).getSecond(), Direction.PARK));
-        shortestPath = dijkstraShortestPath.getPath(list.get(58), list.get(40)).getVertexList();
+        shortestPath = dijkstraShortestPath.getPath(list.get(151), list.get(40)).getVertexList();
         iterator = shortestPath.iterator();
         for (int i = 0; i < shortestPath.size() - 1; i++) {
-            int x1, x2 = 0;
-            int y1, y2 = 0;
-            x1 = shortestPath.get(i).getSecond().getFirst();
-            y1 = shortestPath.get(i).getSecond().getSecond();
-            x2 = shortestPath.get(i + 1).getSecond().getFirst();
-            y2 = shortestPath.get(i + 1).getSecond().getSecond();
-            if (x1 > x2) {
+            int xx1, xx2 = 0;
+            int yy1, yy2 = 0;
+            xx1 = shortestPath.get(i).getSecond().getFirst();
+            yy1 = shortestPath.get(i).getSecond().getSecond();
+            xx2 = shortestPath.get(i + 1).getSecond().getFirst();
+            yy2 = shortestPath.get(i + 1).getSecond().getSecond();
+            if (xx1 > xx2) {
                 result.add(new Pair<>(iterator.next().getSecond(), Direction.LEFT));
-            } else if (x1 < x2) {
+            } else if (xx1 < xx2) {
                 result.add(new Pair<>(iterator.next().getSecond(), Direction.RIGHT));
             }
-            if (y1 > y2) {
+            if (yy1 > yy2) {
                 result.add(new Pair<>(iterator.next().getSecond(), Direction.UP));
-            } else if (y1 < y2) {
+            } else if (yy1 < yy2) {
                 result.add(new Pair<>(iterator.next().getSecond(), Direction.DOWN));
             }
         }
+
         return new Path(result);
     }
 
