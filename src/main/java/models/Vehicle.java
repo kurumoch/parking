@@ -12,6 +12,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import static models.Direction.RIGHT;
 
@@ -31,6 +33,15 @@ public class Vehicle implements Serializable{
     private TileType[][] tiles;
     private Rectangle[][] rectangles;
     JPanel panel;
+
+    public Path getPath() {
+        return path;
+    }
+
+    public int getParkingTime() {
+        return parkingTime;
+    }
+
     Path path;
     Pair<Pair<Integer, Integer>, Direction> point;
 
@@ -60,8 +71,8 @@ public class Vehicle implements Serializable{
     public void move() {
 
 //        int[] arr = controller.getTilesNumber(Math.round(x), Math.round(y));
-
-        point = path.next();
+        if( path.hasNext()) {
+            point = path.next();
             switch (point.getSecond()) {
                 case DOWN:
                     y -= speedY;
@@ -76,16 +87,12 @@ public class Vehicle implements Serializable{
                     y += speedY;
                     break;
                 case PARK:
-                    try {
-                        isParking = true;
-                        Thread.currentThread().sleep(parkingTime);
-                        isParking = false;
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                    isParking = true;
             }
-
+        }
     }
+
+
 
     public void draw(Graphics g) {
         try {
@@ -103,13 +110,15 @@ public class Vehicle implements Serializable{
                     car = ImageIO.read(new File("caru.png"));
                     break;
                 case PARK:
-                    try {
-                        isParking = true;
-                        Thread.sleep(parkingTime);
-                        isParking = false;
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                    new Thread(() -> {
+                        try {
+                            Thread.sleep(parkingTime);
+                            isParking = false;
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }).start();
+
             }
         } catch (IOException e) {
             e.printStackTrace();
