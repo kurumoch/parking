@@ -116,7 +116,7 @@ public class Vehicle implements Serializable{
         }
         AffineTransform t = new AffineTransform();
         t.scale(1,1);
-        t.translate(x-21, y-12);
+        t.translate(x, y);
         ((Graphics2D) g).drawImage(car, t, panel);
 
     }

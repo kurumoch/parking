@@ -274,7 +274,7 @@ public class Controller implements Serializable {
         }
         for (int i = 0; i < TILES_X-1; i++) {
             for (int j = 0; j < TILES_Y-1; j++) {
-                  if (tiles[i][j].equals(TileType.PARK_ROAD) || tiles[i][j].equals(TileType.PARKING)) {
+                  if (tiles[i][j].ordinal()==TileType.PARK_ROAD.ordinal() || tiles[i][j].ordinal()==TileType.ROAD.ordinal()|| tiles[i][j].ordinal()==TileType.PARKING.ordinal()) {
                 graph.addEdge(list.get(i * TILES_Y + j), list.get(i * TILES_Y + j + 1));
                 graph.addEdge(list.get(i * TILES_Y + j), list.get((i + 1) * TILES_Y + j));
                   }
@@ -282,7 +282,7 @@ public class Controller implements Serializable {
         }
 
         DijkstraShortestPath dijkstraShortestPath = new DijkstraShortestPath(graph);
-        java.util.List<Pair<TileType, Pair<Integer, Integer>>> shortestPath = dijkstraShortestPath.getPath(list.get(res[0]*TILES_X+res[1]), list.get(180)).getVertexList();
+        java.util.List<Pair<TileType, Pair<Integer, Integer>>> shortestPath = dijkstraShortestPath.getPath(list.get(res[0]*TILES_X+res[1]), list.get(1)).getVertexList();
         return shortestPath;
     }
 
