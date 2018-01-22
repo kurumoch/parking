@@ -1,11 +1,12 @@
 package forms;
 
 import controllers.Controller;
-import org.apache.commons.math3.distribution.RealDistribution;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -84,6 +85,8 @@ public class ParamsForm extends JFrame {
     private GroupLayout exponentialLayoutTime;
     private GroupLayout exponentialLayoutFlow;
     private Controller controller;
+    private Boolean flag = false;//флаг для обычной проверки
+    private Boolean tflag = false;//флаг для сравнения T1 и T2
 
     public ParamsForm(Controller controller) {
         super("Изменение параметров");
@@ -101,7 +104,6 @@ public class ParamsForm extends JFrame {
         oneToThreeHourLabel = new JLabel("от 1ч до 3ч");
         moreThreeHoursLabel = new JLabel("более 3ч");
         oneHourSpinner = new JSpinner();
-        //oneHourSpinner.setValue(200);
         oneHourSpinner.setModel(new SpinnerNumberModel(200,-999999,999999,10));
         oneToThreeHourSpinner = new JSpinner();
         oneToThreeHourSpinner.setModel(new SpinnerNumberModel(150,-999999,999999,10));
@@ -382,11 +384,12 @@ public class ParamsForm extends JFrame {
                 if(!Objects.equals(intervalFieldTime.getText(), ""))
                 controller.setIntervalTime(Integer.valueOf(intervalFieldTime.getText()));
                 controller.initParking((int)xSpinner.getValue(), (int)ySpinner.getValue());
+                controller.drawTiles();
                 dispose();
             }
 
         });
-
+        //проверки спинеров
         xSpinner.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
@@ -513,5 +516,301 @@ public class ParamsForm extends JFrame {
                 }
             }
         });
+        //проверки спинеров
+        //добавление слушателей на текстовые поля
+        intervalFieldTime.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                flag = check10000(intervalFieldTime,flag);
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                flag = check10000(intervalFieldTime,flag);
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                flag = check10000(intervalFieldTime,flag);
+            }
+        });
+        intervalFieldFlow.getDocument().addDocumentListener(new DocumentListener() {
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                flag = check10000(intervalFieldFlow,flag);
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                flag = check10000(intervalFieldFlow,flag);
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                flag = check10000(intervalFieldFlow,flag);
+            }
+        });
+        mxFieldTime.getDocument().addDocumentListener(new DocumentListener() {
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                flag = check10000(mxFieldTime,flag);
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                flag = check10000(mxFieldTime,flag);
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                flag = check10000(mxFieldTime,flag);
+            }
+        });
+        dxFieldTime.getDocument().addDocumentListener(new DocumentListener() {
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                flag = check10000(dxFieldTime,flag);
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                flag = check10000(dxFieldTime,flag);
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                flag = check10000(dxFieldTime,flag);
+            }
+        });
+        mxFieldFlow.getDocument().addDocumentListener(new DocumentListener() {
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                flag = check10000(mxFieldFlow,flag);
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                flag = check10000(mxFieldFlow,flag);
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                flag = check10000(mxFieldFlow,flag);
+            }
+        });
+        dxFieldFlow.getDocument().addDocumentListener(new DocumentListener() {
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                flag = check10000(dxFieldFlow,flag);
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                flag = check10000(dxFieldFlow,flag);
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                flag = check10000(dxFieldFlow,flag);
+            }
+        });
+        lambdaFieldTime.getDocument().addDocumentListener(new DocumentListener() {
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                flag = check100(lambdaFieldTime,flag);
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                flag = check100(lambdaFieldTime,flag);
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                flag = check100(lambdaFieldTime,flag);
+            }
+        });
+        lambdaFieldFlow.getDocument().addDocumentListener(new DocumentListener() {
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                flag = check100(lambdaFieldFlow,flag);
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                flag = check100(lambdaFieldFlow,flag);
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                flag = check100(lambdaFieldFlow,flag);
+            }
+        });
+        t1FieldTime.getDocument().addDocumentListener(new DocumentListener() {
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                flag = check10000(t1FieldTime,flag);
+                tflag = checkt(t1FieldTime,t2FieldTime,tflag);
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                flag = check10000(t1FieldTime,flag);
+                tflag = checkt(t1FieldTime,t2FieldTime,tflag);
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                flag = check10000(t1FieldTime,flag);
+                tflag = checkt(t1FieldTime,t2FieldTime,tflag);
+            }
+        });
+        t1FieldFlow.getDocument().addDocumentListener(new DocumentListener() {
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                flag = check10000(t1FieldFlow,flag);
+                tflag = checkt(t1FieldFlow,t2FieldFlow,tflag);
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                flag = check10000(t1FieldFlow,flag);
+                tflag = checkt(t1FieldFlow,t2FieldFlow,tflag);
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                flag = check10000(t1FieldFlow,flag);
+                tflag = checkt(t1FieldFlow,t2FieldFlow,tflag);
+            }
+        });
+        t2FieldTime.getDocument().addDocumentListener(new DocumentListener() {
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                flag = check10000(t2FieldTime,flag);
+                tflag = checkt(t1FieldTime,t2FieldTime,tflag);
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                flag = check10000(t2FieldTime,flag);
+                tflag = checkt(t1FieldTime,t2FieldTime,tflag);
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                flag = check10000(t2FieldTime,flag);
+                tflag = checkt(t1FieldTime,t2FieldTime,tflag);
+            }
+        });
+        t2FieldFlow.getDocument().addDocumentListener(new DocumentListener() {
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                flag = check10000(t2FieldFlow,flag);
+                tflag = checkt(t1FieldFlow,t2FieldFlow,tflag);
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                flag = check10000(t2FieldFlow,flag);
+                tflag = checkt(t1FieldFlow,t2FieldFlow,tflag);
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                flag = check10000(t2FieldFlow,flag);
+                tflag = checkt(t1FieldFlow,t2FieldFlow,tflag);
+            }
+        });
+        //добавление слушателей на текстовые поля
     }
+    //методы проверки для текстовых полей
+    private boolean check10000(JTextField tf, Boolean flag){//проверка полей с макс значением 10000
+        ImageIcon eicon = new ImageIcon("error.png");
+        ImageIcon cicon = new ImageIcon("correct.png");
+
+        try {
+            if (Integer.parseInt(tf.getText()) < 0) {
+                tf.setForeground(Color.red);
+                JOptionPane.showMessageDialog(new JApplet(), "Минимальное значение - '0'!", "Недобор", 0,eicon);
+                return true;
+            }
+            if (Integer.parseInt(tf.getText()) > 10000) {
+                tf.setForeground(Color.red);
+                JOptionPane.showMessageDialog(new JApplet(), "Максимальное значение - '10000'!", "Перебор", 0,eicon);
+                return true;
+            }
+            if (Integer.parseInt(tf.getText()) >= 0 && Integer.parseInt(tf.getText())<10001 && flag)  {
+                tf.setForeground(Color.black);
+                JOptionPane.showMessageDialog(new JApplet(), "Значение приведено в допустимый диапозон", "Исправлено", 0,cicon);
+                return false;
+            }
+        }
+        catch (NumberFormatException e){
+            tf.setForeground(Color.red);
+            JOptionPane.showMessageDialog(new JApplet(), "Введите число больше нуля!", "Ошибка", 0,eicon);
+            return true;
+        }
+        return false;
+    }
+    private boolean check100(JTextField tf, Boolean flag){//проверка полей с макс значением 100
+        ImageIcon eicon = new ImageIcon("error.png");
+        ImageIcon cicon = new ImageIcon("correct.png");
+
+        try {
+            if (Integer.parseInt(tf.getText()) < 0) {
+                tf.setForeground(Color.red);
+                JOptionPane.showMessageDialog(new JApplet(), "Минимальное значение - '0'!", "Недобор", 0,eicon);
+                return true;
+            }
+            if (Integer.parseInt(tf.getText()) > 100) {
+                tf.setForeground(Color.red);
+                JOptionPane.showMessageDialog(new JApplet(), "Максимальное значение - '100'!", "Перебор", 0,eicon);
+                return true;
+            }
+            if (Integer.parseInt(tf.getText()) >= 0 && Integer.parseInt(tf.getText())<101 && flag)  {
+                tf.setForeground(Color.black);
+                JOptionPane.showMessageDialog(new JApplet(), "Значение приведено в допустимый диапозон", "Исправлено", 0,cicon);
+                return false;
+            }
+        }
+        catch (NumberFormatException e){
+            tf.setForeground(Color.red);
+            JOptionPane.showMessageDialog(new JApplet(), "Введите число больше нуля!", "Ошибка", 0,eicon);
+            return true;
+        }
+        return false;
+    }
+    private boolean checkt(JTextField tf1, JTextField tf2, Boolean flag1){//проверка T1<T2
+        ImageIcon eicon = new ImageIcon("error.png");
+        ImageIcon cicon = new ImageIcon("correct.png");
+        if (tf1.getText()!="" && tf2.getText()!=""){//хуй знает почему проходит проверку с пустым полем
+            if (Integer.parseInt(tf1.getText()) >= Integer.parseInt(tf2.getText())){
+                tf1.setForeground(Color.red);
+                tf2.setForeground(Color.red);
+                JOptionPane.showMessageDialog(new JApplet(), "T1 должен быть меньше T2", "Ошибка", 0,eicon);
+                return true;
+            }
+            if (Integer.parseInt(tf1.getText()) < Integer.parseInt(tf2.getText()) && flag1){
+                tf1.setForeground(Color.black);
+                tf2.setForeground(Color.black);
+                JOptionPane.showMessageDialog(new JApplet(), "Значения исправлены", "Исправлено", 0,cicon);
+                return false;
+            }
+        }
+        return false;
+    }
+    //методы проверки для текстовых полей
 }
+

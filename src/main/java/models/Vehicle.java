@@ -44,7 +44,7 @@ public class Vehicle implements Serializable{
 
     Path path;
     Pair<Pair<Integer, Integer>, Direction> point;
-
+    Pair<Pair<Integer, Integer>, Direction> oldPoint;
 
     public Vehicle(Controller controller, int parkingTime, Path path) {
         this.parkingTime = parkingTime;
@@ -71,8 +71,7 @@ public class Vehicle implements Serializable{
     public void move() {
 
 //        int[] arr = controller.getTilesNumber(Math.round(x), Math.round(y));
-        if( path.hasNext()) {
-            point = path.next();
+        if(oldPoint != point)
             switch (point.getSecond()) {
                 case DOWN:
                     y -= speedY;
@@ -88,7 +87,11 @@ public class Vehicle implements Serializable{
                     break;
                 case PARK:
                     isParking = true;
-            }
+
+        }
+        if( path.hasNext()) {
+                oldPoint = point;
+            point = path.next();
         }
     }
 
@@ -98,16 +101,16 @@ public class Vehicle implements Serializable{
         try {
             switch (point.getSecond()) {
                 case DOWN:
-                    car = ImageIO.read(new File("card.png"));
+                    car = ImageIO.read(new File("card1.png"));
                     break;
                 case LEFT:
-                    car = ImageIO.read(new File("carl.png"));
+                    car = ImageIO.read(new File("carl1.png"));
                     break;
                 case RIGHT:
-                    car = ImageIO.read(new File("carr.png"));
+                    car = ImageIO.read(new File("carr1.png"));
                     break;
                 case UP:
-                    car = ImageIO.read(new File("caru.png"));
+                    car = ImageIO.read(new File("caru1.png"));
                     break;
                 case PARK:
                     new Thread(() -> {
