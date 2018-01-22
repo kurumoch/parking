@@ -13,6 +13,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 
+import static models.Direction.RIGHT;
+
 public class Vehicle implements Serializable{
 
     private VehicleType type;
@@ -31,7 +33,7 @@ public class Vehicle implements Serializable{
     JPanel panel;
     Path path;
     Pair<Pair<Integer, Integer>, Direction> point;
-
+    Pair<Pair<Integer, Integer>, Direction> oldPoint;
 
 
     public Vehicle(Controller controller, int parkingTime, Path path) {
@@ -47,11 +49,7 @@ public class Vehicle implements Serializable{
         this.path = path;
         point = path.next();
         this.rectangles = controller.getRectangles();
-        try {
-            car = ImageIO.read(new File("l_car.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
         isCreated = true;
     }
 
@@ -63,75 +61,22 @@ public class Vehicle implements Serializable{
     public void move() {
 
 
-        Pair<Pair<Integer, Integer>, Direction> oldPoint = point;
+        oldPoint = point;
 //        int[] arr = controller.getTilesNumber(Math.round(x), Math.round(y));
 
         point = path.next();
             switch (point.getSecond()) {
                 case DOWN:
                     y -= speedY;
-//                    switch (oldPoint.getSecond()) {
-//                        case UP:
-//                            t.rotate(Math.toRadians(180));
-//                            break;
-//                        case RIGHT:
-//                            t.rotate(Math.toRadians(90));
-//                            break;
-//                        case LEFT:
-//                            t.rotate(Math.toRadians(-90));
-//                            break;
-//                        case DOWN:
-//                            break;
-//                    }
                     break;
                 case LEFT:
                     x += speedX;
-//                    switch (oldPoint.getSecond()) {
-//                        case UP:
-//                            t.rotate(Math.toRadians(90));
-//                            break;
-//                        case RIGHT:
-//                            t.rotate(Math.toRadians(180));
-//                            break;
-//                        case LEFT:
-//                            break;
-//                        case DOWN:
-//                            t.rotate(Math.toRadians(-90));
-//                            break;
-//                    }
                     break;
                 case RIGHT:
                     x -= speedX;
-//                    switch (oldPoint.getSecond()) {
-//                        case UP:
-//                            t.rotate(Math.toRadians(-90));
-//                            break;
-//                        case RIGHT:
-//                            ;
-//                            break;
-//                        case LEFT:
-//                            t.rotate(Math.toRadians(180));
-//                            break;
-//                        case DOWN:
-//                            t.rotate(Math.toRadians(-90));
-//                            break;
-//                    }
                     break;
                 case UP:
                     y += speedY;
-//                    switch (oldPoint.getSecond()) {
-//                        case UP:
-//                            break;
-//                        case RIGHT:
-//                            t.rotate(Math.toRadians(-90));
-//                            break;
-//                        case LEFT:
-//                            t.rotate(Math.toRadians(90));
-//                            break;
-//                        case DOWN:
-//                            t.rotate(Math.toRadians(180));
-//                            break;
-//                    }
                     break;
                 case PARK:
                     try {
@@ -146,6 +91,32 @@ public class Vehicle implements Serializable{
     }
 
     public void draw(Graphics g) {
+        try {
+            switch (point.getSecond()) {
+                case DOWN:
+                    car = ImageIO.read(new File("card.png"));
+                    break;
+                case LEFT:
+                    car = ImageIO.read(new File("carl.png"));
+                    break;
+                case RIGHT:
+                    car = ImageIO.read(new File("carr.png"));
+                    break;
+                case UP:
+                    car = ImageIO.read(new File("caru.png"));
+                    break;
+                case PARK:
+                    try {
+                        isParking = true;
+                        Thread.currentThread().sleep(parkingTime);
+                        isParking = false;
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         AffineTransform t = new AffineTransform();
         t.scale(1,1);
         t.translate(x, y);
