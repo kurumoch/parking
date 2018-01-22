@@ -105,7 +105,7 @@ public class Vehicle implements Serializable{
                 case PARK:
                     try {
                         isParking = true;
-                        Thread.currentThread().sleep(parkingTime);
+                        Thread.sleep(parkingTime);
                         isParking = false;
                     } catch (InterruptedException e) {
                         e.printStackTrace();
