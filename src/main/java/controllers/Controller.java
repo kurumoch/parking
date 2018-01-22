@@ -98,16 +98,6 @@ public class Controller implements Serializable {
         vehicles = new CopyOnWriteArrayList<>();
     }
 
-    //чтение из файла
-    public Controller(Path path) {
-        typeOfThreadOfCars = "Детерминированный";
-        typeOfThreadTimeOnParking = "Детерминированный";
-        intervalCars = 5000;
-        intervalTime = 5000;
-        vehicles = new CopyOnWriteArrayList<>();
-    }
-
-
     public void initParking(int x, int y) {
         state = State.CONSTRUCT;
         xSize = ++x;
