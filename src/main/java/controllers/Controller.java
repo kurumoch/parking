@@ -95,7 +95,17 @@ public class Controller implements Serializable {
         float mid_x = ((float) TILES_X) / 2;
         a = Math.round(mid_x - ((float) xSize) / 2) - 1;
         b = Math.round(mid_x + ((float) xSize) / 2) - 1;
-        tiles = new TileType[TILES_X][TILES_Y];
+       tiles = new TileType[TILES_X][TILES_Y];
+    }
+
+    private void recalcEntranceExit(int x, int y){
+        state = State.CONSTRUCT;
+        xSize = ++x;
+        ySize = ++y;
+        float mid_x = ((float) TILES_X) / 2;
+        a = Math.round(mid_x - ((float) xSize) / 2) - 1;
+        b = Math.round(mid_x + ((float) xSize) / 2) - 1;
+//        tiles = new TileType[TILES_X][TILES_Y];
     }
 
     private void fillDefaultTiles(){
@@ -124,8 +134,18 @@ public class Controller implements Serializable {
         entrance = b+1;
         exit = a+1;
         vehicles = new CopyOnWriteArrayList<>();
-        //initGraph();
+        initGraph();
     }
+
+    public void reinitParking(int x, int y) {
+        recalcEntranceExit(x,y);
+        initEmptyParking();
+        entrance = b+1;
+        exit = a+1;
+        vehicles = new CopyOnWriteArrayList<>();
+        initGraph();
+    }
+
 
     public TileType[][] getTiles() {
         return tiles;
@@ -238,6 +258,7 @@ public class Controller implements Serializable {
     }
 
     public void startModelling() {
+//        initGraph();
         if(carsCreator == null)
             carsCreator = new CarsCreator(this);
         if(t == null) {

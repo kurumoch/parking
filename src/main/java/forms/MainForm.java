@@ -142,10 +142,10 @@ public class MainForm extends JFrame {
         setEnableModellingButtons(false);
         startButton.addActionListener(e -> {
             if(controller.getState() == State.CONSTRUCT) {
-                controller.initGraph();
                 setEnabledConstructButtons(false);
                 setEnableModellingButtons(true);
                 controller.setState(State.MODELLING);
+                controller.reinitParking(controller.getxSize(), controller.getySize());
                 controller.startModelling();
                 controller.startTimer();
                 controller.setStartMills(controller.getElapsedMills());
