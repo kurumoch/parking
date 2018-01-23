@@ -98,7 +98,13 @@ public class PathGenerator {
                 result.add(new Pair<>(iterator.next().getSecond(), Direction.DOWN));
             }
         }
+        return new Path(result);
+    }
 
+
+    public Path generateNoPark(){
+        LinkedList<Pair<Pair<Integer, Integer>, Direction>> result = new LinkedList<>();
+        result.add(new Pair<>(controller.getExit(), Direction.LEFT));
         return new Path(result);
     }
 

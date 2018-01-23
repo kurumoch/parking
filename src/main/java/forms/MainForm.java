@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Created by denis on 22.11.2017.
@@ -47,6 +48,7 @@ public class MainForm extends JFrame {
     JMenuItem pauseItem;
     JMenuItem stopItem;
     JMenuItem startItem;
+    Timer tt;
     private TileType currentTileType;
 
     public MainForm(Controller controller) {
@@ -144,6 +146,15 @@ public class MainForm extends JFrame {
                 setEnableModellingButtons(true);
                 controller.setState(State.MODELLING);
                 controller.startModelling();
+                controller.startTimer();
+                controller.setStartMills(controller.getElapsedMills());
+                tt.start();
+            }
+            if(controller.getState() == State.MODELLING){
+                setEnableModellingButtons(true);
+                setEnabledConstructButtons(false);
+                controller.startTimer();
+                tt.start();
             }
         });
         MainForm mf = this;
@@ -218,12 +229,39 @@ public class MainForm extends JFrame {
             }
         });
 
+        rewindButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.setDelay(controller.getDelay()+10);
+            }
+        });
+
+        slowerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.setDelay(controller.getDelay()-10);
+            }
+        });
+
         stopButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controller.setState(State.CONSTRUCT);
+                controller.stopTimer();
                 setEnabledConstructButtons(true);
                 setEnableModellingButtons(false);
+                controller.setVehicles(new CopyOnWriteArrayList<>());
+                controller.drawTiles();
+                tt.stop();
+            }
+        });
+        pauseButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.stopTimer();
+                setEnableModellingButtons(false);
+                startButton.setEnabled(true);
+                tt.stop();
             }
         });
         graphicsPanel.addMouseListener(new MouseAdapter() {
@@ -243,6 +281,20 @@ public class MainForm extends JFrame {
 
         aboutAuthorsItem.addActionListener(e -> new AboutAuthorsForm());
         aboutProgramm.addActionListener(e -> new AboutProgramForm());
+
+
+        tt = new Timer(controller.getDefaultDelay(), new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(controller.getT()!=null) {
+                    long milliseconds = controller.getElapsedMills() - controller.getStartMills();
+                    String time = String.format("Время %02d:%02d", milliseconds / 360, (milliseconds % 360) / 6);
+                    timeLabel.setText(time);
+                    controller.setElapsedMills(controller.getElapsedMills() + controller.getDelay());
+                }
+            }
+        });
+        tt.start();
     }
 
     public void setEnabledConstructButtons(boolean var){
@@ -253,6 +305,10 @@ public class MainForm extends JFrame {
         parkingButton.setEnabled(var);
         startButton.setEnabled(var);
         startItem.setEnabled(var);
+    }
+
+    public void setTimeLabel(String text){
+        timeLabel.setText(text);
     }
 
     public void setEnableModellingButtons(boolean var){

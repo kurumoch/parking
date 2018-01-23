@@ -15,6 +15,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -59,39 +60,23 @@ public class Controller implements Serializable {
     private LinkedList<Pair<Integer,Integer>> freeParkingSpace = new LinkedList<>();
     int a;
     int b;
+    Timer t;
+    CarsCreator carsCreator;
+    int defaultDelay;
+    long startMills;
+    long elapsedMills;
 
-
-    public int getIntervalCars() {
-        return intervalCars;
-    }
-
-    public int getIntervalTime() {
-        return intervalTime;
-
-    }
-
-    public void setIntervalCars(int intervalCars) {
-        this.intervalCars = intervalCars;
-    }
-
-    public void setIntervalTime(int intervalTime) {
-        this.intervalTime = intervalTime;
-    }
-
-    public Rectangle[][] getRectangles() {
-        return rectangles;
-    }
-
-    public void setRectangles(Rectangle[][] rectangles) {
-        this.rectangles = rectangles;
-    }
 
     public Controller() {
         typeOfThreadOfCars = "Детерминированный";
         typeOfThreadTimeOnParking = "Детерминированный";
         intervalCars = 1000;
-        intervalTime = 1300;
+        intervalTime = 300;
+        probOfArrivalToParking = 0.5;
         vehicles = new CopyOnWriteArrayList<>();
+        startMills = System.currentTimeMillis();
+        elapsedMills = startMills;
+        defaultDelay = 20;
     }
 
     private void initEmptyParking(){
@@ -231,13 +216,43 @@ public class Controller implements Serializable {
         drawTiles.draw(tiles);
     }
 
+
+    public Timer getT() {
+        return t;
+    }
+
+    public long getStartMills() {
+        return startMills;
+    }
+
+    public void setStartMills(long startMills) {
+        this.startMills = startMills;
+    }
+
+    public long getElapsedMills() {
+        return elapsedMills;
+    }
+
+    public void setElapsedMills(long elapsedMills) {
+        this.elapsedMills = elapsedMills;
+    }
+
     public void startModelling() {
-        state = State.MODELLING;
-        CarsCreator carsCreator = new CarsCreator(this);
-        carsCreator.start();
-        Timer t = new Timer(20, surface);
-        t.setInitialDelay(0);
-        t.start();
+        if(carsCreator == null)
+            carsCreator = new CarsCreator(this);
+        if(t == null) {
+            state = State.MODELLING;
+
+            carsCreator.start();
+
+            t = new Timer(defaultDelay, surface);
+            t.setInitialDelay(0);
+            t.start();
+        }
+        else {
+            t.start();
+//        carsCreator.start();
+        }
     }
 
     public void stopModelling() {
@@ -314,33 +329,55 @@ public class Controller implements Serializable {
                         }
                     }
                 }
-
-//                if (tiles[i][j].equals(TileType.PARK_ROAD)) {
-//                    if (tiles[i+1][j].equals(TileType.PARK_ROAD) || tiles[i+1][j].equals(TileType.PARKING) || tiles[i+1][j].equals(TileType.ROAD)) {
-//                        graph.addEdge(allVertexes.get(i * TILES_Y + j), allVertexes.get(i * TILES_Y + j + 1));
-//                    }
-//                    if (tiles[i][j+1].equals(TileType.PARK_ROAD) || tiles[i][j+1].equals(TileType.PARKING) ||tiles[i][j+1].equals(TileType.ROAD) ) {
-//                        graph.addEdge(allVertexes.get(i * TILES_Y + j), allVertexes.get((i + 1) * TILES_Y + j));
-//                    }
-//                }
-//
-//                if (tiles[i][j].equals(TileType.PARKING)) {
-//                    if (tiles[i+1][j].equals(TileType.PARK_ROAD)) {
-//                        graph.addEdge(allVertexes.get(i * TILES_Y + j), allVertexes.get(i * TILES_Y + j + 1));
-//                    }
-//                    if (tiles[i][j+1].equals(TileType.PARK_ROAD)) {
-//                        graph.addEdge(allVertexes.get(i * TILES_Y + j), allVertexes.get((i + 1) * TILES_Y + j));
-//                    }
-//                }
-
-
-
             }
-
         }
-
-        System.out.println("qwe");
     }
+
+    public int getDefaultDelay() {
+        return defaultDelay;
+    }
+
+    public int getDelay(){
+        return t.getDelay();
+    }
+
+    public void stopTimer(){
+        t.stop();
+    }
+
+    public void startTimer(){
+        t.start();
+    }
+
+    public void setDelay(int delay) {
+        t.setDelay(delay);
+    }
+
+    public int getIntervalCars() {
+        return intervalCars;
+    }
+
+    public int getIntervalTime() {
+        return intervalTime;
+
+    }
+
+    public void setIntervalCars(int intervalCars) {
+        this.intervalCars = intervalCars;
+    }
+
+    public void setIntervalTime(int intervalTime) {
+        this.intervalTime = intervalTime;
+    }
+
+    public Rectangle[][] getRectangles() {
+        return rectangles;
+    }
+
+    public void setRectangles(Rectangle[][] rectangles) {
+        this.rectangles = rectangles;
+    }
+
 
     public static int vForGen(int i, int j){
         return (j-1) * TILES_Y + (i-1);

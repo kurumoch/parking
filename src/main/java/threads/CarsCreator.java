@@ -51,7 +51,9 @@ public class CarsCreator extends Thread {
         PathGenerator gena = new PathGenerator(controller);
         while (true) {
             int parkTime =  Math.toIntExact(Math.round(distributionTime.sample()));
-            controller.vehicles.add(new Vehicle(controller,parkTime, gena.generate()));
+            if(controller.getProbOfArrivalToParking() < Math.random())
+                controller.vehicles.add(new Vehicle(controller,parkTime, gena.generate()));
+            else controller.vehicles.add(new Vehicle(controller, parkTime, gena.generateNoPark()));
             try {
               int carTime =  Math.toIntExact(Math.round(distributionCars.sample()));
                 Thread.sleep(carTime);
