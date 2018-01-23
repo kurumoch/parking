@@ -60,6 +60,7 @@ public class Controller implements Serializable {
     private LinkedList<Pair<Integer,Integer>> freeParkingSpace = new LinkedList<>();
     int a;
     int b;
+    public int widthh;
     Timer t;
     CarsCreator carsCreator;
     int defaultDelay;
@@ -70,8 +71,8 @@ public class Controller implements Serializable {
     public Controller() {
         typeOfThreadOfCars = "Детерминированный";
         typeOfThreadTimeOnParking = "Детерминированный";
-        intervalCars = 100;
-        intervalTime = 8300;
+        intervalCars = 1000;
+        intervalTime = 2000;
         probOfArrivalToParking = 0.5;
         vehicles = new CopyOnWriteArrayList<>();
         startMills = System.currentTimeMillis();
@@ -89,6 +90,7 @@ public class Controller implements Serializable {
     }
 
     private void calcEntranceExit(int x, int y){
+        widthh = x;
         state = State.CONSTRUCT;
         xSize = ++x;
         ySize = ++y;
@@ -134,7 +136,7 @@ public class Controller implements Serializable {
         entrance = b+1;
         exit = a+1;
         vehicles = new CopyOnWriteArrayList<>();
-        initGraph();
+//        initGraph();
     }
 
     public void reinitParking(int x, int y) {
@@ -271,6 +273,9 @@ public class Controller implements Serializable {
             t.start();
         }
         else {
+            carsCreator.stop();
+            carsCreator = new CarsCreator(this);
+            carsCreator.start();
             t.start();
 //        carsCreator.start();
         }
@@ -462,7 +467,13 @@ public class Controller implements Serializable {
     }
 
     public Pair<Integer, Integer> getEntrance() {
-        return new Pair<Integer, Integer>(TILES_Y-1,entrance);
+       // return new Pair<Integer, Integer>(TILES_Y-1,entrance);
+        for(int i = TILES_Y-1;i>=0;i--) {
+            if(tiles[11][i].ordinal() == TileType.PARK_ROAD.ordinal()) {
+                return new Pair<Integer, Integer>(12,i+1);
+            }
+        }
+        return null;
     }
 
     public void setEntrance(int entrance) {
@@ -470,7 +481,13 @@ public class Controller implements Serializable {
     }
 
     public Pair<Integer, Integer> getExit() {
-        return new Pair<Integer, Integer>(TILES_Y-1,exit);
+      //  return new Pair<Integer, Integer>(TILES_Y-1,exit);
+        for(int i = 0; i < TILES_Y; i++) {
+            if(tiles[11][i].ordinal() == TileType.PARK_ROAD.ordinal()) {
+                return new Pair<Integer, Integer>(12,i+1);
+            }
+        }
+        return null;
     }
 
     public void setExit(int exit) {

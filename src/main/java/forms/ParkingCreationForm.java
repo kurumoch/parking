@@ -49,6 +49,7 @@ public class ParkingCreationForm extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controller.initParking((int) xSpinner.getValue(), (int) ySpinner.getValue());
+                controller.reinitParking((int)xSpinner.getValue(), (int)ySpinner.getValue());
                 controller.drawTiles();
                 dispose();
             }

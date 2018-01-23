@@ -145,7 +145,7 @@ public class MainForm extends JFrame {
                 setEnabledConstructButtons(false);
                 setEnableModellingButtons(true);
                 controller.setState(State.MODELLING);
-                controller.reinitParking(controller.getxSize(), controller.getySize());
+                  controller.reinitParking(controller.getxSize(), controller.getySize());
                 controller.startModelling();
                 controller.startTimer();
                 controller.setStartMills(controller.getElapsedMills());
