@@ -28,7 +28,8 @@ public class PathGenerator {
         Pair<Integer, Integer> exit = controller.getExit();
         DijkstraShortestPath dijkstraShortestPath = new DijkstraShortestPath(controller.getGraph());
         ArrayList<Pair<TileType, Pair<Integer, Integer>>> list = controller.getAllVertexes();
-        java.util.List<Pair<TileType, Pair<Integer, Integer>>> shortestPath = dijkstraShortestPath.getPath(list.get(vForGen(13,12)), list.get(vForGen(12,10))).getVertexList();
+        Pair<Integer, Integer> freeplace = controller.getFreePlace();
+        java.util.List<Pair<TileType, Pair<Integer, Integer>>> shortestPath = dijkstraShortestPath.getPath(list.get(vForGen(13,12)), list.get(vForGen(freeplace.getFirst()+1,freeplace.getSecond()+1))).getVertexList();
         Iterator<Pair<TileType, Pair<Integer, Integer>>> iterator = shortestPath.iterator();
         LinkedList<Pair<Pair<Integer, Integer>, Direction>> result = new LinkedList<>();
        // result.add(new Pair<>(iterator.next().getSecond(), Direction.LEFT));
@@ -46,14 +47,14 @@ public class PathGenerator {
                // result.add(new Pair<>(iterator.next().getSecond(), Direction.LEFT));
                 result.add(new Pair<>(pair,Direction.LEFT));
                 if(i == 0) {
-                    result.add(new Pair<>(pair,Direction.LEFT));
+//                    result.add(new Pair<>(pair,Direction.LEFT));
                 }
             } else if (x1 < x2) {
                 Pair<Integer, Integer> pair = iterator.next().getSecond();
                 //result.add(new Pair<>(iterator.next().getSecond(), Direction.RIGHT));
                 result.add(new Pair<>(pair,Direction.RIGHT));
                 if(i == 0) {
-                    result.add(new Pair<>(pair,Direction.RIGHT));
+//                    result.add(new Pair<>(pair,Direction.RIGHT));
                 }
             }
             if (y1 > y2) {
@@ -61,39 +62,23 @@ public class PathGenerator {
                // result.add(new Pair<>(iterator.next().getSecond(), Direction.UP));
                 result.add(new Pair<>(pair,Direction.UP));
                 if(i == 0) {
-                    result.add(new Pair<>(pair,Direction.UP));
+//                    result.add(new Pair<>(pair,Direction.UP));
                 }
             } else if (y1 < y2) {
                 Pair<Integer, Integer> pair = iterator.next().getSecond();
                // result.add(new Pair<>(iterator.next().getSecond(), Direction.DOWN));
                 result.add(new Pair<>(pair,Direction.DOWN));
                 if(i == 0) {
-                    result.add(new Pair<>(pair,Direction.DOWN));
+//                    result.add(new Pair<>(pair,Direction.DOWN));
                 }
             }
         }
-//        int x1,x2 = 0;
-//        int y1,y2 = 0;
-//        x1 = shortestPath.get(shortestPath.size()-2).getSecond().getFirst();
-//        y1 = shortestPath.get(shortestPath.size()-2).getSecond().getSecond();
-//        x2 = shortestPath.get(shortestPath.size()-1).getSecond().getFirst();
-//        y2 = shortestPath.get(shortestPath.size()-1).getSecond().getSecond();
-//        if (x1 > x2) {
-//            result.add(new Pair<>(iterator.next().getSecond(), Direction.LEFT));
-//        } else if (x1 < x2) {
-//            result.add(new Pair<>(iterator.next().getSecond(), Direction.RIGHT));
-//        }
-//        if (y1 > y2) {
-//            result.add(new Pair<>(iterator.next().getSecond(), Direction.UP));
-//        } else if (y1 < y2) {
-//            result.add(new Pair<>(iterator.next().getSecond(), Direction.DOWN));
-//        }
 
 
 
 
         result.add(new Pair<>(shortestPath.get(shortestPath.size()-1).getSecond(), Direction.PARK));
-        shortestPath = dijkstraShortestPath.getPath(list.get(vForGen(12,10)), list.get(vForGen(2,12))).getVertexList();
+        shortestPath = dijkstraShortestPath.getPath(list.get(vForGen(freeplace.getFirst()+1,freeplace.getSecond()+1)), list.get(vForGen(2,12))).getVertexList();
         iterator = shortestPath.iterator();
         for (int i = 0; i < shortestPath.size() - 1; i++) {
             int xx1, xx2 = 0;
