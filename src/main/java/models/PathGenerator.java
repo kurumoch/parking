@@ -97,6 +97,10 @@ try {
             }
 
         }
+        //normalniy viezd s parkovki
+        result.add(new Pair<>(new Pair<>(0,12), Direction.DOWN));
+        result.add(new Pair<>(new Pair<>(0,12), Direction.LEFT));
+
         return new Path(result);
     }
 //}
