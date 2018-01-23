@@ -275,13 +275,21 @@ public class MainForm extends JFrame {
 
         aboutAuthorsItem.addActionListener(e -> new AboutAuthorsForm());
         aboutProgramm.addActionListener(e -> new AboutProgramForm());
-        Timer t = new Timer(100, new ActionListener() {
+
+        Timer tt = new Timer(controller.getDefaultDelay(), new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                if(controller.getT()!=null) {
+                    long milliseconds = controller.getElapsedMills() - controller.getStartMills();
+                    String time = String.format("Время %02d:%02d", milliseconds / 360, (milliseconds % 360) / 6);
+                    timeLabel.setText(time);
+                    controller.setElapsedMills(controller.getElapsedMills() + controller.getDelay());
+                    repaint();
+                    System.out.print("1");
+                }
             }
         });
-        t.start();
+        tt.start();
     }
 
     public void setEnabledConstructButtons(boolean var){
@@ -292,6 +300,10 @@ public class MainForm extends JFrame {
         parkingButton.setEnabled(var);
         startButton.setEnabled(var);
         startItem.setEnabled(var);
+    }
+
+    public void setTimeLabel(String text){
+        timeLabel.setText(text);
     }
 
     public void setEnableModellingButtons(boolean var){

@@ -15,6 +15,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import static models.TileType.*;
@@ -60,6 +61,8 @@ public class Controller implements Serializable {
     Timer t;
     CarsCreator carsCreator;
     int defaultDelay;
+    long startMills;
+    long elapsedMills;
 
 
     public Controller() {
@@ -69,6 +72,9 @@ public class Controller implements Serializable {
         intervalTime = 300;
         probOfArrivalToParking = 0.5;
         vehicles = new CopyOnWriteArrayList<>();
+        startMills = System.currentTimeMillis();
+        elapsedMills = startMills;
+        defaultDelay = 20;
     }
 
     private void initEmptyParking(){
@@ -208,14 +214,36 @@ public class Controller implements Serializable {
         drawTiles.draw(tiles);
     }
 
+
+    public Timer getT() {
+        return t;
+    }
+
+    public long getStartMills() {
+        return startMills;
+    }
+
+    public void setStartMills(long startMills) {
+        this.startMills = startMills;
+    }
+
+    public long getElapsedMills() {
+        return elapsedMills;
+    }
+
+    public void setElapsedMills(long elapsedMills) {
+        this.elapsedMills = elapsedMills;
+    }
+
     public void startModelling() {
         if(carsCreator == null)
             carsCreator = new CarsCreator(this);
         if(t == null) {
             state = State.MODELLING;
+
             carsCreator.start();
 
-            t = new Timer(20, surface);
+            t = new Timer(defaultDelay, surface);
             t.setInitialDelay(0);
             t.start();
         }
