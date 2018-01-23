@@ -247,7 +247,10 @@ public class Controller implements Serializable {
             t.setInitialDelay(0);
             t.start();
         }
-        else {t.start();carsCreator.start();}
+        else {
+            t.start();
+//        carsCreator.start();
+        }
     }
 
     public void stopModelling() {

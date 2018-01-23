@@ -48,6 +48,7 @@ public class MainForm extends JFrame {
     JMenuItem pauseItem;
     JMenuItem stopItem;
     JMenuItem startItem;
+    Timer tt;
     private TileType currentTileType;
 
     public MainForm(Controller controller) {
@@ -146,11 +147,14 @@ public class MainForm extends JFrame {
                 controller.setState(State.MODELLING);
                 controller.startModelling();
                 controller.startTimer();
+                controller.setStartMills(controller.getElapsedMills());
+                tt.start();
             }
             if(controller.getState() == State.MODELLING){
                 setEnableModellingButtons(true);
                 setEnabledConstructButtons(false);
                 controller.startTimer();
+                tt.start();
             }
         });
         MainForm mf = this;
@@ -248,6 +252,7 @@ public class MainForm extends JFrame {
                 setEnableModellingButtons(false);
                 controller.setVehicles(new CopyOnWriteArrayList<>());
                 controller.drawTiles();
+                tt.stop();
             }
         });
         pauseButton.addActionListener(new ActionListener() {
@@ -256,6 +261,7 @@ public class MainForm extends JFrame {
                 controller.stopTimer();
                 setEnableModellingButtons(false);
                 startButton.setEnabled(true);
+                tt.stop();
             }
         });
         graphicsPanel.addMouseListener(new MouseAdapter() {
@@ -276,7 +282,8 @@ public class MainForm extends JFrame {
         aboutAuthorsItem.addActionListener(e -> new AboutAuthorsForm());
         aboutProgramm.addActionListener(e -> new AboutProgramForm());
 
-        Timer tt = new Timer(controller.getDefaultDelay(), new ActionListener() {
+
+        tt = new Timer(controller.getDefaultDelay(), new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(controller.getT()!=null) {
@@ -284,8 +291,6 @@ public class MainForm extends JFrame {
                     String time = String.format("Время %02d:%02d", milliseconds / 360, (milliseconds % 360) / 6);
                     timeLabel.setText(time);
                     controller.setElapsedMills(controller.getElapsedMills() + controller.getDelay());
-                    repaint();
-                    System.out.print("1");
                 }
             }
         });
