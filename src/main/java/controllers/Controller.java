@@ -70,8 +70,8 @@ public class Controller implements Serializable {
     public Controller() {
         typeOfThreadOfCars = "Детерминированный";
         typeOfThreadTimeOnParking = "Детерминированный";
-        intervalCars = 1000;
-        intervalTime = 300;
+        intervalCars = 100;
+        intervalTime = 8300;
         probOfArrivalToParking = 0.5;
         vehicles = new CopyOnWriteArrayList<>();
         startMills = System.currentTimeMillis();
@@ -124,7 +124,7 @@ public class Controller implements Serializable {
         entrance = b+1;
         exit = a+1;
         vehicles = new CopyOnWriteArrayList<>();
-        initGraph();
+        //initGraph();
     }
 
     public TileType[][] getTiles() {
@@ -297,9 +297,13 @@ public class Controller implements Serializable {
     }
 
     public Pair<Integer,Integer> getFreePlace(){
+//        if (freeParkingSpace.size() != 1)
         return freeParkingSpace.pop();
+//        else return new Pair<Integer, Integer>(2,12);
     }
-
+    public LinkedList<Pair<Integer,Integer>> getFreeParkingSpace(){
+        return freeParkingSpace;
+    }
     private void initEdges() {
         for (int i = 0; i < TILES_X; i++) {
             for (int j = 0; j < TILES_Y; j++) {
@@ -307,30 +311,35 @@ public class Controller implements Serializable {
                     if (tiles[i][j + 1].ordinal() == TileType.PARKING.ordinal() || tiles[i][j + 1].ordinal() == TileType.PARK_ROAD.ordinal()) {
                         graph.addEdge(allVertexes.get(i * TILES_Y + j), allVertexes.get(i * TILES_Y + j + 1));
                         if (tiles[i][j + 1].ordinal() == TileType.PARKING.ordinal()){
-                            freeParkingSpace.add(new Pair<>(i, j + 1));
+                            //if (j != 10)
+                            freeParkingSpace.add(new Pair<>(j+1,i));
                         }
                     }
                     if (tiles[i + 1][j].ordinal() == TileType.PARKING.ordinal() || tiles[i + 1][j].ordinal() == TileType.PARK_ROAD.ordinal()) {
                         graph.addEdge(allVertexes.get(i * TILES_Y + j), allVertexes.get((i + 1) * TILES_Y + j));
-                        if (tiles[i][j + 1].ordinal() == TileType.PARKING.ordinal()){
-                            freeParkingSpace.add(new Pair<>(i+1, j));
+                        if (tiles[i+1][j].ordinal() == TileType.PARKING.ordinal()){
+                           // if (j != 11)
+                            freeParkingSpace.add(new Pair<>(j, i+1));
                         }
                     }
                     if (tiles[i - 1][j].ordinal() == TileType.PARKING.ordinal() || tiles[i - 1][j].ordinal() == TileType.PARK_ROAD.ordinal()) {
                         graph.addEdge(allVertexes.get(i * TILES_Y + j), allVertexes.get((i - 1) * TILES_Y + j));
                         if (tiles[i - 1][j].ordinal() == TileType.PARKING.ordinal()) {
-                            freeParkingSpace.add(new Pair<>(i-1, j));
+                         //   if (j != 11)
+                            freeParkingSpace.add(new Pair<>(j, i-1));
                         }
                     }
                     if (tiles[i][j - 1].ordinal() == TileType.PARKING.ordinal() || tiles[i][j - 1].ordinal() == TileType.PARK_ROAD.ordinal()) {
                         graph.addEdge(allVertexes.get(i * TILES_Y + j), allVertexes.get(i * TILES_Y + j - 1));
                         if (tiles[i][j - 1].ordinal() == TileType.PARKING.ordinal()) {
-                            freeParkingSpace.add(new Pair<>(i, j-1));
+                          //  if (j != 12)
+                            freeParkingSpace.add(new Pair<>(j-1, i));
                         }
                     }
                 }
             }
         }
+
     }
 
     public int getDefaultDelay() {

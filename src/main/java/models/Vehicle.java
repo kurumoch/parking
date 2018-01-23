@@ -117,6 +117,7 @@ public class Vehicle implements Serializable{
                         try {
                             Thread.sleep(parkingTime);
                             isParking = false;
+                            controller.getFreeParkingSpace().add(point.getFirst());
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
