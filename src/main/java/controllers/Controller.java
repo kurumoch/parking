@@ -61,56 +61,13 @@ public class Controller implements Serializable {
     CarsCreator carsCreator;
     int defaultDelay;
 
-    public int getDefaultDelay() {
-        return defaultDelay;
-    }
-
-    public int getDelay(){
-        return t.getDelay();
-    }
-
-    public void stopTimer(){
-        t.stop();
-    }
-
-    public void startTimer(){
-        t.start();
-    }
-
-    public void setDelay(int delay) {
-        t.setDelay(delay);
-    }
-
-    public int getIntervalCars() {
-        return intervalCars;
-    }
-
-    public int getIntervalTime() {
-        return intervalTime;
-
-    }
-
-    public void setIntervalCars(int intervalCars) {
-        this.intervalCars = intervalCars;
-    }
-
-    public void setIntervalTime(int intervalTime) {
-        this.intervalTime = intervalTime;
-    }
-
-    public Rectangle[][] getRectangles() {
-        return rectangles;
-    }
-
-    public void setRectangles(Rectangle[][] rectangles) {
-        this.rectangles = rectangles;
-    }
 
     public Controller() {
         typeOfThreadOfCars = "Детерминированный";
         typeOfThreadTimeOnParking = "Детерминированный";
         intervalCars = 1000;
         intervalTime = 300;
+        probOfArrivalToParking = 0.5;
         vehicles = new CopyOnWriteArrayList<>();
     }
 
@@ -322,6 +279,52 @@ public class Controller implements Serializable {
             }
         }
     }
+
+    public int getDefaultDelay() {
+        return defaultDelay;
+    }
+
+    public int getDelay(){
+        return t.getDelay();
+    }
+
+    public void stopTimer(){
+        t.stop();
+    }
+
+    public void startTimer(){
+        t.start();
+    }
+
+    public void setDelay(int delay) {
+        t.setDelay(delay);
+    }
+
+    public int getIntervalCars() {
+        return intervalCars;
+    }
+
+    public int getIntervalTime() {
+        return intervalTime;
+
+    }
+
+    public void setIntervalCars(int intervalCars) {
+        this.intervalCars = intervalCars;
+    }
+
+    public void setIntervalTime(int intervalTime) {
+        this.intervalTime = intervalTime;
+    }
+
+    public Rectangle[][] getRectangles() {
+        return rectangles;
+    }
+
+    public void setRectangles(Rectangle[][] rectangles) {
+        this.rectangles = rectangles;
+    }
+
 
     public static int vForGen(int i, int j){
         return (j-1) * TILES_Y + (i-1);

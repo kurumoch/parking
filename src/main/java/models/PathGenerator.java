@@ -1,5 +1,6 @@
 package models;
 
+import java.util.List;
 import controllers.Controller;
 import org.apache.commons.math3.util.Pair;
 import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
@@ -28,7 +29,7 @@ public class PathGenerator {
         Pair<Integer, Integer> exit = controller.getExit();
         DijkstraShortestPath dijkstraShortestPath = new DijkstraShortestPath(controller.getGraph());
         ArrayList<Pair<TileType, Pair<Integer, Integer>>> list = controller.getAllVertexes();
-        java.util.List<Pair<TileType, Pair<Integer, Integer>>> shortestPath = dijkstraShortestPath.getPath(list.get(vForGen(13,12)), list.get(vForGen(12,10))).getVertexList();
+        List<Pair<TileType, Pair<Integer, Integer>>> shortestPath = dijkstraShortestPath.getPath(list.get(vForGen(13,12)), list.get(vForGen(12,10))).getVertexList();
         Iterator<Pair<TileType, Pair<Integer, Integer>>> iterator = shortestPath.iterator();
         LinkedList<Pair<Pair<Integer, Integer>, Direction>> result = new LinkedList<>();
             result.add(new Pair<>(controller.getEntrance(), Direction.LEFT));
@@ -76,6 +77,13 @@ public class PathGenerator {
                 result.add(new Pair<>(iterator.next().getSecond(), Direction.DOWN));
             }
         }
+        return new Path(result);
+    }
+
+
+    public Path generateNoPark(){
+        LinkedList<Pair<Pair<Integer, Integer>, Direction>> result = new LinkedList<>();
+        result.add(new Pair<>(controller.getExit(), Direction.LEFT));
         return new Path(result);
     }
 
