@@ -145,7 +145,7 @@ public class MainForm extends JFrame {
                 setEnabledConstructButtons(false);
                 setEnableModellingButtons(true);
                 controller.setState(State.MODELLING);
-                  controller.reinitParking(controller.getxSize(), controller.getySize());
+                  controller.reinitParking(controller.getTILES_X(), controller.getTILES_Y());
                 controller.startModelling();
                 controller.startTimer();
                 controller.setStartMills(controller.getElapsedMills());
@@ -177,7 +177,7 @@ public class MainForm extends JFrame {
                     ObjectInputStream inputStream = new ObjectInputStream((new FileInputStream(fileChooser.getSelectedFile())));
                     Controller controller1 =  (Controller) inputStream.readObject();
                     inputStream.close();
-                    controller.initParking(controller1.getxSize(), controller1.getySize());
+
                     controller.setRectangles(controller1.getRectangles());
                     controller.setTiles(controller1.getTiles());
                     controller.setCostOfOneHour(controller1.getCostOfOneHour());
@@ -202,6 +202,8 @@ public class MainForm extends JFrame {
                     controller.setT1Cars(controller1.getT1Cars());
                     controller.setT2Cars(controller1.getT2Cars());
                     controller.drawTiles();
+                    controller.initParking(controller1.getxSize()-1, controller1.getySize()-1);
+                    controller.reinitParking(controller1.getxSize()-1, controller1.getySize()-1);
                     graphicsPanel = controller1.getSurface();
                     controller.setSurface(controller1.getSurface());
                     graphicsPanel.setController(controller);
@@ -223,8 +225,8 @@ public class MainForm extends JFrame {
                 try {
                     ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(fileChooser.getSelectedFile()));
 //                    Object[] array = new Object[24];
-//                    array[0] = controller.getxSize();
-//                    array[1] = controller.getySize();
+//                    array[0] = controller.getTILES_X();
+//                    array[1] = controller.getTILES_Y();
 //                    array[2] = controller.getRectangles();
 //                    array[3] = controller.getTiles();
 //                    array[4] = controller.getCostOfOneHour();

@@ -1,8 +1,6 @@
 package models;
 
-import JPanels.Surface;
 import controllers.Controller;
-import models.Pair;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -12,10 +10,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
-
-import static models.Direction.RIGHT;
 
 public class Vehicle implements Serializable{
 
@@ -49,7 +43,7 @@ public class Vehicle implements Serializable{
     public Vehicle(Controller controller, int parkingTime, Path path) {
         this.parkingTime = parkingTime;
         JPanel panel = controller.getSurface();
-        Rectangle borderRect = controller.getRectangles()[controller.getxSize()-1][controller.getySize()-1];
+        Rectangle borderRect = controller.getRectangles()[controller.getTILES_X()-1][controller.getTILES_Y()-1];
         x=borderRect.x;
         y=borderRect.y;
         maxX=panel.getWidth();

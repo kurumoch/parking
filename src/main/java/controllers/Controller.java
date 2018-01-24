@@ -446,11 +446,11 @@ public class Controller implements Serializable {
     }
 
     public int getxSize() {
-        return TILES_X;
+        return xSize;
     }
 
     public int getySize() {
-        return TILES_Y;
+        return ySize;
     }
 
     public void setTiles(TileType[][] tiles) {
