@@ -87,6 +87,11 @@ public class Vehicle implements Serializable{
                 oldPoint = point;
             point = path.next();
         }
+        else try {
+            this.finalize();
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
+        }
     }
 
 
