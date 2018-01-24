@@ -179,7 +179,7 @@ public class MainForm extends JFrame {
                     inputStream.close();
 
                     controller.setRectangles(controller1.getRectangles());
-                    controller.setTiles(controller1.getTiles());
+
                     controller.setCostOfOneHour(controller1.getCostOfOneHour());
                     controller.setCostToThreeHours(controller1.getCostToThreeHours());
                     controller.setCostMoreThreeHours(controller1.getCostMoreThreeHours());
@@ -201,12 +201,11 @@ public class MainForm extends JFrame {
                     controller.setLambdaCars(controller1.getLambdaCars());
                     controller.setT1Cars(controller1.getT1Cars());
                     controller.setT2Cars(controller1.getT2Cars());
-                    controller.drawTiles();
+
                     controller.initParking(controller1.getxSize()-1, controller1.getySize()-1);
                     controller.reinitParking(controller1.getxSize()-1, controller1.getySize()-1);
-                    graphicsPanel = controller1.getSurface();
-                    controller.setSurface(controller1.getSurface());
-                    graphicsPanel.setController(controller);
+                    controller.setTiles(controller1.getTiles());
+                    controller.drawTiles();
                     setEnabledConstructButtons(true);
                 } catch (IOException e1) {
                     e1.printStackTrace();
