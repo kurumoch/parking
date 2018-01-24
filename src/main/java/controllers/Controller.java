@@ -59,6 +59,7 @@ public class Controller implements Serializable {
     private SimpleGraph<Pair<TileType, Pair<Integer, Integer>>, DefaultEdge> graph;
     private ArrayList<Pair<TileType, Pair<Integer, Integer>>> allVertexes;
     private LinkedList<Pair<Integer,Integer>> freeParkingSpace = new LinkedList<>();
+    private LinkedList<Timer> timers;
     int a;
     int b;
     public int widthh;
@@ -79,6 +80,7 @@ public class Controller implements Serializable {
         startMills = System.currentTimeMillis();
         elapsedMills = startMills;
         defaultDelay = 20;
+        timers = new LinkedList<>();
     }
 
     private void initEmptyParking(){
@@ -260,8 +262,72 @@ public class Controller implements Serializable {
         this.elapsedMills = elapsedMills;
     }
 
+    public void slower(){
+        changeParams(300);
+        if(timers.size()> 0) {
+            Timer tt = timers.pop();
+            tt.stop();
+        }
+        carsCreator.update();
+    }
+
+    public void faster(){
+        changeParams(-100);
+       Timer tt = new Timer(200, surface);
+       timers.add(tt);
+       tt.start();
+       carsCreator.update();
+    }
+
+    public void changeParams(int delta){
+        switch (getTypeOfThreadTimeOnParking()) {
+            case "Детерминированный":
+                if(intervalTime>0)
+               intervalTime += delta;
+                break;
+            case "Нормальный":
+                if(mxCars > 1){
+               mxTime+=delta; dxTime+=delta*0.1;}
+                break;
+            case "Показательный":
+                if(lambdaTime>0)
+              lambdaTime+=delta;
+                break;
+            case "Равномерный":
+                if(t1Time + delta < t2Time + delta && t1Time > 0 && t2Time >0) {
+                    t1Time += delta;
+                    t2Time = +delta;
+                }
+                break;
+        }
+        switch (getTypeOfThreadTimeOnParking()) {
+            case "Детерминированный":
+                if(intervalCars>0)
+                intervalCars+=delta;
+                break;
+            case "Нормальный":
+                if(mxCars > 1) {
+                    mxCars += delta;
+                    dxCars += delta;
+                }
+                break;
+            case "Показательный":
+                if(lambdaTime>0)
+            lambdaCars+=delta;
+                break;
+            case "Равномерный":
+                if(t1Time + delta < t2Time + delta && t1Time > 0 && t2Time >0) {
+                    t1Cars += delta;
+                    t2Cars += delta;
+                }
+                break;
+        }
+    }
+
     public void startModelling() {
 //        initGraph();
+            timers.forEach(Timer::stop);
+        timers = new LinkedList<>();
         if(carsCreator == null)
             carsCreator = new CarsCreator(this);
         if(t == null) {

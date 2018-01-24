@@ -9,6 +9,7 @@ import org.apache.commons.math3.random.RandomGenerator;
 
 public class CarsCreator extends Thread {
     private Controller controller;
+    public boolean stop;
 
     private AbstractRealDistribution distributionCars;
     private AbstractRealDistribution distributionTime;
@@ -16,6 +17,12 @@ public class CarsCreator extends Thread {
 
     public CarsCreator(Controller controller) {
         this.controller = controller;
+        stop = false;
+        update();
+    }
+
+
+    public void update(){
         switch (controller.getTypeOfThreadTimeOnParking()) {
             case "Детерминированный":
                 distributionTime = new DetermineDistribution(controller.getIntervalTime());
