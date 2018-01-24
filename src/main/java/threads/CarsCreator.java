@@ -50,6 +50,11 @@ public class CarsCreator extends Thread {
     public void run() {
         PathGenerator gena = new PathGenerator(controller);
         while (true) {
+            if(controller.vehicles.size() > 200)
+            {
+              Vehicle v=  controller.vehicles.remove(0);
+              v = null;
+            }
             int parkTime =  Math.toIntExact(Math.round(distributionTime.sample()));
             if(controller.getProbOfArrivalToParking() < Math.random() &&controller.getFreeParkingSpace().size()!=0)
                 controller.vehicles.add(new Vehicle(controller,parkTime, gena.generate()));
