@@ -74,7 +74,7 @@ public class Controller implements Serializable {
         typeOfThreadOfCars = "Детерминированный";
         typeOfThreadTimeOnParking = "Детерминированный";
         intervalCars = 200;
-        intervalTime = 50000;
+        intervalTime = 9000;
         probOfArrivalToParking = 0.5;
         vehicles = new CopyOnWriteArrayList<>();
         startMills = System.currentTimeMillis();
