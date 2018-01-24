@@ -28,7 +28,9 @@ public class MainForm extends JFrame {
     private JMenu aboutMenu;
     private JLabel timeLabel;
     private JLabel freePlacesNumberLabel;
+    private JLabel freePlacesNumberLabelImg;
     private JLabel moneyLabel;
+    private JLabel moneyLabelImg;
     private JButton lawnButton;
     private JButton roadButton;
     private JButton parkingButton;
@@ -110,6 +112,11 @@ public class MainForm extends JFrame {
         stopButton = new JButton("Стоп");
         rewindButton = new JButton("Ускорить");
         slowerButton = new JButton("Замедлить");
+        ImageIcon freeicon = new ImageIcon("yplaces.png");
+        ImageIcon nofreeicon = new ImageIcon("nplaces.png");
+        ImageIcon moneyicon = new ImageIcon("money.png");
+        freePlacesNumberLabelImg = new JLabel(freeicon);
+        moneyLabelImg = new JLabel(moneyicon);
         GroupLayout layout = new GroupLayout(panel);
         menuBar.add(fileMenu);
         menuBar.add(modelMenu);
@@ -121,19 +128,29 @@ public class MainForm extends JFrame {
         controller.setSurface(graphicsPanel);
         graphicsPanel.setPreferredSize(new Dimension(400, 400));
         layout.setHorizontalGroup(layout.createParallelGroup()
-                .addGroup(layout.createSequentialGroup().addComponent(menuBar).addComponent(timeLabel))
+                .addGroup(layout.createSequentialGroup().addComponent(menuBar).addComponent(timeLabel).addGroup(layout.createParallelGroup()
+                        .addComponent(freePlacesNumberLabelImg).addComponent(freePlacesNumberLabel))
+                        .addGroup(layout.createParallelGroup()
+                                .addComponent(moneyLabelImg).addComponent(moneyLabel)))
                 .addComponent(graphicsPanel).addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup()
-                                .addComponent(lawnButton).addComponent(roadButton).addComponent(parkingButton).addComponent(doubleParkingButton).addComponent(freePlacesNumberLabel).addComponent(moneyLabel))
+                                .addComponent(lawnButton).addComponent(roadButton).addComponent(parkingButton).addComponent(doubleParkingButton))
                         .addComponent(startButton).addComponent(pauseButton).addComponent(stopButton).addComponent(rewindButton).addComponent(slowerButton)));
         setContentPane(panel);
 
         layout.setVerticalGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup().addComponent(menuBar).addComponent(timeLabel))
+                .addGroup(layout.createParallelGroup().addComponent(menuBar).addComponent(timeLabel).addGroup(layout.createSequentialGroup()
+                        .addComponent(freePlacesNumberLabelImg).addComponent(freePlacesNumberLabel))
+                        .addGroup(layout.createSequentialGroup()
+                                .addComponent(moneyLabelImg).addComponent(moneyLabel)))
                 .addComponent(graphicsPanel).addGroup(layout.createParallelGroup()
                         .addGroup(layout.createSequentialGroup()
-                                .addComponent(lawnButton).addComponent(roadButton).addComponent(parkingButton).addComponent(doubleParkingButton).addComponent(freePlacesNumberLabel).addComponent(moneyLabel))
-                        .addComponent(startButton).addComponent(pauseButton).addComponent(stopButton).addComponent(rewindButton).addComponent(slowerButton)));
+                                .addComponent(lawnButton).addComponent(roadButton).addComponent(parkingButton).addComponent(doubleParkingButton))
+                        .addComponent(startButton).addGroup(layout.createSequentialGroup()
+                                .addComponent(pauseButton)/*.addComponent(freePlacesNumberLabelImg).addComponent(freePlacesNumberLabel)*/)
+                        .addGroup(layout.createSequentialGroup()
+                                .addComponent(stopButton)/*.addComponent(moneyLabelImg).addComponent(moneyLabel)*/)
+                .addComponent(rewindButton).addComponent(slowerButton)));
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         pack();
@@ -322,6 +339,9 @@ public class MainForm extends JFrame {
                     String time = String.format("Время %02d:%02d", milliseconds / 360, (milliseconds % 360) / 6);
                     timeLabel.setText(time);
                     freePlacesNumberLabel.setText("" + controller.getFreeParkingSpace().size());
+                    if (controller.getFreeParkingSpace().size()!=0)
+                        freePlacesNumberLabelImg.setIcon(freeicon);
+                    else freePlacesNumberLabelImg.setIcon(nofreeicon);
                     moneyLabel.setText(" " + controller.getMoney());
                     controller.setElapsedMills(controller.getElapsedMills() + controller.getDelay());
                 }

@@ -16,7 +16,7 @@ public class AboutProgramForm extends JFrame {
     private JLabel img;
 
     public AboutProgramForm(){
-        super("Об авторах");
+        super("О программе");
         final JFrame frame = new JFrame();
         setSize(500, 230);
         Container container = getContentPane();
