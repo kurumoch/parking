@@ -1,6 +1,7 @@
 package models;
 
-import org.apache.commons.math3.util.Pair;
+
+import models.Pair;
 
 import java.util.*;
 

@@ -1,7 +1,6 @@
 package forms;
 
 import JPanels.Surface;
-import com.google.gson.Gson;
 import controllers.Controller;
 import models.State;
 import models.TileType;
