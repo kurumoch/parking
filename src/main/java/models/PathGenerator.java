@@ -1,7 +1,7 @@
 package models;
 
 import controllers.Controller;
-import org.apache.commons.math3.util.Pair;
+import models.Pair;
 import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
 
 import java.util.ArrayList;

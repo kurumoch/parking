@@ -4,10 +4,10 @@ import JPanels.Surface;
 import drawing.DrawLines;
 import drawing.DrawTiles;
 import drawing.DrawRect;
+import models.Pair;
 import models.State;
 import models.TileType;
 import models.Vehicle;
-import org.apache.commons.math3.util.Pair;
 import org.jgrapht.graph.*;
 import threads.CarsCreator;
 

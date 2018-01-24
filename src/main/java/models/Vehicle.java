@@ -2,7 +2,7 @@ package models;
 
 import JPanels.Surface;
 import controllers.Controller;
-import org.apache.commons.math3.util.Pair;
+import models.Pair;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
