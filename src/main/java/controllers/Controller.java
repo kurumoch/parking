@@ -68,13 +68,21 @@ public class Controller implements Serializable {
     int defaultDelay;
     long startMills;
     long elapsedMills;
+    private int money;
 
+    public int getMoney() {
+        return money;
+    }
+
+    public void setMoney(int money) {
+        this.money = money;
+    }
 
     public Controller() {
         typeOfThreadOfCars = "Детерминированный";
         typeOfThreadTimeOnParking = "Детерминированный";
-        intervalCars = 200;
-        intervalTime = 9000;
+        intervalCars = 1000;
+        intervalTime = 15000;
         probOfArrivalToParking = 0.5;
         vehicles = new CopyOnWriteArrayList<>();
         startMills = System.currentTimeMillis();

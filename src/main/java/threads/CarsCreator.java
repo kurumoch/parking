@@ -56,8 +56,21 @@ public class CarsCreator extends Thread {
               v = null;
             }
             int parkTime =  Math.toIntExact(Math.round(distributionTime.sample()));
-            if(controller.getProbOfArrivalToParking() < Math.random() &&controller.getFreeParkingSpace().size()!=0)
-                controller.vehicles.add(new Vehicle(controller,parkTime, gena.generate()));
+            if(controller.getProbOfArrivalToParking() < Math.random() &&controller.getFreeParkingSpace().size()!=0) {
+                controller.vehicles.add(new Vehicle(controller, parkTime, gena.generate()));
+                int hours = parkTime / 360/6;
+                int profit = 0;
+                if(hours < 1) {
+                    profit = controller.getCostOfOneHour();
+                }
+                else if (hours < 4) {
+                    profit = controller.getCostToThreeHours();
+                }
+                else {
+                    profit = controller.getCostMoreThreeHours();
+                }
+                controller.setMoney(controller.getMoney() + profit);
+            }
             else controller.vehicles.add(new Vehicle(controller, parkTime, gena.generateNoPark()));
             try {
               int carTime =  Math.toIntExact(Math.round(distributionCars.sample()));

@@ -27,6 +27,8 @@ public class MainForm extends JFrame {
     private JMenu modelMenu;
     private JMenu aboutMenu;
     private JLabel timeLabel;
+    private JLabel freePlacesNumberLabel;
+    private JLabel moneyLabel;
     private JButton lawnButton;
     private JButton roadButton;
     private JButton parkingButton;
@@ -89,6 +91,8 @@ public class MainForm extends JFrame {
         aboutMenu.add(aboutAuthorsItem);
         aboutMenu.add(aboutProgramm);
         timeLabel = new JLabel("Время 00:00");
+        freePlacesNumberLabel = new JLabel(" ");
+        moneyLabel = new JLabel(" ");
         lawnButton = new JButton();
         lawnIcon = new ImageIcon("lawn.png");
         lawnButton.setIcon(lawnIcon);
@@ -120,7 +124,7 @@ public class MainForm extends JFrame {
                 .addGroup(layout.createSequentialGroup().addComponent(menuBar).addComponent(timeLabel))
                 .addComponent(graphicsPanel).addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup()
-                                .addComponent(lawnButton).addComponent(roadButton).addComponent(parkingButton).addComponent(doubleParkingButton))
+                                .addComponent(lawnButton).addComponent(roadButton).addComponent(parkingButton).addComponent(doubleParkingButton).addComponent(freePlacesNumberLabel).addComponent(moneyLabel))
                         .addComponent(startButton).addComponent(pauseButton).addComponent(stopButton).addComponent(rewindButton).addComponent(slowerButton)));
         setContentPane(panel);
 
@@ -128,7 +132,7 @@ public class MainForm extends JFrame {
                 .addGroup(layout.createParallelGroup().addComponent(menuBar).addComponent(timeLabel))
                 .addComponent(graphicsPanel).addGroup(layout.createParallelGroup()
                         .addGroup(layout.createSequentialGroup()
-                                .addComponent(lawnButton).addComponent(roadButton).addComponent(parkingButton).addComponent(doubleParkingButton))
+                                .addComponent(lawnButton).addComponent(roadButton).addComponent(parkingButton).addComponent(doubleParkingButton).addComponent(freePlacesNumberLabel).addComponent(moneyLabel))
                         .addComponent(startButton).addComponent(pauseButton).addComponent(stopButton).addComponent(rewindButton).addComponent(slowerButton)));
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -317,6 +321,8 @@ public class MainForm extends JFrame {
                     long milliseconds = controller.getElapsedMills() - controller.getStartMills();
                     String time = String.format("Время %02d:%02d", milliseconds / 360, (milliseconds % 360) / 6);
                     timeLabel.setText(time);
+                    freePlacesNumberLabel.setText("" + controller.getFreeParkingSpace().size());
+                    moneyLabel.setText(" " + controller.getMoney());
                     controller.setElapsedMills(controller.getElapsedMills() + controller.getDelay());
                 }
             }
