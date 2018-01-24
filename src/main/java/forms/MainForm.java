@@ -263,14 +263,14 @@ public class MainForm extends JFrame {
         rewindButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controller.setDelay(controller.getDelay()+10);
+                controller.faster();
             }
         });
 
         slowerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controller.setDelay(controller.getDelay()-10);
+                controller.slower();
             }
         });
 
