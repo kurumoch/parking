@@ -176,37 +176,39 @@ public class MainForm extends JFrame {
                 try {
 
                     ObjectInputStream inputStream = new ObjectInputStream((new FileInputStream(fileChooser.getSelectedFile())));
-                    Controller controller1 =  (Controller) inputStream.readObject();
+                  //  Controller controller1 =  (Controller) inputStream.readObject();
+                    Object[] array = (Object[])inputStream.readObject();
                     inputStream.close();
-                    controller.initParking(controller1.getxSize(), controller1.getySize());
-                    controller.setRectangles(controller1.getRectangles());
-                    controller.setTiles(controller1.getTiles());
-                    controller.setCostOfOneHour(controller1.getCostOfOneHour());
-                    controller.setCostToThreeHours(controller1.getCostToThreeHours());
-                    controller.setCostMoreThreeHours(controller1.getCostMoreThreeHours());
-                    controller.setTypeOfThreadTimeOnParking(controller1.getTypeOfThreadTimeOnParking());
-//                    controller.setDistributionTimeOnParking(controller1.getDistributionTimeOnParking());
-                    controller.setLeftDetermInterval(controller1.getLeftDetermInterval());
-                    controller.setRightDetermInterval(controller1.getRightDetermInterval());
-                    controller.setTypeOfThreadOfCars(controller1.getTypeOfThreadOfCars());
-//                    controller.setDistributionThreadOfCars(controller1.getDistributionThreadOfCars());
-                    controller.setPartOfTrucks(controller1.getPartOfTrucks());
-                    controller.setProbOfArrivalToParking(controller1.getProbOfArrivalToParking());
-                    controller.setMxTime(controller1.getMxTime());
-                    controller.setDxTime(controller1.getDxTime());
-                    controller.setLambdaTime(controller1.getLambdaTime());
-                    controller.setT1Time(controller1.getT1Time());
-                    controller.setT2Time(controller1.getT2Time());
-                    controller.setMxCars(controller1.getMxCars());
-                    controller.setDxCars(controller1.getDxCars());
-                    controller.setLambdaCars(controller1.getLambdaCars());
-                    controller.setT1Cars(controller1.getT1Cars());
-                    controller.setT2Cars(controller1.getT2Cars());
-                    controller.drawTiles();
-                    graphicsPanel = controller1.getSurface();
-                    controller.setSurface(controller1.getSurface());
-                    graphicsPanel.setController(controller);
-                    setEnabledConstructButtons(true);
+                    System.out.println("q");
+//                    controller.initParking(controller1.getxSize(), controller1.getySize());
+//                    controller.setRectangles(controller1.getRectangles());
+//                    controller.setTiles(controller1.getTiles());
+//                    controller.setCostOfOneHour(controller1.getCostOfOneHour());
+//                    controller.setCostToThreeHours(controller1.getCostToThreeHours());
+//                    controller.setCostMoreThreeHours(controller1.getCostMoreThreeHours());
+//                    controller.setTypeOfThreadTimeOnParking(controller1.getTypeOfThreadTimeOnParking());
+////                    controller.setDistributionTimeOnParking(controller1.getDistributionTimeOnParking());
+//                    controller.setLeftDetermInterval(controller1.getLeftDetermInterval());
+//                    controller.setRightDetermInterval(controller1.getRightDetermInterval());
+//                    controller.setTypeOfThreadOfCars(controller1.getTypeOfThreadOfCars());
+////                    controller.setDistributionThreadOfCars(controller1.getDistributionThreadOfCars());
+//                    controller.setPartOfTrucks(controller1.getPartOfTrucks());
+//                    controller.setProbOfArrivalToParking(controller1.getProbOfArrivalToParking());
+//                    controller.setMxTime(controller1.getMxTime());
+//                    controller.setDxTime(controller1.getDxTime());
+//                    controller.setLambdaTime(controller1.getLambdaTime());
+//                    controller.setT1Time(controller1.getT1Time());
+//                    controller.setT2Time(controller1.getT2Time());
+//                    controller.setMxCars(controller1.getMxCars());
+//                    controller.setDxCars(controller1.getDxCars());
+//                    controller.setLambdaCars(controller1.getLambdaCars());
+//                    controller.setT1Cars(controller1.getT1Cars());
+//                    controller.setT2Cars(controller1.getT2Cars());
+//                    controller.drawTiles();
+//                    graphicsPanel = controller1.getSurface();
+//                    controller.setSurface(controller1.getSurface());
+//                    graphicsPanel.setController(controller);
+//                    setEnabledConstructButtons(true);
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 } catch (ClassNotFoundException e1) {
@@ -223,7 +225,7 @@ public class MainForm extends JFrame {
                 fileChooser.showSaveDialog(null);
                 try {
                     ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(fileChooser.getSelectedFile()));
-                    Object[] array = new Object[24];
+                    Object[] array = new Object[23];
                     array[0] = controller.getxSize();
                     array[1] = controller.getySize();
                     array[2] = controller.getRectangles();
@@ -247,7 +249,7 @@ public class MainForm extends JFrame {
                     array[20] = controller.getLambdaCars();
                     array[21] = controller.getT1Cars();
                     array[22] = controller.getT2Cars();
-                    array[23] = controller.getSurface();
+                  //  array[23] = controller.getSurface();
                     outputStream.writeObject(array);
                     outputStream.close();
                 } catch (IOException e1) {
