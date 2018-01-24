@@ -3,6 +3,8 @@ package forms;
 import controllers.Controller;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -52,6 +54,42 @@ public class ParkingCreationForm extends JFrame {
                 controller.reinitParking((int)xSpinner.getValue(), (int)ySpinner.getValue());
                 controller.drawTiles();
                 dispose();
+            }
+        });
+        xSpinner.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                ImageIcon icon = new ImageIcon("error.png");
+                if ((int)xSpinner.getValue()>10){
+                    xLabel.setForeground(Color.red);
+                    JOptionPane.showMessageDialog(new JApplet(),"Максимальное значение - '10'!","Перебор",0,icon);
+                    xSpinner.setValue(10);
+                    xLabel.setForeground(Color.black);
+                }
+                if ((int)xSpinner.getValue()<1){
+                    xLabel.setForeground(Color.red);
+                    JOptionPane.showMessageDialog(new JApplet(),"Минимальное значение - '1'!","Недобор",0,icon);
+                    xSpinner.setValue(1);
+                    xLabel.setForeground(Color.black);
+                }
+            }
+        });
+        ySpinner.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                ImageIcon icon = new ImageIcon("error.png");
+                if ((int)ySpinner.getValue()>10){
+                    yLabel.setForeground(Color.red);
+                    JOptionPane.showMessageDialog(new JApplet(),"Максимальное значение - '10'!","Перебор",0,icon);
+                    ySpinner.setValue(10);
+                    yLabel.setForeground(Color.black);
+                }
+                if ((int)ySpinner.getValue()<1){
+                    yLabel.setForeground(Color.red);
+                    JOptionPane.showMessageDialog(new JApplet(),"Минимальное значение - '1'!","Недобор",0,icon);
+                    ySpinner.setValue(1);
+                    yLabel.setForeground(Color.black);
+                }
             }
         });
     }
