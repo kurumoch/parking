@@ -71,7 +71,7 @@ public class Controller implements Serializable {
     public Controller() {
         typeOfThreadOfCars = "Детерминированный";
         typeOfThreadTimeOnParking = "Детерминированный";
-        intervalCars = 1000;
+        intervalCars = 100;
         intervalTime = 2000;
         probOfArrivalToParking = 0.5;
         vehicles = new CopyOnWriteArrayList<>();
@@ -334,37 +334,51 @@ public class Controller implements Serializable {
         for (int i = 0; i < TILES_X; i++) {
             for (int j = 0; j < TILES_Y; j++) {
                 if (tiles[i][j].ordinal() == TileType.PARK_ROAD.ordinal()) {
+                    Pair<Integer, Integer> freeSpace = null;
                     if (tiles[i][j + 1].ordinal() == TileType.PARKING.ordinal() || tiles[i][j + 1].ordinal() == TileType.PARK_ROAD.ordinal()) {
                         graph.addEdge(allVertexes.get(i * TILES_Y + j), allVertexes.get(i * TILES_Y + j + 1));
                         if (tiles[i][j + 1].ordinal() == TileType.PARKING.ordinal()){
-                            //if (j != 10)
-                            freeParkingSpace.add(new Pair<>(j+1,i));
+                            freeSpace = new Pair<>(j+1,i);
+                          //  freeParkingSpace.add(new Pair<>(j+1,i));
                         }
                     }
                     if (tiles[i + 1][j].ordinal() == TileType.PARKING.ordinal() || tiles[i + 1][j].ordinal() == TileType.PARK_ROAD.ordinal()) {
                         graph.addEdge(allVertexes.get(i * TILES_Y + j), allVertexes.get((i + 1) * TILES_Y + j));
                         if (tiles[i+1][j].ordinal() == TileType.PARKING.ordinal()){
-                           // if (j != 11)
-                            freeParkingSpace.add(new Pair<>(j, i+1));
+                            freeSpace = new Pair<>(j, i+1);
+                          //  freeParkingSpace.add(new Pair<>(j, i+1));
                         }
                     }
                     if (tiles[i - 1][j].ordinal() == TileType.PARKING.ordinal() || tiles[i - 1][j].ordinal() == TileType.PARK_ROAD.ordinal()) {
                         graph.addEdge(allVertexes.get(i * TILES_Y + j), allVertexes.get((i - 1) * TILES_Y + j));
                         if (tiles[i - 1][j].ordinal() == TileType.PARKING.ordinal()) {
-                         //   if (j != 11)
-                            freeParkingSpace.add(new Pair<>(j, i-1));
+                            freeSpace = new Pair<>(j, i-1);
+                           // freeParkingSpace.add(new Pair<>(j, i-1));
                         }
                     }
                     if (tiles[i][j - 1].ordinal() == TileType.PARKING.ordinal() || tiles[i][j - 1].ordinal() == TileType.PARK_ROAD.ordinal()) {
                         graph.addEdge(allVertexes.get(i * TILES_Y + j), allVertexes.get(i * TILES_Y + j - 1));
                         if (tiles[i][j - 1].ordinal() == TileType.PARKING.ordinal()) {
-                          //  if (j != 12)
-                            freeParkingSpace.add(new Pair<>(j-1, i));
+                            freeSpace = new Pair<>(j-1, i);
+                           // freeParkingSpace.add(new Pair<>(j-1, i));
+                        }
+                    }
+                    if(freeSpace != null) {
+                        boolean isAlreadyConsist = false;
+                        for (int a = 0; a < freeParkingSpace.size(); a++) {
+                            if (freeParkingSpace.get(a).getFirst() == freeSpace.getFirst() && freeParkingSpace.get(a).getSecond() == freeSpace.getSecond()) {
+                                isAlreadyConsist = true;
+                                break;
+                            }
+                        }
+                        if (!isAlreadyConsist) {
+                            freeParkingSpace.add(freeSpace);
                         }
                     }
                 }
             }
         }
+        System.out.println("qwe");
 
     }
 
