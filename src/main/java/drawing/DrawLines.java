@@ -21,8 +21,8 @@ public class DrawLines extends JComponent {
         this.controller = controller;
         this.width = surface.getWidth() - 110;
         this.height = surface.getHeight() - 50;
-        this.xSize = controller.getxSize();
-        this.ySize = controller.getySize();
+        this.xSize = controller.getTILES_X();
+        this.ySize = controller.getTILES_Y();
         this.rectangles = new Rectangle[xSize][ySize];
     }
 

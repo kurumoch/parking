@@ -2,16 +2,12 @@ package JPanels;
 
 
 import controllers.Controller;
-import models.TileType;
 import models.Vehicle;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Surface extends JPanel implements ActionListener {
@@ -34,10 +30,10 @@ public class Surface extends JPanel implements ActionListener {
         int x = 30;
         int y = 30;
         g.setColor(Color.BLACK);
-        int dy = (getWidth() - 110) / controller.getxSize();
-        int dx = (getHeight() - 50) / controller.getySize();
-        for (int i = 0; i < controller.getySize(); i++) {
-            for (int j = 0; j < controller.getxSize(); j++) {
+        int dy = (getWidth() - 110) / controller.getTILES_X();
+        int dx = (getHeight() - 50) / controller.getTILES_Y();
+        for (int i = 0; i < controller.getTILES_Y(); i++) {
+            for (int j = 0; j < controller.getTILES_X(); j++) {
                 g.drawRect(y, x, dy, dx);
                 x += dx;
             }
@@ -50,8 +46,8 @@ public class Surface extends JPanel implements ActionListener {
             e.printStackTrace();
         }
         if(controller.getTiles()!=null) {
-            for (int i = 0; i < controller.getxSize(); i++) {
-                for (int j = 0; j < controller.getySize(); j++) {
+            for (int i = 0; i < controller.getTILES_X(); i++) {
+                for (int j = 0; j < controller.getTILES_Y(); j++) {
                     switch (controller.getTiles()[i][j]) {
                         case LAWN:
                             graphics2D.setColor(Color.GREEN);
