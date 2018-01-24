@@ -115,6 +115,18 @@ public class Vehicle implements Serializable{
                     new Thread(() -> {
                         try {
                             Thread.sleep(parkingTime);
+                            int hours = parkingTime / 360/6;
+                            int profit = 0;
+                            if(hours < 1) {
+                                profit = controller.getCostOfOneHour();
+                            }
+                            else if (hours < 4) {
+                                profit = controller.getCostToThreeHours();
+                            }
+                            else {
+                                profit = controller.getCostMoreThreeHours();
+                            }
+                            controller.setMoney(controller.getMoney() + profit);
                             isParking = false;
                             controller.getFreeParkingSpace().add(point.getFirst());
                         } catch (InterruptedException e) {
